@@ -1,9 +1,11 @@
 {
   "functions": { "api/*.php": { "runtime": "vercel-php@0.9.0" } },
+  "buildCommand": "cp -r public/* .",
+  "outputDirectory": "public",
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/admin", "dest": "/admin/index.php" },
-    { "src": "/(.*)", "dest": "/public/$1" }
+    { "src": "/(.*)", "dest": "/$1" }
   ],
   "cleanUrls": true,
   "trailingSlash": false
