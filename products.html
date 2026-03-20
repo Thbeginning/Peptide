@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Qingli Peptide</title>
+    <meta name="description"
+        content="Browse our complete catalog of research peptides.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons (FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Dark Theme Catalog Overrides */
+        body.catalog-page {
+            background-color: var(--bg-dark);
+        }
+        
+        /* Dark Header Override */
+        .catalog-header {
+            background: rgba(10, 15, 26, 0.8);
+            border-bottom: 1px solid var(--border-glass);
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Hero Details */
+        .catalog-hero {
+            height: 300px;
+            background: url('COA/peptide%20product%20cover%20.jpeg') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border-bottom: 1px solid var(--border-glass);
+        }
+        .catalog-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .catalog-hero h1 {
+            position: relative;
+            z-index: 10;
+            font-size: 3.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            font-family: var(--font-primary);
+            color: var(--text-main);
+        }
+        
+        /* Layout */
+        .catalog-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 3rem;
+        }
+        
+        /* Sidebar */
+        .catalog-sidebar h2 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-family: var(--font-primary);
+        }
+        .sidebar-menu {
+            list-style: none; margin-bottom: 2rem;
+        }
+        .sidebar-menu li {
+            margin-bottom: 1rem;
+        }
+        .sidebar-menu a {
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: color 0.1s ease;
+            display: block;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            color: var(--accent-cyan);
+        }
+        .search-box {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 1px solid var(--border-glass-light);
+            border-radius: 0.5rem;
+            background: rgba(0,0,0,0.4);
+            font-family: var(--font-primary);
+            color: var(--text-main);
+        }
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+        
+        /* Grid */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* Dark Product Card (matches rendering now) */
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 3rem;
+            gap: 0.5rem;
+        }
+        .page-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glass-light);
+            padding: 0.5rem 1rem;
+            color: var(--text-muted);
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+        .page-btn.active {
+            background: var(--accent-cyan);
+            color: #000;
+            border-color: var(--accent-cyan);
+            font-weight: 600;
+        }
+        
+        /* Floating Contact Bar (Mobile/Bottom) */
+        .mobile-contact-bar {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            display: flex;
+            z-index: 100;
+        }
+        .mobile-contact-bar a {
+            flex: 1;
+            padding: 1.25rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+            background: rgba(0,0,0,0.8);
+            color: var(--text-main);
+            border-top: 1px solid var(--border-glass);
+            border-right: 1px solid var(--border-glass);
+            backdrop-filter: blur(10px);
+            transition: background 0.2s ease;
+        }
+        .mobile-contact-bar a:hover {
+            background: rgba(11, 190, 214, 0.2);
+            color: var(--accent-cyan);
+        }
+        
+        @media (max-width: 992px) {
+            .catalog-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="catalog-page">
+
+    <!-- Light Header -->
+    <header class="catalog-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 0.75rem;">
+                <img src="Peptide image 2.0/Logo.jpeg" alt="Qingli Peptide Logo" style="width: 44px; height: 44px; border-radius: 8px;">
+                <span class="logo-text" style="font-size: 1.5rem; font-weight: 800; font-family: var(--font-primary);">Qingli Peptide</span>
+            </a>
+
+            <nav class="nav-links" style="align-items: center; display: flex; gap: 2rem;">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link active-link" style="color: #10b981; border-bottom: 2px solid #10b981;">Products</a>
+                <a href="index.html#quality" class="nav-link">About Us</a>
+                <a href="#" class="nav-link">Blog</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <div class="nav-actions flex" style="align-items: center; gap: 1rem;">
+                <a href="https://wa.me/1234567890" target="_blank" class="btn btn-yellow" style="padding: 0.5rem 1.5rem;">Quote Now</a>
+                <button class="mobile-menu-btn" style="color: #333;"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Catalog Hero -->
+    <section class="catalog-hero">
+        <h1>Products</h1>
+    </section>
+
+    <!-- Main Content -->
+    <div class="catalog-container">
+        
+        <!-- Sidebar -->
+        <aside class="catalog-sidebar">
+            <div style="position: sticky; top: 100px;">
+                <h2>Product Categories</h2>
+                
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active" onclick="filterCategory('All')">All Products</a></li>
+                    <li><a href="#" onclick="filterCategory('Peptide')">Peptide</a></li>
+                    <li><a href="#" onclick="filterCategory('Cosmetic')">Cosmetic Peptides</a></li>
+                    <li><a href="#" onclick="filterCategory('Hormone')">Hormones</a></li>
+                    <li><a href="index.html#quality">COA</a></li>
+                </ul>
+                
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="catalogSearch" placeholder="Search..." oninput="filterCatalog(this.value)">
+                </div>
+                
+                <a href="https://wa.me/1234567890" class="btn btn-yellow w-full"><i class="fa-solid fa-clipboard-list mr-2"></i> Quote Now</a>
+            </div>
+        </aside>
+
+        <!-- Product Grid Area -->
+        <main>
+            <div class="catalog-grid" id="fullProductGrid">
+                <!-- Javascript will inject products here -->
+            </div>
+            
+            <div class="pagination" id="catalogPagination">
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">Next <i class="fa-solid fa-chevron-right text-sm ml-1"></i></button>
+            </div>
+        </main>
+        
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer section-darker border-top-glass">
+        <div class="container">
+            <div class="disclaimer-box glass-panel alert-glass mb-8 p-6">
+                <div class="disclaimer-title"><i class="fa-solid fa-triangle-exclamation"></i> MEDICAL DISCLAIMER - RESEARCH USE ONLY</div>
+                <p class="text-muted text-sm mt-2">All products listed on this website are distributed explicitly for laboratory research purposes only. They are NOT intended for human or animal consumption, diagnostic use, therapeutic use, or any agricultural, commercial, or domestic applications. By purchasing, you represent and warrant that you are a qualified researcher and will properly test, use, and dispose of the materials according to strict industry standards. <strong class="text-danger">You must be 21 years or older to purchase.</strong></p>
+            </div>
+
+            <div class="footer-grid mt-8 pt-4">
+                <div class="footer-brand">
+                    <a href="#" class="logo mb-4" style="display:flex;">
+                        <img src="Peptide image 2.0/Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img">
+                        <span class="logo-text text-white">Qingli <span class="text-glow">Peptide</span></span>
+                    </a>
+                    <p class="text-muted text-sm mt-4">Premium supplier of high-purity peptides and chemical reagents for the global biotechnology sector.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-white mb-4">Quick Links</h4>
+                    <ul class="footer-links text-muted text-sm">
+                        <li><a href="#products" class="hover-text-white">Product Catalog</a></li>
+                        <li><a href="#calculator" class="hover-text-white">Reconstitution Calculator</a></li>
+                        <li><a href="#quality" class="hover-text-white">COA Repository</a></li>
+                        <li><a href="#verify" class="hover-text-white">Anti-Scam Check</a></li>
+                        <li><a href="https://wa.me/1234567890" target="_blank" class="hover-text-white" style="color: var(--accent-cyan); font-weight: 600;">Bulk & Custom Orders</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white mb-4">Contact Us</h4>
+                    <ul class="footer-links text-muted text-sm">
+                        <li><a href="https://wa.me/1234567890" class="hover-text-white"><i class="fa-brands fa-whatsapp text-accent mr-2"></i> WhatsApp</a></li>
+                        <li><a href="#" class="hover-text-white"><i class="fa-brands fa-telegram text-accent mr-2"></i> Telegram</a></li>
+                        <li><a href="mailto:sales@qinglipeptide.com" class="hover-text-white"><i class="fa-solid fa-envelope text-accent mr-2"></i> Email Sales</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white mb-4">Accepted Payments</h4>
+                    <div class="payment-icons text-muted flex gap-4 text-2xl">
+                        <i class="fa-brands fa-bitcoin hover-glow" title="Bitcoin"></i>
+                        <span class="hover-glow" style="font-weight: bold; font-family: sans-serif; cursor: help;" title="Tether USDT">₮</span>
+                        <i class="fa-solid fa-building-columns hover-glow" title="Bank Wire"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom mt-8 pt-6 border-top-glass flex-between text-muted text-sm">
+                <p>&copy; 2026 Qingli Peptide. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover-text-white">Terms of Service</a>
+                    <a href="#" class="hover-text-white">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Sticky Bar -->
+    <div class="mobile-contact-bar">
+        <a href="https://wa.me/1234567890" target="_blank"><i class="fa-brands fa-whatsapp mr-2"></i> Whatsapp</a>
+        <a href="mailto:sales@qinglipeptide.com"><i class="fa-solid fa-envelope mr-2"></i> Email</a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js?v=2.4"></script>
+    <script>
+        // Set context for script.js
+        window.isCatalogPage = true;
+    </script>
+</body>
+</html>

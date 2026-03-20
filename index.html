@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-theme">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qingli Peptide | Premium Research Peptides</title>
+    <meta name="description"
+        content="Global supplier of 98%+ purity research peptides. Third-party tested, designed for clinical and laboratory research use only.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons (FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css?v=2.5">
+
+    <style>
+        /* Testimonial Slider Styles */
+        .testimonial-slide {
+            flex: 0 0 100%;
+            padding: 2rem;
+            background: rgba(0, 20, 40, 0.8);
+            border: 1px solid var(--border-glass);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: transform 0.5s ease;
+        }
+        
+        .testimonial-stars {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-quote {
+            font-size: 1.125rem;
+            color: var(--text-main);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+        }
+        
+        .testimonial-location {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-glass);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .slider-dot.active {
+            background: var(--accent-cyan);
+        }
+        
+        .trust-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Medical/Peptide Cinematic Background System -->
+    <div class="cinematic-bg">
+        <div class="molecular-helix"></div>
+        <div class="peptide-chains"></div>
+        <div class="medical-grid"></div>
+        <div class="cellular-particles"></div>
+        <div class="laboratory-beams"></div>
+        <div class="dna-strand"></div>
+        <div class="medical-glow"></div>
+        <div class="aurora-effect"></div>
+        <div class="medical-floating-elements">
+            <div class="medical-element peptide-molecule"></div>
+            <div class="medical-element peptide-molecule"></div>
+            <div class="medical-element peptide-molecule"></div>
+            <div class="medical-element peptide-molecule"></div>
+            <div class="medical-element peptide-molecule"></div>
+            <div class="medical-element dna-helix"></div>
+            <div class="medical-element dna-helix"></div>
+            <div class="medical-element dna-helix"></div>
+        </div>
+    </div>
+
+    <!-- Header & Navigation: Scientific Precision Redesign -->
+    <header class="header">
+        <div class="nav-container">
+            <!-- Left Side: Brand Identity -->
+            <div class="header-left">
+                <a href="#" class="logo">
+                    <div class="logo-icon-wrapper">
+                        <img src="Peptide image 2.0/Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img" loading="lazy">
+                        <div class="logo-glow"></div>
+                    </div>
+                    <span class="logo-text">QINGLI <span class="text-glow">PEPTIDE</span></span>
+                </a>
+            </div>
+
+            <!-- Center: Navigation Map -->
+            <nav class="header-center">
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active">Home</a></li>
+                    <li class="nav-item-dropdown">
+                        <a href="#products" class="nav-link">Shop Compounds <i class="fa-solid fa-chevron-down drop-icon"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="#products" class="dropdown-item">
+                                <div class="item-icon"><i class="fa-solid fa-vial-circle-check"></i></div>
+                                <div class="item-text">
+                                    <span class="title">Peptides</span>
+                                    <span class="sub">99%+ Purity Research</span>
+                                </div>
+                            </a>
+                            <a href="#products" class="dropdown-item">
+                                <div class="item-icon"><i class="fa-solid fa-microscope"></i></div>
+                                <div class="item-text">
+                                    <span class="title">Equipment</span>
+                                    <span class="sub">Laboratory Hardware</span>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#quality" class="nav-link">Lab Results</a></li>
+                    <li><a href="#" class="nav-link" onclick="openContactModal(event)">Support</a></li>
+                </ul>
+            </nav>
+
+            <!-- Right Side: Interaction Hub -->
+            <div class="header-right">
+                <div class="interaction-group">
+                    <!-- Integrated Glass Search -->
+                    <div class="integrated-search">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="catalogSearch" class="search-field" placeholder="Search Compounds..." oninput="handleSearchAutocomplete(this.value)">
+                        <div id="searchAutocomplete" class="search-portal glass-panel-darker"></div>
+                    </div>
+
+                    <div class="action-divider"></div>
+
+                    <!-- Functional Icons -->
+                    <div class="utility-actions">
+                        <button onclick="toggleCart()" class="utility-btn cart-trigger" title="Quote List">
+                            <i class="fa-solid fa-list-check"></i>
+                            <span id="cartCount" class="cart-count-badge">0</span>
+                        </button>
+
+                        <div class="lang-selector-premium">
+                            <button class="utility-btn lang-trigger" onclick="toggleLanguageDropdown(event)">
+                                <i class="fa-solid fa-globe"></i>
+                                <span class="lang-current">EN</span>
+                            </button>
+                            <div class="lang-portal glass-panel-darker" id="langDropdown">
+                                <div class="portal-header">
+                                    <i class="fa-solid fa-language text-accent"></i>
+                                    <span>Select Region</span>
+                                </div>
+                                <div class="lang-grid">
+                                    <button class="lang-option active" onclick="changeLanguage('en')">
+                                        <span class="flag-icon">🇺🇸</span>
+                                        <span class="lang-name">English</span>
+                                    </button>
+                                    <button class="lang-option" onclick="changeLanguage('es')">
+                                        <span class="flag-icon">🇪🇸</span>
+                                        <span class="lang-name">Español</span>
+                                    </button>
+                                    <button class="lang-option" onclick="changeLanguage('fr')">
+                                        <span class="flag-icon">🇫🇷</span>
+                                        <span class="lang-name">Français</span>
+                                    </button>
+                                    <button class="lang-option" onclick="changeLanguage('de')">
+                                        <span class="flag-icon">🇩🇪</span>
+                                        <span class="lang-name">Deutsch</span>
+                                    </button>
+                                    <button class="lang-option" onclick="changeLanguage('zh-CN')">
+                                        <span class="flag-icon">🇨🇳</span>
+                                        <span class="lang-name">中文</span>
+                                    </button>
+                                    <button class="lang-option" onclick="changeLanguage('ja')">
+                                        <span class="flag-icon">🇯🇵</span>
+                                        <span class="lang-name">日本語</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="authLogged" class="user-portal-wrapper" style="display: none;">
+                            <button class="utility-btn user-trigger" onclick="toggleUserDropdown(event)">
+                                <i class="fa-solid fa-user-shield"></i>
+                                <div class="online-pulse"></div>
+                            </button>
+                            <div class="user-portal-dropdown glass-panel-darker" id="userDropdown">
+                                <div class="portal-header">
+                                    <div class="user-info">
+                                        <span id="navUserName" class="user-name">Research Client</span>
+                                        <span class="user-status">Verified Account</span>
+                                    </div>
+                                </div>
+                                <div class="portal-links">
+                                    <button class="portal-link-item" onclick="openMyAccount()">
+                                        <i class="fa-solid fa-folder-open"></i>
+                                        <span>My Quotes & History</span>
+                                    </button>
+                                    <button class="portal-link-item" onclick="openContactModal(event)">
+                                        <i class="fa-solid fa-headset"></i>
+                                        <span>Technical Support</span>
+                                    </button>
+                                    <div class="portal-divider"></div>
+                                    <button class="portal-link-item text-danger" onclick="logoutUser()">
+                                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                        <span>Sign Out</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="authGuest" class="auth-action hide-mobile">
+                        <button onclick="openAuthModal('login')" class="portal-btn">
+                            <span>Client Portal</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <button class="mobile-trigger" id="mobileTrigger" onclick="toggleMobileMenu()">
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- New Marquee Ticker (below navbar) -->
+    <div class="custom-marquee" id="customMarquee" style="display: none;">
+        <div class="custom-marquee-inner" id="customMarqueeInner">
+            <!-- Content dynamically loaded from admin settings -->
+        </div>
+    </div>
+
+    <!-- Mobile Slide-In Sidebar Menu -->
+    <div class="mobile-sidebar-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+    <aside class="mobile-sidebar" id="mobileSidebar">
+        <div class="mobile-sidebar-header">
+            <span class="logo-text">Qingli <span class="text-glow">Peptide</span></span>
+            <button class="icon-btn" onclick="toggleMobileMenu()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="mobile-sidebar-content">
+            <nav class="mobile-nav-links">
+                <a href="#" class="mobile-link" onclick="toggleMobileMenu()">Home <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#products" class="mobile-link" onclick="toggleMobileMenu()">Shop Compounds <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#about" class="mobile-link" onclick="toggleMobileMenu()">About Us <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#quality" class="mobile-link" onclick="toggleMobileMenu()">Lab Results <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#" class="mobile-link" onclick="toggleMobileMenu(); openContactModal(event)">Contact Support <i class="fa-solid fa-chevron-right"></i></a>
+            </nav>
+        </div>
+        <div class="mobile-sidebar-footer" id="mobileAuthGuest">
+             <button onclick="toggleMobileMenu(); openAuthModal('login')" class="btn btn-primary btn-cta-premium w-full py-4">Sign In to Portal</button>
+        </div>
+        <div class="mobile-sidebar-footer" id="mobileAuthLogged" style="display: none;">
+             <button onclick="toggleMobileMenu(); openMyAccount()" class="btn btn-primary w-full py-4 mb-3"><i class="fa-solid fa-user mr-2"></i> My Account</button>
+             <button onclick="toggleMobileMenu(); logoutUser()" class="btn btn-outline text-danger w-full py-4"><i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Sign Out</button>
+        </div>
+    </aside>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="container">
+            <div class="reveal">
+                <div class="luxury-rating-badge mb-8" onclick="scrollToReviews()">
+                    <div class="rating-stars-luxury">
+                        <div class="star-luxury filled"></div>
+                        <div class="star-luxury filled"></div>
+                        <div class="star-luxury filled"></div>
+                        <div class="star-luxury filled"></div>
+                        <div class="star-luxury filled"></div>
+                        <div class="star-luxury half-filled"></div>
+                    </div>
+                    <div class="rating-info-luxury">
+                        <div class="rating-score">4.9</div>
+                        <div class="rating-out-of">/ 5.0</div>
+                        <div class="rating-description">by Global Researchers</div>
+                    </div>
+                </div>
+                <h1 class="hero-title">Precision Peptides for <br><span class="text-glow">Advanced Research</span></h1>
+                <p class="hero-subtitle">Empowering laboratory excellence with high-purity compounds, verifiable analytical data, and a seamless global procurement workflow.</p>
+                
+                <div class="hero-actions flex gap-4" style="justify-content: center;">
+                    <a href="#products" class="btn btn-primary glow-btn px-10 py-4">Explore Catalog</a>
+                    <a href="#calculator" class="btn btn-outline glow-btn-outline px-10 py-4">Dosage Calculator</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section: Premium B2B Redesign -->
+    <section id="about" class="section section-dark relative overflow-hidden">
+        <!-- Background Artistic Elements -->
+        <div class="about-bg-blob blob-1"></div>
+        <div class="about-bg-blob blob-2"></div>
+        <div class="about-grid-pattern"></div>
+
+        <div class="container relative z-10">
+            <div class="about-master-wrapper">
+                
+                <!-- Left Content: Brand Narrative -->
+                <div class="about-narrative reveal">
+                    <div class="narrative-header mb-8">
+                        <div class="narrative-tag">
+                            <i class="fa-solid fa-microscope text-accent"></i>
+                            <span>ESTABLISHED 2019</span>
+                        </div>
+                        <h2 class="narrative-title mt-4">
+                            Innovation in <span class="text-glow">Molecular</span> <br>
+                            Synthesis & Excellence
+                        </h2>
+                    </div>
+                    
+                    <div class="narrative-body">
+                        <p class="narrative-text mb-10">
+                            With over <span class="text-accent font-bold">7 years of excellence</span> in peptide production, <strong>Qingli Peptide</strong> specializes in high-purity research, beauty, and fitness compounds. Our mission is to bridge the gap between complex molecular science and global research availability.
+                        </p>
+                        
+                        <div class="narrative-pillars">
+                            <div class="pillar-item glass-panel">
+                                <div class="pillar-icon"><i class="fa-solid fa-vial-circle-check"></i></div>
+                                <div class="pillar-info">
+                                    <h4>GMP Compliant</h4>
+                                    <p>Strict pharmaceutical standards</p>
+                                </div>
+                            </div>
+                            <div class="pillar-item glass-panel">
+                                <div class="pillar-icon"><i class="fa-solid fa-fingerprint"></i></div>
+                                <div class="pillar-info">
+                                    <h4>Full Traceability</h4>
+                                    <p>Batch-verified purity reports</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content: The "Excellence Card" -->
+                <div class="about-excellence-card-wrapper reveal">
+                    <div class="excellence-card glass-panel-darker border-glow">
+                        <div class="card-header-badge">
+                            <span class="pulse-dot"></span>
+                            LABORATORY CERTIFIED
+                        </div>
+                        
+                        <div class="excellence-content mt-8">
+                            <h3 class="text-white text-2xl font-bold mb-4">Innovation & Global Reliability</h3>
+                            <p class="text-muted text-sm leading-relaxed mb-8">
+                                Our state-of-the-art manufacturing facility enables us to produce custom and bulk peptides with full traceability, ensuring consistent quality and reliability for our global partners in research and development.
+                            </p>
+                            
+                            <div class="excellence-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">7+</div>
+                                    <div class="stat-label">Years of Industry Leadership</div>
+                                </div>
+                                <div class="stat-divider"></div>
+                                <div class="stat-item">
+                                    <div class="stat-value">99.9%</div>
+                                    <div class="stat-label">Synthesis Purity Standards</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DNA Helix Animated Decoration -->
+                        <div class="card-decoration">
+                            <i class="fa-solid fa-dna floating-dna"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Support Element -->
+                    <div class="floating-trust-card glass-panel blur-heavy">
+                        <div class="trust-icons">
+                            <i class="fa-solid fa-shield-halved text-success"></i>
+                            <i class="fa-solid fa-certificate text-accent"></i>
+                            <i class="fa-solid fa-earth-americas text-blue"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-white">Global Research Partner</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Scientific Trust Bar: Sleek Horizontal Integration -->
+    <section class="trust-bar-premium reveal">
+        <div class="container">
+            <div class="trust-flex">
+                <div class="trust-mini-item">
+                    <i class="fa-solid fa-microscope"></i>
+                    <span>THIRD-PARTY TESTED</span>
+                </div>
+                <div class="trust-separator"></div>
+                <div class="trust-mini-item">
+                    <i class="fa-solid fa-vial-circle-check"></i>
+                    <span>99%+ PURITY STANDARDS</span>
+                </div>
+                <div class="trust-separator"></div>
+                <div class="trust-mini-item">
+                    <i class="fa-solid fa-earth-americas"></i>
+                    <span>GLOBAL LOGISTICS NETWORK</span>
+                </div>
+                <div class="trust-separator"></div>
+                <div class="trust-mini-item">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>VERIFIED REPRESENTATIVES</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="section section-dark reveal">
+        <div class="container">
+            <div class="section-header text-center mx-auto mb-12" style="max-width: 800px;">
+                <span class="badge mb-4">Research Catalog</span>
+                <h2 class="text-gradient">Featured Research Compounds</h2>
+                <p class="section-desc text-muted">Our most requested peptides, synthesized for maximum purity. <strong class="text-danger">Strictly not for human consumption.</strong></p>
+            </div>
+
+            <div class="products-grid" id="productGrid">
+                <!-- Products dynamically injected via JS -->
+                <div class="text-center py-20 text-muted col-span-full"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><br>Fetching Compounds...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section: Scientific Reconstitution Tool -->
+    <section id="calculator" class="section section-dark relative overflow-hidden">
+        <div class="about-bg-blob blob-1"></div>
+        <div class="about-bg-blob blob-2"></div>
+        <div class="about-bg-blob blob-3"></div>
+        
+        <div class="container relative z-10">
+            <div class="calculator-master-grid">
+                
+                <!-- Left: Scientific Info -->
+                <div class="calc-info-col reveal">
+                    <div class="narrative-tag mb-4">
+                        <i class="fa-solid fa-calculator text-accent"></i>
+                        <span>PRECISION DOSAGE TOOL</span>
+                    </div>
+                    <h2 class="narrative-title mb-6">Peptide Reconstitution<br><span class="text-glow">Calculator</span></h2>
+                    <p class="narrative-text mb-8">
+                        Achieve 100% accurate research measurements with our clinical-grade reconstitution tool. Designed for precise laboratory calculations across all standard syringe specifications.
+                    </p>
+                    
+                    <div class="calc-highlights-grid">
+                        <div class="highlight-item-elegant">
+                            <div class="highlight-icon-wrapper">
+                                <i class="fa-solid fa-syringe highlight-icon"></i>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Universal Syringe Support</h4>
+                                <p>Compatible with U-100, U-50, U-30 insulin syringes for maximum flexibility</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-item-elegant">
+                            <div class="highlight-icon-wrapper">
+                                <i class="fa-solid fa-arrows-rotate highlight-icon"></i>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Real-Time Conversion</h4>
+                                <p>Instant MCG/MG synchronization with precise mathematical calculations</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-item-elegant">
+                            <div class="highlight-icon-wrapper">
+                                <i class="fa-solid fa-eye highlight-icon"></i>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Visual Precision</h4>
+                                <p>Advanced pull indicator system for accurate dosage visualization</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-item-elegant">
+                            <div class="highlight-icon-wrapper">
+                                <i class="fa-solid fa-shield-check highlight-icon"></i>
+                            </div>
+                            <div class="highlight-content">
+                                <h4>Clinical Validation</h4>
+                                <p>Laboratory-grade accuracy guaranteed with professional standards</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right: Interactive Calculator Card -->
+                <div class="calc-card-col reveal">
+                    <div class="calculator-card-premium glass-panel-darker border-glow p-8 majestic-glow">
+                        <div class="card-header-badge mb-6">
+                            <span class="pulse-dot"></span>
+                            PRECISION CALCULATION ENGINE
+                        </div>
+                        
+                        <!-- Calculator Instructions -->
+                        <div class="calc-instructions mb-6">
+                            <p class="instruction-text">
+                                <i class="fa-solid fa-info-circle"></i>
+                                Enter your peptide details below to calculate exact dosage measurements
+                            </p>
+                        </div>
+                        
+                        <div class="calculator-form-grid">
+                            <div class="input-field">
+                                <label class="input-label-enhanced">
+                                    <i class="fa-solid fa-syringe"></i>
+                                    Syringe Size
+                                    <span class="input-hint">Choose your syringe type</span>
+                                </label>
+                                <div class="glass-select-wrapper">
+                                    <select id="syringeSize" class="glass-input-premium">
+                                        <option value="100">1mL (100 units) - Most Common</option>
+                                        <option value="50">0.5mL (50 units) - Half Size</option>
+                                        <option value="30">0.3mL (30 units) - Small Doses</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="input-field">
+                                <label class="input-label-enhanced">
+                                    <i class="fa-solid fa-flask"></i>
+                                    Peptide Amount
+                                    <span class="input-hint">Total peptide in vial (mg)</span>
+                                </label>
+                                <input type="number" id="peptideAmount" class="glass-input-premium" placeholder="e.g. 5" min="0" step="0.1">
+                            </div>
+                        </div>
+                        
+                        <div class="input-field">
+                            <label class="input-label-enhanced">
+                                <i class="fa-solid fa-droplet"></i>
+                                BAC Water Added
+                                <span class="input-hint">Water volume for mixing (mL)</span>
+                            </label>
+                            <input type="number" id="waterAmount" class="glass-input-premium" placeholder="e.g. 2" step="0.1" value="2">
+                        </div>
+                        
+                        <div class="input-field">
+                            <label class="input-label-enhanced">
+                                <i class="fa-solid fa-bullseye"></i>
+                                Desired Dose
+                                <span class="input-hint">Amount you want to administer</span>
+                            </label>
+                            <div class="dose-sync-wrapper">
+                                <input type="number" id="desiredDose" class="glass-input-premium" placeholder="e.g. 250" min="0" step="0.1">
+                                <button class="sync-btn-enhanced" onclick="calculateDose()">
+                                    <i class="fa-solid fa-calculator"></i>
+                                    Calculate
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Result Display -->
+                        <div class="calc-result-enhanced">
+                            <div class="result-header">
+                                <i class="fa-solid fa-check-circle"></i>
+                                Calculation Result
+                            </div>
+                            <div class="result-content">
+                                <div class="result-item">
+                                    <div class="result-label">Units to Draw</div>
+                                    <div class="result-value" id="unitsToDraw">--</div>
+                                    <div class="result-description">Mark this on your syringe</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Laboratory Standards: Analytical Verification -->
+    <section id="quality" class="section section-dark relative overflow-hidden border-top-glass">
+        <div class="about-bg-blob blob-2" style="top: 0; right: 0;"></div>
+        <div class="container relative z-10">
+            <div class="lab-master-grid">
+                
+                <!-- Left: Standards Content -->
+                <div class="lab-content reveal">
+                    <div class="narrative-tag mb-4">
+                        <i class="fa-solid fa-shield-virus text-accent"></i>
+                        <span>QUALITY ASSURANCE</span>
+                    </div>
+                    <h2 class="narrative-title mb-6">Uncompromising <br><span class="text-glow">Analytical Verification</span></h2>
+                    <p class="narrative-text mb-10">
+                        In the research chemical sector, trust is built on verifiable data. Every single batch undergoes rigorous independent analysis via HPLC and Mass Spectrometry before entering our global inventory.
+                    </p>
+
+                    <div class="lab-features-stack">
+                        <div class="lab-feature-card glass-panel">
+                            <div class="feature-icon-box"><i class="fa-solid fa-check-double text-accent"></i></div>
+                            <div class="feature-text">
+                                <h4>Independently Validated</h4>
+                                <p>We utilize globally recognized facilities including <strong>Janoshik Analytical</strong> and <strong>MZ Biolabs</strong>.</p>
+                            </div>
+                        </div>
+                        <div class="lab-feature-card glass-panel">
+                            <div class="feature-icon-box"><i class="fa-solid fa-chart-line text-accent"></i></div>
+                            <div class="feature-text">
+                                <h4>HPLC & MS Analysis</h4>
+                                <p>Every COA provides full spectral data ensuring 99%+ purity and molecular weight verification.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: The "Purity Seal" Graphic -->
+                <div class="lab-graphic-col reveal">
+                    <div class="purity-seal-wrapper">
+                        <div class="seal-outer-ring"></div>
+                        <div class="seal-inner-card glass-panel-darker">
+                            <div class="seal-content">
+                                <i class="fa-solid fa-flask-vial seal-icon"></i>
+                                <div class="seal-status">
+                                    <span class="pulse-dot"></span>
+                                    PURITY VERIFIED
+                                </div>
+                                <h3 class="seal-title">99.9% Purity</h3>
+                                <p class="seal-desc">HPLC / MS CERTIFIED</p>
+                            </div>
+                            
+                            <!-- Analytical Graph Decoration -->
+                            <div class="graph-deco">
+                                <div class="bar" style="height: 40%"></div>
+                                <div class="bar" style="height: 60%"></div>
+                                <div class="bar" style="height: 30%"></div>
+                                <div class="bar active" style="height: 95%"></div>
+                                <div class="bar" style="height: 50%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Verification Badges -->
+                        <div class="badge-float badge-top-right glass-panel">
+                            <i class="fa-solid fa-certificate text-accent"></i>
+                            <span>ISO 9001</span>
+                        </div>
+                        <div class="badge-float badge-bottom-left glass-panel">
+                            <i class="fa-solid fa-microscope text-accent"></i>
+                            <span>3RD PARTY</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust & Reviews Section -->
+    <section id="trust-reviews" class="section section-dark relative">
+        <div class="bg-glow-right"></div>
+        <div class="container relative z-10">
+            <div class="section-header text-center mx-auto" style="max-width: 800px;">
+                <h2 class="text-gradient">Trusted by Global Researchers</h2>
+                <p class="section-desc text-muted">Join thousands of satisfied researchers worldwide who trust Qingli Peptide for their research needs.</p>
+            </div>
+
+            <!-- Testimonial Slider -->
+            <div class="testimonial-slider" style="max-width: 1000px; margin: 3rem auto 0;">
+                <div class="testimonial-container" id="testimonialContainer" style="display: flex; overflow: hidden; position: relative;">
+                    <!-- Testimonials will be loaded here via JS -->
+                </div>
+                
+                <!-- Slider Controls -->
+                <div class="slider-controls" style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+                    <button class="slider-btn" id="prevBtn" onclick="prevTestimonial()" style="background: rgba(0, 20, 40, 0.8); border: 1px solid var(--border-glass); border-radius: 50%; width: 40px; height: 40px; color: var(--text-main); cursor: pointer; transition: all 0.3s ease;">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div class="slider-dots" id="sliderDots" style="display: flex; gap: 0.5rem;"></div>
+                    <button class="slider-btn" id="nextBtn" onclick="nextTestimonial()" style="background: rgba(0, 20, 40, 0.8); border: 1px solid var(--border-glass); border-radius: 50%; width: 40px; height: 40px; color: var(--text-main); cursor: pointer; transition: all 0.3s ease;">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Verification Tool -->
+    <section id="verify" class="section section-darker verify-section border-top-glass">
+        <div class="container">
+            <div class="verify-box glass-panel text-center">
+                <div class="verify-icon mx-auto mb-4 text-accent">
+                    <i class="fa-solid fa-shield-halved" style="font-size: 3rem; filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.5));"></i>
+                </div>
+                <h2>Verify Your Sales Representative</h2>
+                <p class="text-muted max-w-2xl mx-auto">To ensure secure communication and transactions, verify your representative's unique ID here before discussing any commercial terms.</p>
+
+                <form id="verifyForm" class="verify-form flex mx-auto max-w-2xl mt-6" style="gap:1rem;" onsubmit="handleVerify(event)">
+                    <input type="text" id="repId" class="glass-input verify-input" placeholder="Enter Rep ID (e.g., QL-1045)" style="flex:1;" required>
+                    <button type="submit" class="btn btn-primary glow-btn">Verify Rep</button>
+                </form>
+
+                <div id="verifyResult" class="verify-result glass-panel-darker mt-6 max-w-2xl mx-auto"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bg-pattern"></div>
+        <div class="container">
+            <div class="disclaimer-box alert-glass">
+                <div class="disclaimer-title">
+                    <i class="fa-solid fa-triangle-exclamation"></i> 
+                    MEDICAL DISCLAIMER - RESEARCH USE ONLY
+                </div>
+                <p class="text-muted text-sm">All products listed on this website are distributed explicitly for laboratory research purposes only. They are NOT intended for human or animal consumption, diagnostic use, therapeutic use, or any agricultural, commercial, or domestic applications. By purchasing, you represent and warrant that you are a qualified researcher and will properly test, use, and dispose of the materials according to strict industry standards. <strong class="text-danger">You must be 21 years or older to purchase.</strong></p>
+            </div>
+
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <img src="Peptide image 2.0/Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img">
+                        <span class="logo-text">Qingli <span class="text-glow">Peptide</span></span>
+                    </a>
+                    <p class="footer-description">
+                        Premium supplier of high-purity peptides and chemical reagents for the global biotechnology sector. Empowering research excellence since 2019.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Twitter">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" class="hover-glow">Home</a></li>
+                        <li><a href="#about" class="hover-glow">About Us</a></li>
+                        <li><a href="#products" class="hover-glow">Research Catalog</a></li>
+                        <li><a href="#quality" class="hover-glow">Lab Results</a></li>
+                        <li><a href="#verify" class="hover-glow">Verify Rep</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Compliance</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" class="hover-glow">Terms of Service</a></li>
+                        <li><a href="#" class="hover-glow">Privacy Policy</a></li>
+                        <li><a href="#" class="hover-glow">Shipping & Customs</a></li>
+                        <li><a href="#" class="hover-glow text-danger">Research Disclaimer</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact & Support</h4>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <span>WhatsApp Support</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>sales@qinglipeptide.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-globe"></i>
+                            <span>Global Shipping</span>
+                        </div>
+                    </div>
+                    
+                    <div class="newsletter-section">
+                        <h5 class="newsletter-title">Research Updates</h5>
+                        <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+                            <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                            <button type="submit" class="newsletter-btn">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-bottom-links">
+                    <a href="#" class="hover-glow">Terms of Service</a>
+                    <a href="#" class="hover-glow">Privacy Policy</a>
+                    <a href="#" class="hover-glow">Cookie Policy</a>
+                </div>
+                
+                <div class="payment-methods">
+                    <span class="text-muted">Accepted Methods:</span>
+                    <div class="payment-icon" title="Bitcoin">
+                        <i class="fa-brands fa-bitcoin"></i>
+                    </div>
+                    <div class="payment-icon" title="Tether">
+                        <span>₮</span>
+                    </div>
+                    <div class="payment-icon" title="Bank Wire">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                </div>
+                
+                <p>&copy; 2026 Qingli Peptide. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <i class="fa-solid fa-arrow-up"></i>
+    </div>
+
+    <!-- Floating Action Button -->
+    <a href="https://wa.me/237681163230?text=Hello%20CEO%2C%20I%20have%20a%20question%20about%20my%20quote." target="_blank" class="floating-chat glow-btn" style="background: var(--success-green); border-color: var(--success-green); box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);">
+        <i class="fa-brands fa-whatsapp text-white"></i>
+        <span class="floating-chat-tooltip glass-panel">Inquire on WhatsApp</span>
+    </a>
+
+    <!-- Admin Return to Dashboard (only visible if logged in as admin) -->
+    <a href="admin/index.php" id="floatingAdminBtn" style="display: none; position: fixed; bottom: 2rem; left: 2rem; background: rgba(5, 8, 16, 0.8); backdrop-filter: blur(12px); border: 1px solid var(--accent-cyan); color: white; padding: 0.8rem 1.5rem; border-radius: 9999px; z-index: 1500; text-decoration: none; font-size: 0.9rem; font-weight: 700; box-shadow: 0 0 20px rgba(6, 182, 212, 0.2); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 0.75rem;">
+        <i class="fa-solid fa-arrow-left text-accent"></i> 
+        <span>Return to Dashboard</span>
+    </a>
+
+    <!-- Contact Support Modal -->
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker text-center contact-support-modal">
+            <button class="modal-close" onclick="document.getElementById('contactModal').classList.remove('active')">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="modal-header-icon">
+                <i class="fa-solid fa-headset text-accent"></i>
+            </div>
+            
+            <h3 class="mb-2 text-white">Research Support</h3>
+            <p class="text-muted mb-8">Our specialized team is available to assist with technical specifications, custom synthesis, or active quote inquiries.</p>
+            
+            <div class="contact-options">
+                <a href="mailto:support@qinglipeptide.com" id="modalEmailLink" class="contact-card email-card">
+                    <div class="contact-card-icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div class="contact-card-info">
+                        <span class="contact-card-label">Email Us</span>
+                        <span class="contact-card-value" id="modalEmailText">support@qinglipeptide.com</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right contact-card-arrow"></i>
+                </a>
+                
+                <a href="https://wa.me/..." id="modalWhatsappLink" target="_blank" class="contact-card whatsapp-card">
+                    <div class="contact-card-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div class="contact-card-info">
+                        <span class="contact-card-label">WhatsApp Support</span>
+                        <span class="contact-card-value">Instant Scientific Inquiry</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right contact-card-arrow"></i>
+                </a>
+            </div>
+            
+            <div class="modal-footer-note mt-8">
+                <p class="text-xs text-muted"><i class="fa-solid fa-clock mr-2"></i> Typical response time: <span class="text-accent">Under 2 hours</span> during business cycles.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top-btn" onclick="scrollToTop()">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Google Translate Hidden Widget -->
+    <div id="google_translate_element" style="display:none;"></div>
+
+    <!-- Custom Script -->
+    <script src="script.js?v=2.5"></script>
+    
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,zh-CN,ja,ru,pt,ar',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Force Cinematic Background Visibility -->
+    <script>
+        // Force background visibility immediately on page load
+        (function() {
+            function forceBackground() {
+                const bg = document.querySelector('.cinematic-bg');
+                if (bg) {
+                    bg.style.cssText = 'position:fixed!important;top:0!important;left:0!important;width:100%!important;height:100%!important;z-index:-1!important;display:block!important;visibility:visible!important;opacity:1!important';
+                    const children = bg.children;
+                    for(let i=0;i<children.length;i++) {
+                        children[i].style.display='block';
+                        children[i].style.visibility='visible';
+                        children[i].style.opacity='1';
+                    }
+                }
+            }
+            // Try immediately
+            forceBackground();
+            // Try again after DOM loads
+            document.addEventListener('DOMContentLoaded', forceBackground);
+            // Keep trying
+            setInterval(forceBackground, 300);
+        })();
+    </script>
+
+    <!-- Inline Particle Burst Function -->
+    <script>
+        function createBurst(event) {
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: fixed;
+                    left: ${event.clientX}px;
+                    top: ${event.clientY}px;
+                    width: 4px;
+                    height: 4px;
+                    background: radial-gradient(circle, rgba(11, 190, 214, 0.8) 0%, transparent 70%);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    animation: particleBurst ${1 + Math.random()}s ease-out forwards;
+                `;
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 2000);
+            }
+        }
+    </script>
+
+    <!-- Medical/Peptide Cinematic Background System -->
+    <div class="cinematic-bg">
+        <div class="molecular-helix"></div>
+        <div class="peptide-chains"></div>
+        <div class="medical-grid"></div>
+        <div class="cellular-particles"></div>
+        <div class="laboratory-beams"></div>
+        <div class="dna-strand"></div>
+        <div class="medical-glow"></div>
+        <div class="aurora-effect"></div>
+        <div class="medical-floating-elements">
+            <div class="medical-element peptide-molecule"></div>
+            <div class="medical-element peptide-molecule"></div>
+            <div class="medical-element peptide-molecule"></div>
+            <div class="medical-element peptide-molecule"></div>
+            <div class="medical-element peptide-molecule"></div>
+            <div class="medical-element dna-helix"></div>
+            <div class="medical-element dna-helix"></div>
+            <div class="medical-element dna-helix"></div>
+        </div>
+    </div>
+
+    <!-- 21+ Age Verification Modal -->
+    <div id="ageModal" class="modal-overlay active" style="z-index: 9999;">
+        <div class="modal-content glass-panel-darker text-center">
+            <i class="fa-solid fa-triangle-exclamation text-danger mb-4" style="font-size: 3rem;"></i>
+            <h2 class="text-white mb-2">Age Verification Required</h2>
+            <p id="ageModalText" class="text-muted mb-6">Are you 21 years of age or older? This site contains products intended for laboratory research use only.</p>
+            <div id="ageModalButtons" class="flex gap-4" style="justify-content: center;">
+                <button class="btn btn-outline text-danger" onclick="handleAgeRejection()" style="flex:1;">No, I am under 21</button>
+                <button class="btn btn-primary glow-btn" onclick="const p = this.parentElement.parentElement.parentElement; p.classList.remove('active'); p.style.display='none'; localStorage.setItem('age_verified', 'true');" style="flex:1;">Yes, I am 21+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inquiry Form Modal -->
+    <div id="inquiryModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker">
+            <button class="modal-close" onclick="document.getElementById('inquiryModal').classList.remove('active')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-center mb-4">Finalize Inquiry</h3>
+            <form id="inquiryForm" onsubmit="submitInquiry(event)">
+                <div class="input-group mb-4">
+                    <label>Full Name</label>
+                    <input type="text" id="inqName" class="glass-input" required>
+                </div>
+                <div class="flex gap-4 mb-4" style="margin-bottom: 1rem;">
+                    <div class="input-group" style="flex:1; margin:0;">
+                        <label>City</label>
+                        <input type="text" id="inqCity" class="glass-input" required>
+                    </div>
+                    <div class="input-group" style="flex:1; margin:0;">
+                        <label>Country</label>
+                        <input type="text" id="inqCountry" class="glass-input" required>
+                    </div>
+                </div>
+                <div class="input-group mb-4" style="margin-bottom: 1rem;">
+                    <label>Preferred Contact Method</label>
+                    <select id="inqContactMethod" class="glass-input" required>
+                        <option value="email">Email</option>
+                        <option value="whatsapp">WhatsApp</option>
+                    </select>
+                </div>
+                <div class="input-group mb-4" style="margin-bottom: 1rem;">
+                    <label>Contact Detail (WhatsApp Number / Email)</label>
+                    <input type="text" id="inqContactDetail" class="glass-input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="text-muted text-sm mb-2 block">Message / Research Inquiry</label>
+                    <textarea id="quoteMessage" class="glass-input w-full" rows="3" placeholder="Tell us about your research or order details..."></textarea>
+                </div>
+
+                <div class="mb-8 p-4 rounded-xl border border-danger bg-danger-transparent">
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="researchDisclaimer" required class="w-5 h-5 accent-danger">
+                        <span class="text-xs text-white font-semibold">I UNDERSTAND THESE PRODUCTS ARE INTENDED FOR LABORATORY RESEARCH USE ONLY. HUMAN CONSUMPTION IS STRICTLY PROHIBITED.</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary glow-btn w-full py-4 text-lg">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> Submit Inquiry & Request Quote
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- COA Preview Modal -->
+    <div id="coaModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker coa-preview-modal">
+            <button class="modal-close" onclick="document.getElementById('coaModal').classList.remove('active')">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="coa-modal-header text-center mb-6">
+                <h3 id="coaModalTitle" class="text-white">Certificate of Analysis</h3>
+                <p id="coaModalSub" class="text-muted text-xs">Authentic Third-Party Laboratory Verification</p>
+            </div>
+            <div id="coaModalBody" class="coa-modal-body">
+                <!-- Image or PDF will be injected here -->
+                <div class="text-center py-20 text-muted"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Initializing Laboratory Data...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker text-center success-submission-modal">
+            <button class="modal-close" onclick="document.getElementById('successModal').classList.remove('active')">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="success-icon-wrapper">
+                <div class="success-icon-ring"></div>
+                <i class="fa-solid fa-check"></i>
+            </div>
+            
+            <h2 class="text-white mb-4">Request Successfully Submitted</h2>
+            <p class="text-muted mb-8" id="successMessageText">Your research inquiry has been securely transmitted. Our laboratory team will review the specifications and contact you via your preferred method within 12 hours.</p>
+            
+            <div class="flex flex-col gap-3">
+                <button class="btn btn-primary glow-btn w-full py-4" onclick="document.getElementById('successModal').classList.remove('active')">
+                    Continue Research
+                </button>
+                <p class="text-xs text-muted">A copy of this request has been saved to your account history.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart / Quote List Sidebar -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar glass-panel-darker border-left-glass" id="cartSidebar">
+        <div class="border-bottom-glass p-4 flex-between">
+            <span class="logo-text text-white" style="font-size: 1.25rem;"><i class="fa-solid fa-list-check mr-2"></i> Your Quote List</span>
+            <button class="modal-close" style="position: static;" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items p-4" id="cartItemsContainer">
+            <!-- Items injected via JS -->
+        </div>
+        <div class="cart-footer p-4 border-top-glass">
+            <button class="btn btn-primary w-full glow-btn btn-lg" onclick="checkoutCart()">Finalize Inquiry</button>
+        </div>
+    </div>
+
+    <!-- My Account Modal -->
+    <div id="accountModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker" style="max-width: 800px;">
+            <button class="modal-close" onclick="document.getElementById('accountModal').classList.remove('active')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="mb-6"><i class="fa-solid fa-user text-accent mr-2"></i> My Account & Quotes</h3>
+            
+            <div id="accountQuotesContainer" style="max-height: 60vh; overflow-y: auto; padding-right: 0.5rem;">
+                <div class="text-center text-muted py-8"><i class="fa-solid fa-spinner fa-spin"></i> Fetching your quote history...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker">
+            <button class="modal-close" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Sign Up</button>
+            </div>
+            
+            <div id="loginForm" class="auth-form-container">
+                <h3 class="text-center mb-4">Welcome Back</h3>
+                <div id="loginError" class="alert alert-glass mb-4" style="display: none; padding: 1rem; border-radius: 0.5rem;"></div>
+                <form onsubmit="handleLogin(event)">
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" class="glass-input" required>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" class="glass-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary glow-btn w-full mt-4">Login</button>
+                </form>
+            </div>
+
+            <div id="registerForm" class="auth-form-container" style="display: none;">
+                <h3 class="text-center mb-4">Create Account</h3>
+                <div id="regError" class="alert alert-glass mb-4" style="display: none; padding: 1rem; border-radius: 0.5rem;"></div>
+                <form onsubmit="handleRegister(event)">
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label for="regName">Full Name</label>
+                        <input type="text" id="regName" class="glass-input" required>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label for="regEmail">Email Address</label>
+                        <input type="email" id="regEmail" class="glass-input" required>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" class="glass-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary glow-btn w-full mt-4">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

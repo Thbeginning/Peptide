@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-theme">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Qingli Peptide</title>
+    <meta name="description"
+        content="High-purity research peptides. Third-party tested, designed for clinical and laboratory research use only.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons (FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css?v=2.5">
+    <link rel="stylesheet" href="product.css?v=2.5">
+</head>
+
+<body>
+
+    <!-- Header & Navigation -->
+    <!-- Header & Navigation: Scientific Precision Redesign -->
+    <header class="header">
+        <div class="container nav-container">
+            <!-- Left Side: Brand Identity -->
+            <div class="header-left">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon-wrapper">
+                        <img src="Peptide image 2.0/Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img" loading="lazy">
+                        <div class="logo-glow"></div>
+                    </div>
+                    <span class="logo-text">QINGLI <span class="text-glow">PEPTIDE</span></span>
+                </a>
+            </div>
+
+            <!-- Center: Navigation Map -->
+            <nav class="header-center hide-tablet">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item-dropdown">
+                        <a href="products.html" class="nav-link active">Shop Compounds <i class="fa-solid fa-chevron-down drop-icon"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="products.html" class="dropdown-item">
+                                <div class="item-icon"><i class="fa-solid fa-vial-circle-check"></i></div>
+                                <div class="item-text">
+                                    <span class="title">Peptides</span>
+                                    <span class="sub">99%+ Purity Research</span>
+                                </div>
+                            </a>
+                            <a href="products.html" class="dropdown-item">
+                                <div class="item-icon"><i class="fa-solid fa-microscope"></i></div>
+                                <div class="item-text">
+                                    <span class="title">Equipment</span>
+                                    <span class="sub">Laboratory Hardware</span>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li><a href="index.html#about" class="nav-link">About</a></li>
+                    <li><a href="index.html#quality" class="nav-link">Lab Results</a></li>
+                    <li><a href="#" class="nav-link" onclick="openContactModal(event)">Support</a></li>
+                </ul>
+            </nav>
+
+            <!-- Right Side: Interaction Hub -->
+            <div class="header-right">
+                <div class="interaction-group">
+                    <!-- Integrated Glass Search -->
+                    <div class="integrated-search">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="catalogSearch" class="search-field" placeholder="Search Compounds..." oninput="handleSearchAutocomplete(this.value)">
+                        <div id="searchAutocomplete" class="search-portal glass-panel-darker"></div>
+                    </div>
+
+                    <div class="action-divider"></div>
+
+                    <!-- Functional Icons -->
+                    <div class="utility-actions">
+                        <button onclick="toggleCart()" class="utility-btn cart-trigger" title="Quote List">
+                            <i class="fa-solid fa-list-check"></i>
+                            <span id="cartCount" class="cart-count-badge">0</span>
+                        </button>
+
+                        <div class="lang-selector-premium">
+                            <button class="utility-btn lang-trigger" onclick="toggleLanguageDropdown(event)">
+                                <i class="fa-solid fa-globe"></i>
+                                <span class="lang-current">EN</span>
+                            </button>
+                            <div class="lang-portal glass-panel-darker" id="langDropdown">
+                                <div class="portal-header">
+                                    <i class="fa-solid fa-language text-accent"></i>
+                                    <span>Select Region</span>
+                                </div>
+                                <div class="lang-grid">
+                                    <button class="lang-option active" onclick="changeLanguage('en')">
+                                        <span class="flag-icon">🇺🇸</span>
+                                        <span class="lang-name">English</span>
+                                    </button>
+                                    <button class="lang-option" onclick="changeLanguage('es')">
+                                        <span class="flag-icon">🇪🇸</span>
+                                        <span class="lang-name">Español</span>
+                                    </button>
+                                    <button class="lang-option" onclick="changeLanguage('fr')">
+                                        <span class="flag-icon">🇫🇷</span>
+                                        <span class="lang-name">Français</span>
+                                    </button>
+                                    <button class="lang-option" onclick="changeLanguage('de')">
+                                        <span class="flag-icon">🇩🇪</span>
+                                        <span class="lang-name">Deutsch</span>
+                                    </button>
+                                    <button class="lang-option" onclick="changeLanguage('zh-CN')">
+                                        <span class="flag-icon">🇨🇳</span>
+                                        <span class="lang-name">中文</span>
+                                    </button>
+                                    <button class="lang-option" onclick="changeLanguage('ja')">
+                                        <span class="flag-icon">🇯🇵</span>
+                                        <span class="lang-name">日本語</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="authLogged" class="user-portal-wrapper" style="display: none;">
+                            <button class="utility-btn user-trigger" onclick="toggleUserDropdown(event)">
+                                <i class="fa-solid fa-user-shield"></i>
+                                <div class="online-pulse"></div>
+                            </button>
+                            <div class="user-portal-dropdown glass-panel-darker" id="userDropdown">
+                                <div class="portal-header">
+                                    <div class="user-info">
+                                        <span id="navUserName" class="user-name">Research Client</span>
+                                        <span class="user-status">Verified Account</span>
+                                    </div>
+                                </div>
+                                <div class="portal-links">
+                                    <button class="portal-link-item" onclick="openMyAccount()">
+                                        <i class="fa-solid fa-folder-open"></i>
+                                        <span>My Quotes & History</span>
+                                    </button>
+                                    <button class="portal-link-item" onclick="openContactModal(event)">
+                                        <i class="fa-solid fa-headset"></i>
+                                        <span>Technical Support</span>
+                                    </button>
+                                    <div class="portal-divider"></div>
+                                    <button class="portal-link-item text-danger" onclick="logoutUser()">
+                                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                        <span>Sign Out</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="authGuest" class="auth-action hide-mobile">
+                        <button onclick="openAuthModal('login')" class="portal-btn">
+                            <span>Client Portal</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <button class="mobile-trigger" id="mobileTrigger" onclick="toggleMobileMenu()">
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Slide-In Sidebar Menu -->
+    <div class="mobile-sidebar-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+    <aside class="mobile-sidebar" id="mobileSidebar">
+        <div class="mobile-sidebar-header">
+            <span class="logo-text">Qingli <span class="text-glow">Peptide</span></span>
+            <button class="icon-btn" onclick="toggleMobileMenu()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="mobile-sidebar-content">
+            <nav class="mobile-nav-links">
+                <a href="index.html" class="mobile-link" onclick="toggleMobileMenu()">Home <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="products.html" class="mobile-link" onclick="toggleMobileMenu()">Shop Compounds <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="index.html#about" class="mobile-link" onclick="toggleMobileMenu()">About Us <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="index.html#quality" class="mobile-link" onclick="toggleMobileMenu()">Lab Results <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#" class="mobile-link" onclick="toggleMobileMenu(); openContactModal(event)">Contact Support <i class="fa-solid fa-chevron-right"></i></a>
+            </nav>
+        </div>
+        <div class="mobile-sidebar-footer" id="mobileAuthGuest">
+             <button onclick="toggleMobileMenu(); openAuthModal('login')" class="btn btn-primary btn-cta-premium w-full py-4">Sign In to Portal</button>
+        </div>
+        <div class="mobile-sidebar-footer" id="mobileAuthLogged" style="display: none;">
+             <button onclick="toggleMobileMenu(); openMyAccount()" class="btn btn-primary w-full py-4 mb-3"><i class="fa-solid fa-user mr-2"></i> My Account</button>
+             <button onclick="toggleMobileMenu(); logoutUser()" class="btn btn-outline text-danger w-full py-4"><i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Sign Out</button>
+        </div>
+    </aside>
+
+    <!-- Product Details Section -->
+    <section class="product-page-section">
+        <div class="container product-layout">
+
+            <!-- Left Column: Images -->
+            <div class="product-gallery" id="dynamicProductGallery">
+            </div>
+
+            <!-- Right Column: Info -->
+            <div class="product-info-col" id="dynamicProductInfo">
+            </div>
+            
+        </div>
+        
+        <!-- Full Description Container (Dark Theme) -->
+        <div class="container glass-panel-darker" id="dynamicProductFullDesc" style="margin-top: 4rem; padding: 4rem; border-radius: 2rem; display: none;">
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer section-darker border-top-glass">
+        <div class="container">
+            <div class="disclaimer-box glass-panel alert-glass mb-8 p-6">
+                <div class="disclaimer-title"><i class="fa-solid fa-triangle-exclamation"></i> MEDICAL DISCLAIMER - RESEARCH USE ONLY</div>
+                <p class="text-muted text-sm mt-2">All products listed on this website are distributed explicitly for laboratory research purposes only. They are NOT intended for human or animal consumption, diagnostic use, therapeutic use, or any agricultural, commercial, or domestic applications. By purchasing, you represent and warrant that you are a qualified researcher and will properly test, use, and dispose of the materials according to strict industry standards. <strong class="text-danger">You must be 21 years or older to purchase.</strong></p>
+            </div>
+
+            <div class="footer-grid mt-8 pt-4">
+                <div class="footer-brand">
+                    <a href="#" class="logo mb-4" style="display:flex;">
+                        <img src="Peptide image 2.0/Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img">
+                        <span class="logo-text text-white">Qingli <span class="text-glow">Peptide</span></span>
+                    </a>
+                    <p class="text-muted text-sm mt-4">Premium supplier of high-purity peptides and chemical reagents for the global biotechnology sector.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-white mb-4">Company</h4>
+                    <ul class="footer-links text-muted text-sm">
+                        <li><a href="index.html" class="hover-text-white">Home</a></li>
+                        <li><a href="index.html#about" class="hover-text-white">About Us</a></li>
+                        <li><a href="index.html#products" class="hover-text-white">Research Catalog</a></li>
+                        <li><a href="index.html#quality" class="hover-text-white">Lab Results</a></li>
+                        <li><a href="index.html#verify" class="hover-text-white">Verify Rep</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white mb-4">Compliance</h4>
+                    <ul class="footer-links text-muted text-sm">
+                        <li><a href="#" class="hover-text-white">Terms of Service</a></li>
+                        <li><a href="#" class="hover-text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="hover-text-white">Shipping & Customs</a></li>
+                        <li><a href="#" class="hover-text-white text-danger">Research Disclaimer</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white mb-4">Contact Us</h4>
+                    <ul class="footer-links text-muted text-sm">
+                        <li><a href="https://wa.me/1234567890" class="hover-text-white"><i class="fa-brands fa-whatsapp text-accent mr-2"></i> WhatsApp</a></li>
+                        <li><a href="#" class="hover-text-white"><i class="fa-brands fa-telegram text-accent mr-2"></i> Telegram</a></li>
+                        <li><a href="mailto:sales@qinglipeptide.com" class="hover-text-white"><i class="fa-solid fa-envelope text-accent mr-2"></i> Email Sales</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white mb-4">Accepted Payments</h4>
+                    <div class="payment-icons text-muted flex gap-4 text-2xl">
+                        <i class="fa-brands fa-bitcoin hover-glow" title="Bitcoin"></i>
+                        <span class="hover-glow" style="font-weight: bold; font-family: sans-serif; cursor: help;" title="Tether USDT">₮</span>
+                        <i class="fa-solid fa-building-columns hover-glow" title="Bank Wire"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom mt-8 pt-6 border-top-glass flex-between text-muted text-sm">
+                <p>&copy; 2026 Qingli Peptide. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover-text-white">Terms of Service</a>
+                    <a href="#" class="hover-text-white">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <a href="https://wa.me/237681163230?text=Hello%20CEO%2C%20I%20have%20a%20question%20about%20my%20quote." target="_blank" class="floating-chat glow-btn" style="background: var(--success-green); border-color: var(--success-green); box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);">
+        <i class="fa-brands fa-whatsapp text-white"></i>
+        <span class="floating-chat-tooltip glass-panel">Inquire on WhatsApp</span>
+    </a>
+
+    <!-- Contact Support Modal -->
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker text-center contact-support-modal">
+            <button class="modal-close" onclick="document.getElementById('contactModal').classList.remove('active')">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-header-icon">
+                <i class="fa-solid fa-headset text-accent"></i>
+            </div>
+            <h3 class="mb-2 text-white">Research Support</h3>
+            <p class="text-muted mb-8">Our specialized team is available to assist with technical specifications, custom synthesis, or active quote inquiries.</p>
+            <div class="contact-options">
+                <a href="mailto:support@qinglipeptide.com" id="modalEmailLink" class="contact-card email-card">
+                    <div class="contact-card-icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div class="contact-card-info">
+                        <span class="contact-card-label">Email Us</span>
+                        <span class="contact-card-value" id="modalEmailText">support@qinglipeptide.com</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right contact-card-arrow"></i>
+                </a>
+                <a href="https://wa.me/..." id="modalWhatsappLink" target="_blank" class="contact-card whatsapp-card">
+                    <div class="contact-card-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div class="contact-card-info">
+                        <span class="contact-card-label">WhatsApp Support</span>
+                        <span class="contact-card-value">Instant Scientific Inquiry</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right contact-card-arrow"></i>
+                </a>
+            </div>
+            <div class="modal-footer-note mt-8">
+                <p class="text-xs text-muted"><i class="fa-solid fa-clock mr-2"></i> Typical response time: <span class="text-accent">Under 2 hours</span> during business cycles.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inquiry Form Modal -->
+    <div id="inquiryModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker">
+            <button class="modal-close" onclick="document.getElementById('inquiryModal').classList.remove('active')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-center mb-4">Finalize Inquiry</h3>
+            <form id="inquiryForm" onsubmit="submitInquiry(event)">
+                <div class="input-group mb-4">
+                    <label>Full Name</label>
+                    <input type="text" id="inqName" class="glass-input" required>
+                </div>
+                <div class="flex gap-4 mb-4" style="margin-bottom: 1rem;">
+                    <div class="input-group" style="flex:1; margin:0;">
+                        <label>City</label>
+                        <input type="text" id="inqCity" class="glass-input" required>
+                    </div>
+                    <div class="input-group" style="flex:1; margin:0;">
+                        <label>Country</label>
+                        <input type="text" id="inqCountry" class="glass-input" required>
+                    </div>
+                </div>
+                <div class="input-group mb-4" style="margin-bottom: 1rem;">
+                    <label>Preferred Contact Method</label>
+                    <select id="inqContactMethod" class="glass-input" required>
+                        <option value="email">Email</option>
+                        <option value="whatsapp">WhatsApp</option>
+                    </select>
+                </div>
+                <div class="input-group mb-4" style="margin-bottom: 1rem;">
+                    <label>Contact Detail (WhatsApp Number / Email)</label>
+                    <input type="text" id="inqContactDetail" class="glass-input" required>
+                </div>
+                <div class="mb-4">
+                    <label class="text-muted text-sm mb-2 block">Message / Research Inquiry</label>
+                    <textarea id="inqMessage" class="glass-input w-full" rows="3" placeholder="Tell us about your research or order details..."></textarea>
+                </div>
+
+                <div class="mb-8 p-4 rounded-xl border border-danger bg-danger-transparent">
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="inqResearchOnly" required class="w-5 h-5 accent-danger">
+                        <span class="text-xs text-white font-semibold">I UNDERSTAND THESE PRODUCTS ARE INTENDED FOR LABORATORY RESEARCH USE ONLY. HUMAN CONSUMPTION IS STRICTLY PROHIBITED.</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary glow-btn w-full py-4 text-lg">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> Submit Inquiry & Request Quote
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- COA Preview Modal -->
+    <div id="coaModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker coa-preview-modal">
+            <button class="modal-close" onclick="document.getElementById('coaModal').classList.remove('active')">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="coa-modal-header text-center mb-6">
+                <h3 id="coaModalTitle" class="text-white">Certificate of Analysis</h3>
+                <p id="coaModalSub" class="text-muted text-xs">Authentic Third-Party Laboratory Verification</p>
+            </div>
+            <div id="coaModalBody" class="coa-modal-body">
+                <div class="text-center py-20 text-muted"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Initializing Laboratory Data...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker text-center success-submission-modal">
+            <button class="modal-close" onclick="document.getElementById('successModal').classList.remove('active')">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="success-icon-wrapper">
+                <div class="success-icon-ring"></div>
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2 class="text-white mb-4">Request Successfully Submitted</h2>
+            <p class="text-muted mb-8" id="successMessageText">Your research inquiry has been securely transmitted. Our laboratory team will review the specifications and contact you via your preferred method within 12 hours.</p>
+            <div class="flex flex-col gap-3">
+                <button class="btn btn-primary glow-btn w-full py-4" onclick="document.getElementById('successModal').classList.remove('active')">
+                    Continue Research
+                </button>
+                <p class="text-xs text-muted">A copy of this request has been saved to your account history.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart / Quote List Sidebar -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar glass-panel-darker border-left-glass" id="cartSidebar">
+        <div class="border-bottom-glass p-4 flex-between">
+            <span class="logo-text text-white" style="font-size: 1.25rem;"><i class="fa-solid fa-list-check mr-2"></i> Your Quote List</span>
+            <button class="modal-close" style="position: static;" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items p-4" id="cartItemsContainer">
+        </div>
+        <div class="cart-footer p-4 border-top-glass">
+            <button class="btn btn-primary w-full glow-btn btn-lg" onclick="checkoutCart()">Finalize Inquiry</button>
+        </div>
+    </div>
+
+    <!-- My Account Modal -->
+    <div id="accountModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker" style="max-width: 800px;">
+            <button class="modal-close" onclick="document.getElementById('accountModal').classList.remove('active')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="mb-6"><i class="fa-solid fa-user text-accent mr-2"></i> My Account & Quotes</h3>
+            <div id="accountQuotesContainer" style="max-height: 60vh; overflow-y: auto; padding-right: 0.5rem;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-content glass-panel-darker">
+            <button class="modal-close" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Sign Up</button>
+            </div>
+            <div id="loginForm" class="auth-form-container">
+                <h3 class="text-center mb-4">Welcome Back</h3>
+                <div id="loginError" class="alert alert-glass mb-4" style="display: none; padding: 1rem; border-radius: 0.5rem;"></div>
+                <form onsubmit="handleLogin(event)">
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" class="glass-input" required>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" class="glass-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary glow-btn w-full mt-4">Login</button>
+                </form>
+            </div>
+            <div id="registerForm" class="auth-form-container" style="display: none;">
+                <h3 class="text-center mb-4">Create Account</h3>
+                <div id="regError" class="alert alert-glass mb-4" style="display: none; padding: 1rem; border-radius: 0.5rem;"></div>
+                <form onsubmit="handleRegister(event)">
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label for="regName">Full Name</label>
+                        <input type="text" id="regName" class="glass-input" required>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label for="regEmail">Email Address</label>
+                        <input type="email" id="regEmail" class="glass-input" required>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" class="glass-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary glow-btn w-full mt-4">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top-btn" onclick="scrollToTop()">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Google Translate Hidden Widget -->
+    <div id="google_translate_element" style="display:none;"></div>
+
+    <!-- Include Script -->
+    <script src="script.js?v=2.5"></script>
+    <script>
+        // Tell script.js that we are on the single product page
+        window.isProductDetailPage = true;
+    </script>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,zh-CN,ja,ru,pt,ar',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+
+</html>
