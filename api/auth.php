@@ -5,6 +5,25 @@
 session_start();
 header('Content-Type: application/json');
 
+// Security: Prevent session fixation
+if (!isset($_SESSION['initiated'])) {
+    session_regenerate_id(true);
+    $_SESSION['initiated'] = true;
+}
+
+// Security: Session timeout (2 hours)
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 7200)) {
+    session_destroy();
+    echo json_encode(['status' => 'error', 'message' => 'Session expired. Please login again.']);
+    exit;
+}
+$_SESSION['last_activity'] = time();
+
+// Security: Generate CSRF token
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 require_once 'db.php';
 
 // Get request method
@@ -66,20 +85,7 @@ switch ($action) {
         $email = filter_var($input['email'] ?? '', FILTER_SANITIZE_EMAIL);
         $password = $input['password'] ?? '';
 
-        // --- TEMP FIX for initial admin login ---
-        if ($email === 'admin@qinglipeptide.com' && $password === 'admin123') {
-            $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-            $stmt->execute([$email]);
-            $admin = $stmt->fetch();
-            $newHash = password_hash('admin123', PASSWORD_DEFAULT);
-            if ($admin) {
-                $pdo->prepare("UPDATE users SET password_hash = ?, role = 'admin' WHERE id = ?")->execute([$newHash, $admin['id']]);
-            } else {
-                $pdo->prepare("INSERT INTO users (name, email, password_hash, role) VALUES ('Admin User', ?, ?, 'admin')")->execute([$email, $newHash]);
-            }
-        }
-        // ----------------------------------------
-
+        // Proper authentication without hardcoded bypass
         if (empty($email) || empty($password)) {
             echo json_encode(['status' => 'error', 'message' => 'Email and password are required.']);
             exit;

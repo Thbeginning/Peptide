@@ -893,12 +893,8 @@ async function checkAuthSession() {
             if (navUserName) navUserName.innerText = currentUser.name;
 
             const adminLink = document.getElementById('adminDashboardLink');
-            const floatingAdminBtn = document.getElementById('floatingAdminBtn');
             if (adminLink) {
                 adminLink.style.display = currentUser.role === 'admin' ? 'block' : 'none';
-            }
-            if (floatingAdminBtn) {
-                floatingAdminBtn.style.display = currentUser.role === 'admin' ? 'flex' : 'none';
             }
             
             const mobGuest = document.getElementById('mobileAuthGuest');
