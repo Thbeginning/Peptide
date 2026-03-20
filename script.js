@@ -507,10 +507,20 @@ async function fetchProducts() {
     }
     
     try {
+        console.log('Fetching products from: api/products.php?action=fetch_all');
         const res = await fetch('api/products.php?action=fetch_all');
+        console.log('API response status:', res.status);
+        
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
         const data = await res.json();
+        console.log('API response data:', data);
+        
         if (data.status === 'success') {
             products = data.products;
+            console.log('Products loaded:', products.length);
             
             // Artificial delay for smooth skeleton transition
             setTimeout(() => {
@@ -526,10 +536,20 @@ async function fetchProducts() {
                     renderProductDetail();
                 }
             }, 500);
+        } else {
+            throw new Error(data.message || 'API returned error status');
         }
     } catch(e) {
         console.error('Error fetching products:', e);
-        if (grid) grid.innerHTML = '<div class="text-center py-20 text-danger">Failed to load compounds.</div>';
+        const errorMessage = `
+            <div class="text-center py-20 text-danger">
+                <i class="fa-solid fa-exclamation-triangle fa-2x mb-4"></i>
+                <h4>Failed to load compounds</h4>
+                <p class="text-muted">Error: ${e.message}</p>
+                <small class="text-muted">Check browser console for details</small>
+            </div>
+        `;
+        if (grid) grid.innerHTML = errorMessage;
     }
 }
 
@@ -879,8 +899,16 @@ function toggleReadMore() {
 
 async function checkAuthSession() {
     try {
+        console.log('Checking auth session...');
         const res = await fetch('api/auth.php?action=check');
+        console.log('Auth check response status:', res.status);
+        
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
         const data = await res.json();
+        console.log('Auth check data:', data);
         
         if (data.logged_in) {
             currentUser = data.user;
@@ -917,7 +945,20 @@ async function checkAuthSession() {
             if(mobGuest) mobGuest.style.display = 'block';
             if(mobLogged) mobLogged.style.display = 'none';
         }
-    } catch (e) { console.error('Error checking auth', e); }
+    } catch (e) { 
+        console.error('Error checking auth:', e);
+        // Show guest UI as fallback
+        currentUser = null;
+        const authGuest = document.getElementById('authGuest');
+        const authLogged = document.getElementById('authLogged');
+        if (authGuest) authGuest.style.display = 'flex';
+        if (authLogged) authLogged.style.display = 'none';
+        
+        const mobGuest = document.getElementById('mobileAuthGuest');
+        const mobLogged = document.getElementById('mobileAuthLogged');
+        if(mobGuest) mobGuest.style.display = 'block';
+        if(mobLogged) mobLogged.style.display = 'none';
+    }
 }
 
 async function handleLogin(e) {
