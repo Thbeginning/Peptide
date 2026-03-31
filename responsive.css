@@ -1,0 +1,401 @@
+/* =============================================
+   PROFESSIONAL RESPONSIVE — ALL DEVICES
+   Breakpoints: 1200 | 1024 | 768 | 480 | 360
+   ============================================= */
+
+/* =============================================
+   GLOBAL: Mobile Slide-in Sidebar
+   Always defined globally, not inside a media query.
+   The trigger button controls visibility via .active class.
+   ============================================= */
+
+.mobile-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.mobile-sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    height: 100%;
+    background: #050810;
+    border-left: 1px solid rgba(11, 190, 214, 0.2);
+    z-index: 2001;
+    overflow-y: auto;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+}
+.mobile-sidebar.active {
+    right: 0;
+}
+
+.mobile-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.mobile-sidebar-header .logo-text {
+    font-size: 1rem;
+    font-weight: 800;
+}
+.mobile-sidebar-header .icon-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1.1rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.mobile-sidebar-header .icon-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.mobile-sidebar-content {
+    flex: 1;
+    padding: 1rem 0;
+    overflow-y: auto;
+}
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+}
+.mobile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: all 0.2s;
+}
+.mobile-link:hover,
+.mobile-link:active {
+    color: #0bbed6;
+    background: rgba(11, 190, 214, 0.07);
+    padding-left: 1.75rem;
+}
+.mobile-link i {
+    font-size: 0.7rem;
+    opacity: 0.4;
+    color: #0bbed6;
+}
+
+.mobile-sidebar-footer {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Mobile trigger button — hidden on desktop, shown on mobile via media query below */
+.mobile-trigger {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: rgba(11, 190, 214, 0.1);
+    border: 1px solid rgba(11, 190, 214, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s;
+    padding: 0;
+    display: none; /* shown by media query */
+}
+.mobile-trigger:hover {
+    background: rgba(11, 190, 214, 0.2);
+}
+
+
+/* =============================================
+   NAVBAR — TABLET (769px–1024px)
+   ============================================= */
+@media (max-width: 1024px) {
+    /* Show hamburger, hide desktop nav and Client Portal button */
+    .mobile-trigger { display: flex !important; }
+    .hide-mobile { display: none !important; }
+    /* Hide Client Portal & Account icon from NAV on mobile — sidebar handles auth */
+    #authGuest, #authLogged { display: none !important; }
+    /* Hide desktop nav links and search bar */
+    .header-center { display: none !important; }
+    .integrated-search { display: none !important; }
+    .action-divider { display: none !important; }
+    .auth-action.hide-mobile { display: none !important; }
+
+    /* Show burger menu */
+    .mobile-trigger { display: flex !important; }
+
+    /* Header layout */
+    .nav-container {
+        height: 75px;
+        padding: 0 1.5rem;
+    }
+    .header-left {
+        flex: 1;
+        min-width: unset;
+    }
+    .header-right {
+        flex: 0 0 auto;
+        min-width: unset;
+    }
+    .interaction-group {
+        gap: 0.75rem;
+        justify-content: flex-end;
+    }
+    .utility-actions {
+        gap: 0.5rem;
+    }
+}
+
+/* =============================================
+   NAVBAR — MOBILE (≤768px)
+   ============================================= */
+@media (max-width: 768px) {
+    /* Header */
+    .nav-container {
+        height: 68px;
+        padding: 0 1rem;
+    }
+    .header-left {
+        flex: 1;
+        min-width: unset;
+    }
+    .header-right {
+        flex: 0 0 auto;
+        min-width: unset;
+    }
+    .interaction-group {
+        gap: 0.5rem;
+        justify-content: flex-end;
+        width: auto;
+    }
+    .utility-actions {
+        gap: 0.4rem;
+    }
+    /* On mobile: hide BOTH auth buttons from the NAV BAR.
+       The mobile sidebar (#mobileAuthGuest / #mobileAuthLogged) handles auth instead. */
+    #authGuest,
+    #authLogged { display: none !important; }
+    /* User dropdown auto-repositions on mobile */
+    .user-portal-dropdown {
+        right: -1rem !important;
+        left: auto !important;
+        max-width: calc(100vw - 2rem);
+    }
+    /* Language portal auto-repositions */
+    .lang-portal {
+        right: 0;
+        left: auto;
+        width: min(280px, calc(100vw - 2rem));
+    }
+
+    /* body/layout */
+    body { font-size: 15px; }
+    .container { padding: 0 1rem; }
+    .section { padding: 3rem 0; }
+
+    /* Hero */
+    .hero { min-height: 80vh; padding: 6rem 1rem 3rem; text-align: center; }
+    .hero h1 { font-size: 2.2rem; line-height: 1.2; }
+    .hero p { font-size: 1rem; }
+    .hero-actions { flex-direction: column; gap: 0.75rem; width: 100%; }
+    .hero-actions .btn { width: 100%; text-align: center; justify-content: center; }
+    .hero-stats { flex-wrap: wrap; gap: 1rem; justify-content: center; }
+
+    /* Products */
+    .products-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+
+    /* Calculator */
+    .calculator-master-grid { grid-template-columns: 1fr; padding: 0 1rem; }
+    .calc-grid { grid-template-columns: 1fr; }
+    .calc-info-col { display: none; }
+
+    /* Stats */
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .stat-card { padding: 1.5rem 1rem; }
+    .stat-number { font-size: 2rem; }
+
+    /* Footer */
+    .footer { padding: 2.5rem 0 1rem; }
+    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; text-align: center; }
+    .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+    .payment-icons { justify-content: center; }
+
+    /* Modals */
+    .modal-content {
+        margin: 0 !important;
+        padding: 1.5rem !important;
+        border-radius: 1.25rem 1.25rem 0 0 !important;
+        max-width: 100% !important;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+    }
+    .modal-overlay {
+        align-items: flex-end !important;
+        padding: 0 !important;
+    }
+
+    /* Age Verification Modal - Always Centered */
+    #ageModal.modal-overlay {
+        align-items: center !important;
+        padding: 1rem !important;
+    }
+    #ageModal .modal-content {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        border-radius: 1.25rem !important;
+        margin: auto !important;
+        max-width: 90% !important;
+    }
+
+    /* Cart Sidebar */
+    .cart-sidebar { width: 100%; right: -100%; }
+
+    /* Section headings */
+    .section-header h2 { font-size: 1.9rem; }
+
+    /* Back to top */
+    .back-to-top { bottom: 5rem; right: 1rem; }
+
+
+    /* Glass inputs — prevent iOS auto-zoom */
+    .glass-input { font-size: 16px !important; }
+
+    /* Testimonials */
+    .testimonial-slide { padding: 1.5rem; }
+
+    /* Footer */
+    .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+}
+
+/* =============================================
+   NAVBAR — SMALL MOBILE (≤480px)
+   ============================================= */
+@media (max-width: 480px) {
+    /* Header */
+    .nav-container {
+        height: 64px;
+        padding: 0 0.75rem;
+    }
+    /* Logo: keep icon + text but slightly smaller */
+    .logo-icon-wrapper {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+    }
+    .logo-text {
+        font-size: 0.8rem !important;
+        letter-spacing: 0.05em !important;
+    }
+    /* Utility buttons slightly smaller */
+    .utility-btn, .mobile-trigger {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        font-size: 0.9rem !important;
+    }
+    /* Hide "EN" label to save space */
+    .lang-current { display: none !important; }
+
+    /* Cart badge */
+    .cart-count-badge {
+        width: 14px !important;
+        height: 14px !important;
+        font-size: 0.55rem !important;
+        top: -3px !important;
+        right: -3px !important;
+    }
+
+    /* Utility spacing */
+    .utility-actions { gap: 0.3rem !important; }
+    .interaction-group { gap: 0.4rem !important; }
+
+    /* Content */
+    .hero h1 { font-size: 1.8rem; }
+    .products-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .product-image-wrapper { height: 180px; }
+    .auth-tabs { gap: 0; }
+    .auth-tab { font-size: 0.875rem; padding: 0.75rem; }
+    .section-header h2 { font-size: 1.6rem; }
+    .testimonial-slide { padding: 1rem; }
+
+    /* Full-width sidebar on small phones — still slides in correctly */
+    .mobile-sidebar { width: 100% !important; }
+    .mobile-sidebar { right: -100% !important; }
+    .mobile-sidebar.active { right: 0 !important; }
+}
+
+/* =============================================
+   NAVBAR — VERY SMALL (≤360px)
+   ============================================= */
+@media (max-width: 360px) {
+    .nav-container {
+        height: 60px;
+        padding: 0 0.5rem;
+    }
+    /* At this extreme, hide logo text, keep icon only */
+    .logo-text { display: none !important; }
+    .logo-icon-wrapper {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+    }
+    .utility-btn, .mobile-trigger {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.8rem !important;
+        border-radius: 6px !important;
+    }
+    .utility-actions { gap: 0.2rem !important; }
+    .interaction-group { gap: 0.25rem !important; }
+    .cart-count-badge {
+        width: 12px !important;
+        height: 12px !important;
+        font-size: 0.5rem !important;
+        top: -2px !important;
+        right: -2px !important;
+    }
+}
+
+/* =============================================
+   TABLET GRID ADJUSTMENTS (769–1024px)
+   ============================================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .calculator-master-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}

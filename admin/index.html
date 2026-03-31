@@ -1,0 +1,2311 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qingli Admin | Dashboard</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css?v=2.0">
+    <style>
+        /* Professional Admin Dashboard Styles */
+        body { 
+            padding-top: 0; 
+            display: flex; 
+            min-height: 100vh; 
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+        }
+        
+        /* Elegant Sidebar */
+        .sidebar { 
+            width: 280px; 
+            background: linear-gradient(180deg, rgba(11, 190, 214, 0.08) 0%, var(--bg-darker) 100%);
+            border-right: 2px solid var(--border-glass-light);
+            padding: 2.5rem 2rem; 
+            display: flex; 
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(11, 190, 214, 0.05) 50%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .sidebar-link { 
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+            color: rgba(255, 255, 255, 0.7);
+            padding: 1.25rem 1.5rem;
+            border-radius: 1rem;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            margin-bottom: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+        }
+        
+        .sidebar-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(11, 190, 214, 0.2), transparent);
+            transition: left 0.4s ease;
+        }
+        
+        .sidebar-link:hover, .sidebar-link.active { 
+            background: linear-gradient(135deg, rgba(11, 190, 214, 0.15) 0%, rgba(6, 182, 212, 0.08) 100%);
+            color: var(--accent-cyan);
+            transform: translateX(8px);
+            box-shadow: 0 8px 30px rgba(11, 190, 214, 0.2);
+            border: 1px solid rgba(11, 190, 214, 0.3);
+        }
+        
+        .sidebar-link:hover::before, .sidebar-link.active::before {
+            left: 100%;
+        }
+        
+        /* Professional Main Content */
+        .main-content { 
+            flex: 1; 
+            padding: 3rem 3rem 3rem 3rem; 
+            background: linear-gradient(135deg, var(--bg-dark) 0%, rgba(0, 20, 40, 0.9) 100%);
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(11, 190, 214, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        /* Elegant Stat Cards */
+        .stat-card { 
+            padding: 2.5rem;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: statShimmer 4s ease-in-out infinite;
+        }
+        
+        @keyframes statShimmer {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 20px 60px rgba(11, 190, 214, 0.3);
+        }
+        
+        .stat-value { 
+            font-size: 3rem; 
+            font-weight: 900; 
+            color: var(--accent-cyan);
+            display: flex; 
+            align-items: baseline; 
+            gap: 0.5rem;
+            text-shadow: 0 0 20px rgba(11, 190, 214, 0.5);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .stat-label { 
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em; 
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        /* Professional Tables */
+        .glass-panel {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-blue), transparent);
+        }
+        
+        .table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 1rem; 
+            color: var(--text-main);
+        }
+        
+        .table th, .table td { 
+            padding: 1.25rem 1rem; 
+            text-align: left; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .table th { 
+            color: var(--accent-cyan);
+            font-weight: 700; 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em;
+            background: rgba(11, 190, 214, 0.05);
+        }
+        
+        .table tbody tr { 
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .table tbody tr:hover { 
+            background: linear-gradient(90deg, rgba(11, 190, 214, 0.08) 0%, transparent 100%);
+            transform: translateX(8px);
+        }
+        
+        /* Professional Headers */
+        .text-white {
+            color: white !important;
+            font-weight: 700;
+            font-size: 2rem;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .text-white::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 2px;
+        }
+        
+        /* Enhanced Buttons */
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.4s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.4s ease;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+            color: var(--bg-darker);
+            box-shadow: 0 8px 30px rgba(11, 190, 214, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 50px rgba(11, 190, 214, 0.4);
+        }
+        
+        /* Modal Enhancements */
+        #cartModal { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.9); 
+            z-index: 1000; 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            backdrop-filter: blur(10px);
+        }
+        
+        #cartModal.active { display: flex; }
+        
+        .cart-modal-content { 
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
+            border: 2px solid var(--border-glass-light);
+            border-radius: 2rem;
+            width: 700px; 
+            max-width: 90%; 
+            max-height: 80vh; 
+            overflow-y: auto; 
+            padding: 2.5rem; 
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Dashboard Header */
+        .dashboard-header {
+            position: relative;
+        }
+        
+        .dashboard-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+        
+        /* Stat Icon Wrapper */
+        .stat-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 30px rgba(11, 190, 214, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-icon-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+        
+        .stat-icon-wrapper i {
+            font-size: 1.5rem;
+            color: white;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            position: relative;
+        }
+        
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .stat-trend {
+            color: rgba(34, 197, 94, 0.8);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .stat-trend::before {
+            content: '↑';
+            font-size: 1rem;
+        }
+        
+        /* Panel Header */
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .panel-title {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0;
+        }
+        
+        .panel-title i {
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+        }
+        
+        .panel-badge {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            color: rgba(34, 197, 94, 0.9);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .panel-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: rgba(34, 197, 94, 0.9);
+            border-radius: 50%;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+        
+        /* Enhanced Table Headers */
+        .table th i {
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        /* View Header */
+        .view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .view-header h2 {
+            margin: 0;
+        }
+        
+        .view-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+        
+        .view-header .btn {
+            margin-top: 0.5rem;
+        }
+        
+        /* Professional Action Buttons */
+        .action-btn {
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 36px;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.4s ease;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .action-btn-approve {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+            color: var(--bg-darker);
+            box-shadow: 
+                0 4px 15px rgba(11, 190, 214, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .action-btn-approve:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 
+                0 8px 25px rgba(11, 190, 214, 0.4),
+                inset 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .action-btn-delete {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(220, 38, 38, 0.9) 100%);
+            color: white;
+            box-shadow: 
+                0 4px 15px rgba(239, 68, 68, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .action-btn-delete:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 1) 0%, rgba(220, 38, 38, 1) 100%);
+            box-shadow: 
+                0 8px 25px rgba(239, 68, 68, 0.4),
+                inset 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Professional Icon Buttons */
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 0.75rem;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            overflow: hidden;
+            font-size: 0.9rem;
+            margin: 0 0.25rem;
+        }
+
+        .icon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.4s ease;
+        }
+
+        .icon-btn:hover::before {
+            left: 100%;
+        }
+
+        .icon-btn.text-accent {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+            color: var(--bg-darker);
+            box-shadow: 0 4px 15px rgba(11, 190, 214, 0.3);
+        }
+
+        .icon-btn.text-accent:hover {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(11, 190, 214, 0.4);
+        }
+
+        .icon-btn.text-danger {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(220, 38, 38, 0.9) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .icon-btn.text-danger:hover {
+            transform: translateY(-2px) scale(1.1);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 1) 0%, rgba(220, 38, 38, 1) 100%);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Enhanced Clear All Button */
+        .text-xs.text-danger.hover\\:text-white {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .text-xs.text-danger.hover\\:text-white:hover {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(220, 38, 38, 0.9) 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Content Manager Styles */
+        .content-manager-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .content-editor {
+            padding: 1.5rem;
+        }
+
+        .content-editor .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .content-editor label {
+            display: block;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-editor .glass-input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .content-editor .glass-input:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px rgba(11, 190, 214, 0.2);
+        }
+
+        .content-editor textarea.glass-input {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Communication Logs Styles */
+        .communication-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            color: var(--accent-cyan);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .communication-timeline {
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .communication-entry {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .communication-entry:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(4px);
+        }
+
+        .comm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .comm-customer {
+            font-weight: 600;
+            color: var(--accent-cyan);
+        }
+
+        .comm-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .comm-content {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .comm-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* CRM Pipeline Styles */
+        .pipeline-stages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .pipeline-stage {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            min-height: 400px;
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stage-header h4 {
+            color: white;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .stage-count {
+            background: var(--accent-cyan);
+            color: var(--bg-darker);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .stage-cards {
+            min-height: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .customer-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .customer-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .customer-name {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .customer-email {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+
+        .customer-value {
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 240px;
+                padding: 2rem 1.5rem;
+            }
+            
+            .main-content {
+                padding: 2rem;
+            }
+            
+            .stat-value {
+                font-size: 2rem;
+            }
+            
+            .text-white {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../supabase-config.js?v=7.0"></script></head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar section-darker">
+        <div class="logo mb-8" style="font-size: 1.25rem;">
+            <img src="../Logo.jpeg" alt="Logo" class="logo-img" style="width:32px; height:32px; border-radius: 50%;">
+            <span class="logo-text">Qingli <span class="text-glow">Admin</span></span>
+        </div>
+
+        <nav style="flex:1;">
+            <a href="#" class="sidebar-link active" onclick="showView('dashboard')"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+            <a href="#" class="sidebar-link" onclick="showView('quotes')"><i class="fa-solid fa-list-check"></i> Quote Requests</a>
+            <a href="#" class="sidebar-link" onclick="showView('reviews')"><i class="fa-solid fa-star"></i> Customer Reviews</a>
+            <a href="#" class="sidebar-link" onclick="showView('users')"><i class="fa-solid fa-users"></i> Registered Clients</a>
+            <a href="#" class="sidebar-link" onclick="showView('products')"><i class="fa-solid fa-flask"></i> Products Manager</a>
+            <a href="#" class="sidebar-link" onclick="showView('reps')"><i class="fa-solid fa-id-badge"></i> Reps Verification</a>
+            <a href="#" class="sidebar-link" onclick="showView('content')"><i class="fa-solid fa-pen-to-square"></i> Content Manager</a>
+            <a href="#" class="sidebar-link" onclick="showView('settings')"><i class="fa-solid fa-gear"></i> Site Settings</a>
+            <a href="../index.html" class="sidebar-link"><i class="fa-solid fa-store"></i> View Storefront</a>
+        </nav>
+
+        <button onclick="logoutAdmin()" class="btn btn-outline glow-btn-outline w-full mt-auto" style="color: var(--danger-red); border-color: rgba(239, 68, 68, 0.3);"><i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Logout</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Dashboard View -->
+        <div id="view-dashboard" class="view-section">
+            <div class="dashboard-header mb-8">
+                <h2 class="text-white">Command Center</h2>
+                <p class="dashboard-subtitle">Real-time oversight of laboratory operations and client management</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="stat-label">Total Registered Clients</div>
+                    <div class="stat-value"><span id="statUsers">0</span></div>
+                    <div class="stat-trend">+12% this month</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div class="stat-label">Items Currently in Carts</div>
+                    <div class="stat-value"><span id="statItems">0</span></div>
+                    <div class="stat-trend">Active sessions</div>
+                </div>
+            </div>
+
+            <div class="glass-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        Recent Client Registrations
+                    </h3>
+                    <div class="panel-badge">Live Data</div>
+                </div>
+                <table class="table" id="recentUsersTable">
+                    <thead>
+                        <tr>
+                            <th><i class="fa-solid fa-user"></i> Name</th>
+                            <th><i class="fa-solid fa-envelope"></i> Email</th>
+                            <th><i class="fa-solid fa-calendar"></i> Registered On</th>
+                            <th><i class="fa-solid fa-circle-dot"></i> Last Active</th>
+                        </tr>
+                    </thead>
+                    <tbody><!-- Filled via JS --></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Quotes View -->
+        <div id="view-quotes" class="view-section" style="display: none;">
+            <div class="view-header">
+                <h2 class="text-white">Quote Requests Manager</h2>
+                <p class="view-subtitle">Monitor and respond to client quote inquiries</p>
+                <button class="btn btn-primary" onclick="loadQuotes()">
+                    <i class="fa-solid fa-rotate-right"></i> 
+                    Refresh Data
+                </button>
+            </div>
+            
+            <div class="glass-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        Active Quote Requests
+                    </h3>
+                    <div class="panel-badge">Real-time</div>
+                </div>
+                <table class="table" id="quotesTable">
+                    <thead>
+                        <tr>
+                            <th><i class="fa-solid fa-calendar"></i> Date</th>
+                            <th><i class="fa-solid fa-hashtag"></i> ID</th>
+                            <th><i class="fa-solid fa-user"></i> Customer</th>
+                            <th><i class="fa-solid fa-box"></i> Items</th>
+                            <th><i class="fa-solid fa-flag"></i> Status</th>
+                            <th><i class="fa-solid fa-sticky-note"></i> Notes</th>
+                            <th><i class="fa-solid fa-gear"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody><!-- Filled via JS --></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Reviews View -->
+        <div id="view-reviews" class="view-section" style="display: none;">
+            <div class="view-header">
+                <h2 class="text-white">Customer Reviews</h2>
+                <p class="view-subtitle">Manage and moderate client feedback</p>
+                <button class="btn btn-primary" onclick="loadReviews()">
+                    <i class="fa-solid fa-rotate-right"></i> 
+                    Refresh Data
+                </button>
+            </div>
+
+            <div class="glass-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <i class="fa-solid fa-star"></i>
+                        Client Testimonials
+                    </h3>
+                    <div class="panel-badge">Live Reviews</div>
+                </div>
+                <table class="table" id="reviewsTable">
+                    <thead>
+                        <tr>
+                            <th><i class="fa-solid fa-calendar"></i> Date</th>
+                            <th><i class="fa-solid fa-user"></i> Display Name</th>
+                            <th><i class="fa-solid fa-star"></i> Overall Rating</th>
+                            <th><i class="fa-solid fa-comments"></i> Communication</th>
+                            <th><i class="fa-solid fa-truck"></i> Shipping</th>
+                            <th><i class="fa-solid fa-flask"></i> Product Standards</th>
+                            <th><i class="fa-solid fa-message"></i> Review</th>
+                            <th><i class="fa-solid fa-flag"></i> Status</th>
+                            <th><i class="fa-solid fa-gear"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody><!-- Filled via JS --></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Users/Clients View -->
+        <div id="view-users" class="view-section" style="display: none;">
+            <div class="flex-between mb-6">
+                <h2 class="text-white m-0">Client Directory</h2>
+                <button class="btn btn-primary glow-btn" onclick="loadUsers()"><i class="fa-solid fa-rotate-right mr-2"></i> Refresh</button>
+            </div>
+            
+            <div class="glass-panel p-6">
+                <table class="table" id="allUsersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Last Active</th>
+                            <th>Items in Cart</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody><!-- Filled via JS --></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Products Manager View -->
+        <div id="view-products" class="view-section" style="display: none;">
+            <div class="flex-between mb-6">
+                <h2 class="text-white m-0">Products Manager</h2>
+                <div>
+                    <button class="btn btn-outline glow-btn-outline mr-4" onclick="loadProducts()"><i class="fa-solid fa-rotate-right mr-2"></i> Refresh</button>
+                    <button class="btn btn-primary glow-btn" onclick="openProductModal()"><i class="fa-solid fa-plus mr-2"></i> Add Product</button>
+                </div>
+            </div>
+            
+            <div class="glass-panel p-6">
+                <table class="table" id="productsTable">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Purity</th>
+                            <th>COA</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody><!-- Filled via JS --></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Content Manager View -->
+        <div id="view-content" class="view-section" style="display: none;">
+            <div class="view-header">
+                <h2 class="text-white">Content Manager</h2>
+                <p class="view-subtitle">Edit website content without coding</p>
+                <button class="btn btn-primary" onclick="saveContentChanges()">
+                    <i class="fa-solid fa-save"></i> 
+                    Save All Changes
+                </button>
+            </div>
+            
+            <div class="content-manager-grid">
+                <!-- Hero Section Editor -->
+                <div class="glass-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">
+                            <i class="fa-solid fa-house"></i>
+                            Hero Section
+                        </h3>
+                        <div class="panel-badge">Live Preview</div>
+                    </div>
+                    <div class="content-editor">
+                        <div class="input-group mb-4">
+                            <label>Main Headline</label>
+                            <input type="text" id="heroHeadline" class="glass-input" value="Premium Research Peptides" placeholder="Enter main headline">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Sub-headline</label>
+                            <input type="text" id="heroSubheadline" class="glass-input" value="Global supplier of 98%+ purity research peptides" placeholder="Enter sub-headline">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Primary CTA Button Text</label>
+                            <input type="text" id="heroCTA" class="glass-input" value="Get Started" placeholder="Enter button text">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Secondary CTA Button Text</label>
+                            <input type="text" id="heroCTA2" class="glass-input" value="View Catalog" placeholder="Enter secondary button text">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Trust Badge Rating</label>
+                            <input type="number" id="heroRating" class="glass-input" value="4.9" step="0.1" min="1" max="5" placeholder="Enter rating">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Section Editor -->
+                <div class="glass-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">
+                            <i class="fa-solid fa-info-circle"></i>
+                            About Section
+                        </h3>
+                        <div class="panel-badge">Rich Text</div>
+                    </div>
+                    <div class="content-editor">
+                        <div class="input-group mb-4">
+                            <label>About Us Title</label>
+                            <input type="text" id="aboutTitle" class="glass-input" value="About Qingli Peptide" placeholder="Enter about title">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Company Description</label>
+                            <textarea id="aboutDescription" class="glass-input w-full" rows="4" placeholder="Enter company description">Premium supplier of high-purity peptides and chemical reagents for global biotechnology sector. Empowering research excellence since 2019.</textarea>
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Our Mission</label>
+                            <textarea id="aboutMission" class="glass-input w-full" rows="3" placeholder="Enter mission statement">To provide researchers worldwide with the highest quality peptides, backed by comprehensive analytical verification and exceptional customer service.</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Section Editor -->
+                <div class="glass-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">
+                            <i class="fa-solid fa-calculator"></i>
+                            Calculator Section
+                        </h3>
+                        <div class="panel-badge">Tool Settings</div>
+                    </div>
+                    <div class="content-editor">
+                        <div class="input-group mb-4">
+                            <label>Section Title</label>
+                            <input type="text" id="calcTitle" class="glass-input" value="Peptide Reconstitution Calculator" placeholder="Enter calculator title">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Section Description</label>
+                            <textarea id="calcDescription" class="glass-input w-full" rows="3" placeholder="Enter calculator description">Achieve 100% accurate research measurements with our clinical-grade reconstitution tool. Designed for precise laboratory calculations across all standard syringe specifications.</textarea>
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Default Water Amount (mL)</label>
+                            <input type="number" id="calcDefaultWater" class="glass-input" value="2" step="0.1" min="0.1" placeholder="Default water amount">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quality Section Editor -->
+                <div class="glass-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">
+                            <i class="fa-solid fa-shield-virus"></i>
+                            Quality Section
+                        </h3>
+                        <div class="panel-badge">Lab Standards</div>
+                    </div>
+                    <div class="content-editor">
+                        <div class="input-group mb-4">
+                            <label>Section Title</label>
+                            <input type="text" id="qualityTitle" class="glass-input" value="Uncompromising Analytical Verification" placeholder="Enter quality title">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Quality Description</label>
+                            <textarea id="qualityDescription" class="glass-input w-full" rows="3" placeholder="Enter quality description">In the research chemical sector, trust is built on verifiable data. Every single batch undergoes rigorous independent analysis via HPLC and Mass Spectrometry before entering our global inventory.</textarea>
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Purity Percentage</label>
+                            <input type="number" id="qualityPurity" class="glass-input" value="99.9" step="0.1" min="90" max="100" placeholder="Purity percentage">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEO Settings -->
+                <div class="glass-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">
+                            <i class="fa-solid fa-search"></i>
+                            SEO Settings
+                        </h3>
+                        <div class="panel-badge">Meta Tags</div>
+                    </div>
+                    <div class="content-editor">
+                        <div class="input-group mb-4">
+                            <label>Page Title</label>
+                            <input type="text" id="seoTitle" class="glass-input" value="Qingli Peptide | Premium Research Peptides" placeholder="Enter page title">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Meta Description</label>
+                            <textarea id="seoDescription" class="glass-input w-full" rows="3" placeholder="Enter meta description">Global supplier of 98%+ purity research peptides. Third-party tested, designed for clinical and laboratory research use only.</textarea>
+                        </div>
+                        <div class="input-group mb-4">
+                            <label>Keywords (comma separated)</label>
+                            <input type="text" id="seoKeywords" class="glass-input" value="research peptides, peptide synthesis, laboratory chemicals, HPLC tested, 99% purity" placeholder="Enter keywords">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Representatives Manager View -->
+        <div id="view-reps" class="view-section" style="display: none;">
+            <div class="flex-between mb-6">
+                <h2 class="text-white m-0">Verified Representatives</h2>
+                <div>
+                    <button class="btn btn-outline glow-btn-outline mr-4" onclick="loadReps()"><i class="fa-solid fa-rotate-right mr-2"></i> Refresh</button>
+                    <button class="btn btn-primary glow-btn" onclick="openRepModal()"><i class="fa-solid fa-plus mr-2"></i> Add Rep</button>
+                </div>
+            </div>
+            
+            <div class="glass-panel p-6 mb-8">
+                <p class="text-muted text-sm mb-4">Manage the unique IDs that customers use to verify official sales reps.</p>
+                <table class="table" id="repsTable">
+                    <thead>
+                        <tr>
+                            <th>Rep ID</th>
+                            <th>Name</th>
+                            <th>Territory</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody><!-- Filled via JS --></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Communication Logs View -->
+        <div id="view-communications" class="view-section" style="display: none;">
+            <div class="view-header">
+                <h2 class="text-white">Communication Logs</h2>
+                <p class="view-subtitle">Track all customer interactions</p>
+                <div class="flex gap-2">
+                    <button class="btn btn-primary" onclick="addCommunication()">
+                        <i class="fa-solid fa-plus"></i> 
+                        Add Entry
+                    </button>
+                    <button class="btn btn-outline" onclick="loadCommunications()">
+                        <i class="fa-solid fa-rotate-right"></i> 
+                        Refresh
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="glass-panel p-4 mb-6">
+                <div class="communication-filters">
+                    <div class="filter-group">
+                        <label>Search Customer</label>
+                        <input type="text" id="commSearch" class="glass-input" placeholder="Search by name, email, or phone">
+                    </div>
+                    <div class="filter-group">
+                        <label>Communication Type</label>
+                        <select id="commType" class="glass-input">
+                            <option value="">All Types</option>
+                            <option value="email">Email</option>
+                            <option value="whatsapp">WhatsApp</option>
+                            <option value="phone">Phone Call</option>
+                            <option value="support">Support Ticket</option>
+                            <option value="meeting">In-Person Meeting</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Date Range</label>
+                        <input type="date" id="commDateFrom" class="glass-input">
+                        <input type="date" id="commDateTo" class="glass-input">
+                    </div>
+                    <div class="filter-group">
+                        <label>Status</label>
+                        <select id="commStatus" class="glass-input">
+                            <option value="">All Status</option>
+                            <option value="open">Open</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="follow-up">Follow-up Required</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communication Timeline -->
+            <div class="glass-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        Communication Timeline
+                    </h3>
+                    <div class="panel-badge">Live Tracking</div>
+                </div>
+                <div class="communication-timeline" id="communicationTimeline">
+                    <!-- Communications will be loaded here via JS -->
+                    <div class="text-center py-8 text-muted">
+                        <i class="fa-solid fa-spinner fa-spin mr-2"></i> 
+                        Loading communication history...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CRM System View -->
+        <div id="view-crm" class="view-section" style="display: none;">
+            <div class="view-header">
+                <h2 class="text-white">CRM System</h2>
+                <p class="view-subtitle">Complete customer relationship management</p>
+                <div class="flex gap-2">
+                    <button class="btn btn-primary" onclick="addCustomer()">
+                        <i class="fa-solid fa-user-plus"></i> 
+                        Add Customer
+                    </button>
+                    <button class="btn btn-outline" onclick="loadCRM()">
+                        <i class="fa-solid fa-rotate-right"></i> 
+                        Refresh
+                    </button>
+                </div>
+            </div>
+            
+            <!-- CRM Dashboard Stats -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="stat-label">Total Customers</div>
+                    <div class="stat-value" id="crmTotalCustomers">0</div>
+                    <div class="stat-trend">+8% this month</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div class="stat-label">Active Deals</div>
+                    <div class="stat-value" id="crmActiveDeals">0</div>
+                    <div class="stat-trend">$45,000 value</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <div class="stat-label">Open Conversations</div>
+                    <div class="stat-value" id="crmOpenConversations">0</div>
+                    <div class="stat-trend">12 need follow-up</div>
+                </div>
+            </div>
+
+            <!-- Customer Pipeline -->
+            <div class="glass-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <i class="fa-solid fa-filter"></i>
+                        Customer Pipeline
+                    </h3>
+                    <div class="panel-badge">Sales Funnel</div>
+                </div>
+                
+                <!-- Pipeline Stages -->
+                <div class="pipeline-stages">
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <h4>New Leads</h4>
+                            <span class="stage-count" id="stageNew">0</span>
+                        </div>
+                        <div class="stage-cards" id="stageNewCards">
+                            <!-- Lead cards will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <h4>Qualified</h4>
+                            <span class="stage-count" id="stageQualified">0</span>
+                        </div>
+                        <div class="stage-cards" id="stageQualifiedCards">
+                            <!-- Qualified lead cards -->
+                        </div>
+                    </div>
+                    
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <h4>Quote Sent</h4>
+                            <span class="stage-count" id="stageQuote">0</span>
+                        </div>
+                        <div class="stage-cards" id="stageQuoteCards">
+                            <!-- Quote sent cards -->
+                        </div>
+                    </div>
+                    
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <h4>Negotiation</h4>
+                            <span class="stage-count" id="stageNegotiation">0</span>
+                        </div>
+                        <div class="stage-cards" id="stageNegotiationCards">
+                            <!-- Negotiation cards -->
+                        </div>
+                    </div>
+                    
+                    <div class="pipeline-stage">
+                        <div class="stage-header">
+                            <h4>Closed Won</h4>
+                            <span class="stage-count" id="stageWon">0</span>
+                        </div>
+                        <div class="stage-cards" id="stageWonCards">
+                            <!-- Won deal cards -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Site Settings View -->
+        <div id="view-settings" class="view-section" style="display: none;">
+            <div class="flex-between mb-6">
+                <h2 class="text-white m-0">Site Settings</h2>
+            </div>
+            
+            <div class="glass-panel p-6 max-w-2xl mb-8">
+                <h3 class="text-white mb-4">Admin Account Login</h3>
+                <p class="text-muted text-sm mb-4">Update your dashboard login email and password.</p>
+                <form onsubmit="updateAdminLogin(event)">
+                    <div class="mb-4">
+                        <label class="text-muted text-sm mb-2 block">New Login Email</label>
+                        <input type="email" id="adminUpdateEmail" required class="glass-input w-full" placeholder="admin@qinglipeptide.com">
+                    </div>
+                    <div class="mb-6">
+                        <label class="text-muted text-sm mb-2 block">New Password (leave blank to keep current)</label>
+                        <input type="password" id="adminUpdatePassword" class="glass-input w-full" placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary glow-btn" id="adminUpdateBtn">
+                        <i class="fa-solid fa-save mr-2"></i> Update Login
+                    </button>
+                </form>
+            </div>
+
+
+        </div>
+
+    </main>
+
+    <!-- Inspect Cart Modal -->
+    <div id="cartModal">
+        <div class="cart-modal-content">
+            <button class="modal-close" style="top: 1.5rem;" onclick="closeCartModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-white mb-2" id="modalUserName">Client's Cart</h3>
+            <p class="text-muted text-sm mb-6" id="modalUserEmail">email@example.com</p>
+
+            <div id="modalCartItems">
+                <!-- Filled via JS -->
+                <div class="text-center text-muted py-8"><i class="fa-solid fa-spinner fa-spin"></i> Loading cart data...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="productModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(5px); overflow-y:auto; padding: 2rem;">
+        <div class="cart-modal-content" style="max-width: 800px; width: 100%;">
+            <button class="modal-close" style="top: 1.5rem;" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-white mb-4" id="productModalTitle">Add/Edit Product</h3>
+            
+            <form id="productForm" onsubmit="submitProductForm(event)">
+                <input type="hidden" id="prodAction" value="add_product">
+                <input type="hidden" id="prodOldId" value="">
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <label class="text-muted text-sm mb-2 block">Product ID (e.g. bpc-157)</label>
+                        <input type="text" id="prodId" required class="glass-input w-full">
+                    </div>
+                    <div>
+                        <label class="text-muted text-sm mb-2 block">Product Name</label>
+                        <input type="text" id="prodName" required class="glass-input w-full">
+                    </div>
+                    <div>
+                        <label class="text-muted text-sm mb-2 block">Category</label>
+                        <input type="text" id="prodCategory" required class="glass-input w-full">
+                    </div>
+                    <div>
+                        <label class="text-muted text-sm mb-2 block">Purity (e.g. >99%)</label>
+                        <input type="text" id="prodPurity" class="glass-input w-full">
+                    </div>
+                    <div>
+                        <label class="text-muted text-sm mb-2 block">Specification</label>
+                        <input type="text" id="prodSpec" class="glass-input w-full" placeholder="e.g. 10mg/vial">
+                    </div>
+                    <div>
+                        <label class="text-muted text-sm mb-2 block">Form</label>
+                        <input type="text" id="prodForm" class="glass-input w-full" placeholder="e.g. Lyophilized powder">
+                    </div>
+                    <div>
+                        <label class="text-muted text-sm mb-2 block">Storage</label>
+                        <input type="text" id="prodStorage" class="glass-input w-full" placeholder="e.g. Store at -20°C">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                    <label class="text-muted text-sm mb-2 block">Short Description</label>
+                    <textarea id="prodDesc" rows="2" class="glass-input w-full"></textarea>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label class="text-muted text-sm mb-2 block">Overview / Full Description</label>
+                    <textarea id="prodOverview" rows="3" class="glass-input w-full"></textarea>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label class="text-muted text-sm mb-2 block">Typical Research Applications</label>
+                    <textarea id="prodApps" rows="3" class="glass-input w-full" placeholder="Use • or new lines for lists"></textarea>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label class="text-muted text-sm mb-2 block">Target Users</label>
+                    <textarea id="prodUsers" rows="3" class="glass-input w-full" placeholder="Use ✔️ or new lines for lists"></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                    <div>
+                        <label class="text-muted text-sm mb-2 block">Product Image Upload (JPEG/PNG)</label>
+                        <input type="file" id="prodImage" accept="image/*" style="width:100%; color:var(--text-muted);">
+                    </div>
+                    <div>
+                        <label class="text-muted text-sm mb-2 block">COA Documents Upload (Multiple)</label>
+                        <input type="file" id="prodCoa" name="coa[]" multiple accept=".pdf,image/*" style="width:100%; color:var(--text-muted);">
+                        <div id="clearCoasContainer" style="display:none; margin-top: 0.5rem;">
+                            <label class="text-sm text-accent"><input type="checkbox" id="clearCoas" value="true"> Clear existing COAs?</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary glow-btn w-full">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Rep Modal -->
+    <div id="repModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(5px); padding: 2rem;">
+        <div class="cart-modal-content" style="max-width: 500px; width: 100%;">
+            <button class="modal-close" style="top: 1.5rem;" onclick="closeRepModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-white mb-4" id="repModalTitle">Add New Representative</h3>
+            
+            <form id="repForm" onsubmit="submitRepForm(event)">
+                <input type="hidden" id="repAction" value="add">
+                <input type="hidden" id="repDbId" value="0">
+                
+                <div class="mb-4">
+                    <label class="text-muted text-sm mb-2 block">Unique Rep ID (e.g. QL-1045)</label>
+                    <input type="text" id="repIdInput" required class="glass-input w-full">
+                </div>
+                <div class="mb-4">
+                    <label class="text-muted text-sm mb-2 block">Full Name</label>
+                    <input type="text" id="repNameInput" required class="glass-input w-full">
+                </div>
+                <div class="mb-4">
+                    <label class="text-muted text-sm mb-2 block">Territory / Platform (Optional)</label>
+                    <input type="text" id="repTerritoryInput" class="glass-input w-full" placeholder="e.g. Europe / WhatsApp">
+                </div>
+                <div class="mb-6">
+                    <label class="text-muted text-sm mb-2 block">Status</label>
+                    <select id="repStatusInput" class="glass-input w-full">
+                        <option value="Active">Active</option>
+                        <option value="Suspended">Suspended</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary glow-btn w-full">Save Representative</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin JS logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../supabase-config.js?v=7.0"></script>
+
+    <!-- Admin Supabase JS -->
+    <script>
+        // =====================================================
+        // ADMIN AUTH GUARD — redirects to login.html if not authenticated
+        // =====================================================
+        (async () => {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session || session.user?.user_metadata?.role !== 'admin') {
+                window.location.href = 'login.html';
+                return;
+            }
+            // Populate admin email display
+            const adminEmailEl = document.getElementById('adminEmail');
+            if (adminEmailEl) adminEmailEl.textContent = session.user.email;
+        })();
+
+
+        // =====================================================
+        //  TAB ROUTING
+        // =====================================================
+        function showView(viewName) {
+            document.querySelectorAll('.view-section').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            document.getElementById(`view-${viewName}`).style.display = 'block';
+            if (event) event.currentTarget.classList.add('active');
+            if (viewName === 'dashboard') loadStats();
+            if (viewName === 'users') loadUsers();
+            if (viewName === 'products') loadProducts();
+            if (viewName === 'reps') loadReps();
+            if (viewName === 'settings') loadSettings();
+            if (viewName === 'reviews') loadReviews();
+            if (viewName === 'content') loadContentSettings();
+            if (viewName === 'communications') loadCommunications();
+            if (viewName === 'crm') loadCRM();
+            if (viewName === 'quotes') loadQuotes();
+        }
+
+        function logoutAdmin() {
+            supabaseClient.auth.signOut().then(() => { window.location.href = 'login.html'; });
+        }
+
+        // =====================================================
+        //  SETTINGS
+        // =====================================================
+        async function loadSettings() {
+            const { data: rows } = await supabaseClient.from('settings').select('setting_key, setting_value');
+            if (!rows) return;
+            const s = {};
+            rows.forEach(r => s[r.setting_key] = r.setting_value);
+            const el = (id) => document.getElementById(id);
+            if (el('settingContactEmail')) el('settingContactEmail').value = s.support_email || '';
+            if (el('settingContactWhatsapp')) el('settingContactWhatsapp').value = s.whatsapp_no || '';
+            if (el('settingMarqueeText')) el('settingMarqueeText').value = s.contact_marquee || '';
+            if (el('settingMarqueeSpeed') && s.marquee_speed) el('settingMarqueeSpeed').value = s.marquee_speed;
+            if (el('settingMarqueeColor') && s.marquee_color) {
+                el('settingMarqueeColor').value = s.marquee_color;
+                if (el('settingMarqueeColorText')) el('settingMarqueeColorText').value = s.marquee_color;
+            }
+        }
+
+        async function saveContactSettings(btnNode) {
+            const orig = btnNode.innerHTML;
+            btnNode.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Saving...';
+            btnNode.disabled = true;
+            const upserts = [
+                { setting_key: 'support_email', setting_value: document.getElementById('settingContactEmail').value },
+                { setting_key: 'whatsapp_no', setting_value: document.getElementById('settingContactWhatsapp').value }
+            ];
+            const { error } = await supabaseClient.from('settings').upsert(upserts, { onConflict: 'setting_key' });
+            if (!error) {
+                btnNode.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Saved!';
+                btnNode.style.background = 'var(--success-green)';
+                setTimeout(() => { btnNode.innerHTML = orig; btnNode.style.background = ''; btnNode.disabled = false; }, 2000);
+            } else {
+                alert('Error: ' + error.message);
+                btnNode.innerHTML = orig;
+                btnNode.disabled = false;
+            }
+        }
+
+        async function saveMarqueeSettings(btnNode) {
+            const orig = btnNode.innerHTML;
+            btnNode.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Saving...';
+            btnNode.disabled = true;
+            const upserts = [
+                { setting_key: 'contact_marquee', setting_value: document.getElementById('settingMarqueeText').value },
+                { setting_key: 'marquee_speed', setting_value: document.getElementById('settingMarqueeSpeed').value },
+                { setting_key: 'marquee_color', setting_value: document.getElementById('settingMarqueeColor').value }
+            ];
+            const { error } = await supabaseClient.from('settings').upsert(upserts, { onConflict: 'setting_key' });
+            if (!error) {
+                btnNode.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Saved!';
+                btnNode.style.background = 'var(--success-green)';
+                setTimeout(() => { btnNode.innerHTML = orig; btnNode.style.background = ''; btnNode.disabled = false; }, 1000);
+            } else {
+                alert('Error: ' + error.message);
+                btnNode.innerHTML = orig;
+                btnNode.disabled = false;
+            }
+        }
+
+        async function updateAdminLogin(e) {
+            e.preventDefault();
+            const btnNode = document.getElementById('adminUpdateBtn');
+            const orig = btnNode.innerHTML;
+            btnNode.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Updating...';
+            btnNode.disabled = true;
+            const newEmail = document.getElementById('adminUpdateEmail').value;
+            const newPassword = document.getElementById('adminUpdatePassword').value;
+            try {
+                const update = {};
+                if (newEmail) update.email = newEmail;
+                if (newPassword) update.password = newPassword;
+                const { error } = await supabaseClient.auth.updateUser(update);
+                if (error) throw error;
+                btnNode.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Updated!';
+                btnNode.style.background = 'var(--success-green)';
+                document.getElementById('adminUpdatePassword').value = '';
+                setTimeout(() => {
+                    alert('Login updated. You will be signed out to re-authenticate.');
+                    logoutAdmin();
+                }, 1500);
+            } catch(err) {
+                alert('Error: ' + err.message);
+                btnNode.innerHTML = orig;
+                btnNode.disabled = false;
+            }
+        }
+
+        // =====================================================
+        //  DASHBOARD STATS
+        // =====================================================
+        async function loadStats() {
+            const [{ count: totalUsers }, { count: totalCart }, { data: recentUsers }] = await Promise.all([
+                supabaseClient.from('users').select('*', { count: 'exact', head: true }),
+                supabaseClient.from('cart_items').select('*', { count: 'exact', head: true }),
+                supabaseClient.from('users').select('id, name, email, created_at, last_login').order('created_at', { ascending: false }).limit(10)
+            ]);
+            const statUsers = document.getElementById('statUsers');
+            const statItems = document.getElementById('statItems');
+            if (statUsers) statUsers.innerText = totalUsers ?? 0;
+            if (statItems) statItems.innerText = totalCart ?? 0;
+            const tbody = document.querySelector('#recentUsersTable tbody');
+            if (tbody) {
+                if (!recentUsers || recentUsers.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No clients yet.</td></tr>';
+                } else {
+                    tbody.innerHTML = recentUsers.map(u => `
+                        <tr>
+                            <td>${u.name || 'N/A'}</td>
+                            <td>${u.email}</td>
+                            <td><span class="badge" style="background:rgba(255,255,255,0.1);padding:0.25rem 0.5rem;border-radius:1rem;font-size:0.75rem;">${new Date(u.created_at).toLocaleDateString()}</span></td>
+                            <td><span class="badge" style="background:rgba(11,190,214,0.1);color:var(--accent-cyan);padding:0.25rem 0.5rem;border-radius:1rem;font-size:0.75rem;">${u.last_login ? new Date(u.last_login).toLocaleString() : 'Never'}</span></td>
+                        </tr>`).join('');
+                }
+            }
+        }
+
+        // =====================================================
+        //  USERS
+        // =====================================================
+        async function loadUsers() {
+            const { data: users } = await supabaseClient.from('users').select('id, name, email, last_login').order('created_at', { ascending: false });
+            const cartCounts = await supabaseClient.from('cart_items').select('user_id');
+            const countMap = {};
+            (cartCounts.data || []).forEach(c => { countMap[c.user_id] = (countMap[c.user_id] || 0) + 1; });
+            const tbody = document.querySelector('#allUsersTable tbody');
+            if (!tbody) return;
+            if (!users || users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No clients found.</td></tr>';
+            } else {
+                tbody.innerHTML = users.map(u => {
+                    const cnt = countMap[u.id] || 0;
+                    return `<tr>
+                        <td>#${u.id.substring(0,8)}</td>
+                        <td style="font-weight:600;">${u.name || 'N/A'}</td>
+                        <td>${u.email}</td>
+                        <td><span style="font-size:0.85rem;color:var(--text-muted);"><i class="fa-solid fa-clock mr-1"></i>${u.last_login ? new Date(u.last_login).toLocaleString() : 'Never'}</span></td>
+                        <td><span style="display:inline-block;padding:0.25rem 0.75rem;border-radius:2rem;background:${cnt>0?'rgba(11,190,214,0.1)':'rgba(255,255,255,0.05)'};color:${cnt>0?'var(--accent-cyan)':'var(--text-muted)'};font-weight:700;">${cnt} Items</span></td>
+                        <td><button class="btn btn-outline" style="padding:0.25rem 0.75rem;font-size:0.875rem;" onclick="inspectCart('${u.id}','${u.name||u.email}','${u.email}')"><i class="fa-solid fa-eye mr-2"></i>Inspect Cart</button></td>
+                    </tr>`;
+                }).join('');
+            }
+        }
+
+        async function inspectCart(userId, userName, userEmail) {
+            document.getElementById('cartModal').classList.add('active');
+            const container = document.getElementById('modalCartItems');
+            document.getElementById('modalUserName').innerText = userName + "'s Cart";
+            document.getElementById('modalUserEmail').innerText = userEmail;
+            container.innerHTML = '<div class="text-center text-muted py-8"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>';
+            const { data: cart } = await supabaseClient.from('cart_items').select('*').eq('user_id', userId).order('added_at');
+            if (!cart || cart.length === 0) {
+                container.innerHTML = '<div class="text-center text-muted py-6"><i class="fa-solid fa-cart-shopping fa-3x mb-4 opacity-50"></i><p>This cart is empty.</p></div>';
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem;border-bottom:1px solid var(--border-glass-light);background:rgba(0,0,0,0.2);margin-bottom:0.5rem;border-radius:0.5rem;">
+                        <div>
+                            <strong class="text-white block">${item.product_name}</strong>
+                            <span class="text-muted text-sm">Product ID: ${item.product_id}</span>
+                        </div>
+                        <div style="text-align:right;">
+                            <span class="text-accent" style="font-weight:700;font-size:1.125rem;">x${item.quantity}</span>
+                            <div class="text-muted text-sm" style="font-size:0.7rem;">Added: ${new Date(item.added_at).toLocaleString()}</div>
+                        </div>
+                    </div>`).join('');
+            }
+        }
+
+        function closeCartModal() { document.getElementById('cartModal').classList.remove('active'); }
+
+        // =====================================================
+        //  PRODUCTS
+        // =====================================================
+        async function loadProducts() {
+            const { data: prods } = await supabaseClient.from('products').select('*').order('name');
+            const tbody = document.querySelector('#productsTable tbody');
+            if (!tbody) return;
+            if (!prods || prods.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No products found.</td></tr>';
+            } else {
+                tbody.innerHTML = prods.map(p => {
+                    let coas = [];
+                    try { coas = JSON.parse(p.coa_paths || '[]'); } catch(e) { if (p.coa_path) coas = [p.coa_path]; }
+                    return `<tr>
+                        <td><img src="${p.image_path || p.image || ''}" alt="${p.name}" style="width:40px;height:40px;border-radius:4px;object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=40'"></td>
+                        <td><span class="text-muted" style="font-family:monospace;">${p.id}</span></td>
+                        <td style="font-weight:600;">${p.name}</td>
+                        <td><span class="badge" style="background:rgba(255,255,255,0.05);">${p.category}</span></td>
+                        <td><span class="text-accent">${p.purity || 'N/A'}</span></td>
+                        <td>${coas.length > 0 ? `<span class="text-accent text-sm">${coas.length} File(s)</span>` : '<span class="text-muted text-sm">None</span>'}</td>
+                        <td>
+                            <button class="icon-btn text-accent" onclick="editProduct('${encodeURIComponent(JSON.stringify(p))}')" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="icon-btn text-danger" onclick="deleteProduct('${p.id}')" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                }).join('');
+            }
+        }
+
+        function openProductModal() {
+            document.getElementById('productForm').reset();
+            document.getElementById('productModalTitle').innerText = 'Add New Product';
+            document.getElementById('prodAction').value = 'add_product';
+            document.getElementById('clearCoasContainer').style.display = 'none';
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function editProduct(pStr) {
+            const p = JSON.parse(decodeURIComponent(pStr));
+            document.getElementById('productForm').reset();
+            document.getElementById('productModalTitle').innerText = 'Edit Product';
+            document.getElementById('prodAction').value = 'edit_product';
+            document.getElementById('prodOldId').value = p.id;
+            document.getElementById('prodId').value = p.id;
+            document.getElementById('prodName').value = p.name;
+            document.getElementById('prodCategory').value = p.category;
+            document.getElementById('prodPurity').value = p.purity || '';
+            document.getElementById('prodSpec').value = p.specification || '';
+            document.getElementById('prodForm').value = p.form || '';
+            document.getElementById('prodStorage').value = p.storage || '';
+            document.getElementById('prodDesc').value = p.description || '';
+            document.getElementById('prodOverview').value = p.overview || '';
+            document.getElementById('prodApps').value = p.applications || '';
+            document.getElementById('prodUsers').value = p.target_users || '';
+            document.getElementById('clearCoasContainer').style.display = 'block';
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function closeProductModal() { document.getElementById('productModal').style.display = 'none'; }
+
+        async function submitProductForm(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            btn.disabled = true;
+
+            const action = document.getElementById('prodAction').value;
+            const oldId = document.getElementById('prodOldId').value;
+            const productId = document.getElementById('prodId').value.trim();
+
+            let imageUrl = null;
+            let coaUrls = [];
+
+            // Upload image to Supabase Storage if provided
+            const imageFile = document.getElementById('prodImage').files[0];
+            if (imageFile) {
+                const imgPath = `${productId}/${Date.now()}_${imageFile.name}`;
+                const { data: imgData, error: imgErr } = await supabaseClient.storage.from('products').upload(imgPath, imageFile, { upsert: true });
+                if (!imgErr) {
+                    const { data: { publicUrl } } = supabaseClient.storage.from('products').getPublicUrl(imgPath);
+                    imageUrl = publicUrl;
+                }
+            }
+
+            // Upload COA files
+            const coaFiles = document.getElementById('prodCoa').files;
+            for (let i = 0; i < coaFiles.length; i++) {
+                const coaPath = `${productId}/${Date.now()}_${coaFiles[i].name}`;
+                const { error: coaErr } = await supabaseClient.storage.from('coa-files').upload(coaPath, coaFiles[i], { upsert: true });
+                if (!coaErr) {
+                    const { data: { publicUrl } } = supabaseClient.storage.from('coa-files').getPublicUrl(coaPath);
+                    coaUrls.push(publicUrl);
+                }
+            }
+
+            const payload = {
+                id: productId,
+                name: document.getElementById('prodName').value,
+                category: document.getElementById('prodCategory').value,
+                description: document.getElementById('prodDesc').value,
+                purity: document.getElementById('prodPurity').value,
+                specification: document.getElementById('prodSpec').value,
+                form: document.getElementById('prodForm').value,
+                storage: document.getElementById('prodStorage').value,
+                overview: document.getElementById('prodOverview').value,
+                applications: document.getElementById('prodApps').value,
+                target_users: document.getElementById('prodUsers').value
+            };
+            if (imageUrl) payload.image_path = imageUrl;
+            if (coaUrls.length > 0) payload.coa_paths = JSON.stringify(coaUrls);
+            if (document.getElementById('clearCoas')?.checked) payload.coa_paths = '[]';
+
+            let error;
+            if (action === 'add_product') {
+                ({ error } = await supabaseClient.from('products').insert(payload));
+            } else {
+                // If ID changed, handle it
+                if (oldId && oldId !== productId) {
+                    await supabaseClient.from('products').delete().eq('id', oldId);
+                    ({ error } = await supabaseClient.from('products').insert(payload));
+                } else {
+                    ({ error } = await supabaseClient.from('products').update(payload).eq('id', oldId || productId));
+                }
+            }
+
+            if (!error) {
+                closeProductModal();
+                loadProducts();
+            } else {
+                alert('Error: ' + error.message);
+            }
+            btn.innerHTML = 'Save Product';
+            btn.disabled = false;
+        }
+
+        async function deleteProduct(id) {
+            if (!confirm(`Are you sure you want to delete product "${id}"?`)) return;
+            const { error } = await supabaseClient.from('products').delete().eq('id', id);
+            if (!error) loadProducts(); else alert('Error: ' + error.message);
+        }
+
+        // =====================================================
+        //  QUOTES
+        // =====================================================
+        async function loadQuotes() {
+            try {
+                const { data: quotes, error } = await supabaseClient
+                    .from('quote_requests')
+                    .select('*, quote_request_items(product_name, quantity)')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                    
+                const tbody = document.querySelector('#quotesTable tbody');
+                if (!tbody) return;
+                
+                if (!quotes || quotes.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-12"><i class="fa-solid fa-folder-open fa-3x mb-4 opacity-30"></i><br>No quote requests found.</td></tr>';
+                } else {
+                    tbody.innerHTML = quotes.map(q => {
+                        const items = q.quote_request_items || [];
+                        const itemsList = items.map(i => `<div class="text-xs mb-1">• ${i.product_name} <span class="text-accent">(x${i.quantity})</span></div>`).join('');
+                        let statusClass = 'status-pending';
+                        if (['Paid','Shipped','Contacted'].includes(q.status)) statusClass = 'status-approved';
+                        if (q.status === 'Cancelled') statusClass = 'status-rejected';
+                        const contactIcon = q.contact_method === 'whatsapp' ? 'whatsapp text-success' : 'envelope';
+                        
+                        const customerInfo = `
+                            <strong>${q.customer_name || 'Customer'}</strong><br>
+                            <small class="text-muted">${q.shipping_city ? q.shipping_city + ', ' : ''}${q.shipping_country || 'Unknown Location'}</small><br>
+                            <small class="mt-1" style="display:inline-block"><i class="fa-solid fa-${contactIcon} mr-1"></i> ${q.contact_detail || 'No Contact Provided'}</small>
+                        `;
+
+                        const noteBtn = q.message 
+                            ? `<button class="btn glass-input text-xs" style="padding:0.25rem 0.5rem;" onclick="alert('Message from ${q.customer_name || 'Customer'}:\\n\\n${(q.message || '').replace(/'/g, "\\'")}')"><i class="fa-solid fa-eye"></i> View</button>` 
+                            : '<span class="text-muted text-xs">None</span>';
+
+                        return `<tr>
+                            <td><span class="badge" style="background:rgba(255,255,255,0.05);">${new Date(q.created_at).toLocaleDateString()}</span></td>
+                            <td style="font-family:monospace;font-weight:bold;">#${String(q.id).substring(0,8)}</td>
+                            <td>${customerInfo}</td>
+                            <td>${itemsList || '<span class="text-muted">N/A</span>'}</td>
+                            <td><span class="${statusClass}">${q.status}</span></td>
+                            <td>${noteBtn}</td>
+                            <td>
+                                <select onchange="updateQuoteStatus('${q.id}', this.value)" class="glass-input" style="padding:0.25rem 0.5rem;font-size:0.8rem;">
+                                    <option value="">Change Status</option>
+                                    ${['Under Review','Contacted','Paid','Shipped','Cancelled'].map(s => `<option value="${s}">${s}</option>`).join('')}
+                                </select>
+                            </td>
+                        </tr>`;
+                    }).join('');
+                }
+            } catch (err) {
+                console.error("Error loading quotes:", err);
+            }
+        }
+
+        async function updateQuoteStatus(quoteId, newStatus) {
+            if (!newStatus) return;
+            const { error } = await supabaseClient.from('quote_requests').update({ status: newStatus }).eq('id', quoteId);
+            if (!error) loadQuotes(); else alert('Error: ' + error.message);
+        }
+
+        // =====================================================
+        //  REVIEWS
+        // =====================================================
+        async function loadReviews() {
+            const { data: reviews } = await supabaseClient.from('site_reviews').select('*').order('submitted_at', { ascending: false });
+            const container = document.getElementById('reviewsContainer');
+            if (!container) return;
+            if (!reviews || reviews.length === 0) {
+                container.innerHTML = '<div class="text-center text-muted py-12">No reviews yet.</div>';
+            } else {
+                container.innerHTML = reviews.map(r => {
+                    const stars = '★'.repeat(r.overall_rating) + '☆'.repeat(5 - r.overall_rating);
+                    const statusClass = r.status === 'approved' ? 'status-approved' : r.status === 'rejected' ? 'status-rejected' : 'status-pending';
+                    return `
+                    <div class="glass-panel" style="padding:1.5rem;margin-bottom:1rem;border-radius:1rem;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+                            <div>
+                                <strong class="text-white">${r.display_name}</strong>
+                                <span class="text-accent ml-2" style="font-size:1.25rem;">${stars}</span>
+                                <span class="${statusClass} ml-2" style="font-size:0.75rem;">${r.status.toUpperCase()}</span>
+                            </div>
+                            <div style="display:flex;gap:0.5rem;">
+                                ${r.status !== 'approved' ? `<button class="btn btn-sm btn-outline" onclick="updateReviewStatus('${r.id}','approved')"><i class="fa-solid fa-check mr-1"></i>Approve</button>` : ''}
+                                ${r.status !== 'rejected' ? `<button class="btn btn-sm btn-outline" style="color:var(--error-red);" onclick="updateReviewStatus('${r.id}','rejected')"><i class="fa-solid fa-times mr-1"></i>Reject</button>` : ''}
+                                <button class="icon-btn text-danger" onclick="deleteReview('${r.id}')"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <p class="text-muted" style="margin:0;">${r.review_text}</p>
+                        <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);">
+                            Submitted: ${new Date(r.submitted_at).toLocaleDateString()}
+                            ${r.communication_professional ? ' · ✓ Communication' : ''}
+                            ${r.shipping_discreet_timely ? ' · ✓ Shipping' : ''}
+                            ${r.product_lab_standards ? ' · ✓ Lab Standards' : ''}
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+        }
+
+        async function updateReviewStatus(reviewId, status) {
+            const { error } = await supabaseClient.from('site_reviews').update({ status }).eq('id', reviewId);
+            if (!error) loadReviews(); else alert('Error: ' + error.message);
+        }
+
+        async function deleteReview(reviewId) {
+            if (!confirm('Delete this review permanently?')) return;
+            const { error } = await supabaseClient.from('site_reviews').delete().eq('id', reviewId);
+            if (!error) loadReviews(); else alert('Error: ' + error.message);
+        }
+
+        // =====================================================
+        //  REPRESENTATIVES
+        // =====================================================
+        async function loadReps() {
+            const { data: reps } = await supabaseClient.from('representatives').select('*').order('created_at', { ascending: false });
+            const tbody = document.querySelector('#repsTable tbody');
+            if (!tbody) return;
+            if (!reps || reps.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No representatives found.</td></tr>';
+            } else {
+                tbody.innerHTML = reps.map(r => `
+                    <tr>
+                        <td style="font-family:monospace;font-weight:bold;color:var(--accent-cyan);">${r.rep_id}</td>
+                        <td style="font-weight:600;">${r.name}</td>
+                        <td>${r.territory || 'N/A'}</td>
+                        <td><span class="${r.status === 'Active' ? 'status-approved' : 'status-rejected'}">${r.status}</span></td>
+                        <td>
+                            <button class="icon-btn text-accent" onclick="editRep('${encodeURIComponent(JSON.stringify(r))}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="icon-btn text-danger" onclick="deleteRep(${r.id})"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>`).join('');
+            }
+        }
+
+        function openRepModal() {
+            document.getElementById('repForm').reset();
+            document.getElementById('repModalTitle').innerText = 'Add New Representative';
+            document.getElementById('repAction').value = 'add';
+            document.getElementById('repDbId').value = '0';
+            document.getElementById('repModal').style.display = 'flex';
+        }
+
+        function editRep(rStr) {
+            const r = JSON.parse(decodeURIComponent(rStr));
+            document.getElementById('repModalTitle').innerText = 'Edit Representative';
+            document.getElementById('repAction').value = 'edit';
+            document.getElementById('repDbId').value = r.id;
+            document.getElementById('repIdInput').value = r.rep_id;
+            document.getElementById('repNameInput').value = r.name;
+            document.getElementById('repTerritoryInput').value = r.territory || '';
+            document.getElementById('repStatusInput').value = r.status || 'Active';
+            document.getElementById('repModal').style.display = 'flex';
+        }
+
+        function closeRepModal() { document.getElementById('repModal').style.display = 'none'; }
+
+        async function submitRepForm(e) {
+            e.preventDefault();
+            const action = document.getElementById('repAction').value;
+            const dbId = parseInt(document.getElementById('repDbId').value);
+            const payload = {
+                rep_id: document.getElementById('repIdInput').value,
+                name: document.getElementById('repNameInput').value,
+                territory: document.getElementById('repTerritoryInput').value,
+                status: document.getElementById('repStatusInput').value
+            };
+            let error;
+            if (action === 'add') {
+                ({ error } = await supabaseClient.from('representatives').insert(payload));
+            } else {
+                ({ error } = await supabaseClient.from('representatives').update(payload).eq('id', dbId));
+            }
+            if (!error) { closeRepModal(); loadReps(); } else alert('Error: ' + error.message);
+        }
+
+        async function deleteRep(id) {
+            if (!confirm('Delete this representative?')) return;
+            const { error } = await supabaseClient.from('representatives').delete().eq('id', id);
+            if (!error) loadReps(); else alert('Error: ' + error.message);
+        }
+
+        // =====================================================
+        //  CONTENT MANAGER
+        // =====================================================
+        async function loadContentSettings() {
+            const { data: rows } = await supabaseClient.from('settings').select('setting_key, setting_value');
+            if (!rows) return;
+            const s = {};
+            rows.forEach(r => s[r.setting_key] = r.setting_value);
+            const el = (id, def) => { const e = document.getElementById(id); if (e) e.value = s[id.replace(/([A-Z])/g, '_$1').toLowerCase()] || def || ''; };
+            const set = (id, key, def) => { const e = document.getElementById(id); if (e) e.value = s[key] || def || ''; };
+            set('heroHeadline', 'hero_headline', 'Premium Research Peptides');
+            set('heroSubheadline', 'hero_subheadline', 'Global supplier of 98%+ purity research peptides');
+            set('heroCTA', 'hero_cta', 'Get Started');
+            set('heroCTA2', 'hero_cta2', 'View Catalog');
+            set('heroRating', 'hero_rating', '4.9');
+            set('aboutTitle', 'about_title', 'About Qingli Peptide');
+            set('aboutDescription', 'about_description', '');
+            set('aboutMission', 'about_mission', '');
+            set('calcTitle', 'calc_title', 'Peptide Reconstitution Calculator');
+            set('calcDescription', 'calc_description', '');
+            set('calcDefaultWater', 'calc_default_water', '2');
+            set('qualityTitle', 'quality_title', 'Uncompromising Analytical Verification');
+            set('qualityDescription', 'quality_description', '');
+            set('qualityPurity', 'quality_purity', '99.9');
+            set('seoTitle', 'seo_title', 'Qingli Peptide | Premium Research Peptides');
+            set('seoDescription', 'seo_description', '');
+            set('seoKeywords', 'seo_keywords', '');
+        }
+
+        async function saveContentChanges() {
+            const btn = event.target;
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Saving...';
+            btn.disabled = true;
+            const get = (id) => document.getElementById(id)?.value || '';
+            const upserts = [
+                { setting_key: 'hero_headline', setting_value: get('heroHeadline') },
+                { setting_key: 'hero_subheadline', setting_value: get('heroSubheadline') },
+                { setting_key: 'hero_cta', setting_value: get('heroCTA') },
+                { setting_key: 'hero_cta2', setting_value: get('heroCTA2') },
+                { setting_key: 'hero_rating', setting_value: get('heroRating') },
+                { setting_key: 'about_title', setting_value: get('aboutTitle') },
+                { setting_key: 'about_description', setting_value: get('aboutDescription') },
+                { setting_key: 'about_mission', setting_value: get('aboutMission') },
+                { setting_key: 'calc_title', setting_value: get('calcTitle') },
+                { setting_key: 'calc_description', setting_value: get('calcDescription') },
+                { setting_key: 'calc_default_water', setting_value: get('calcDefaultWater') },
+                { setting_key: 'quality_title', setting_value: get('qualityTitle') },
+                { setting_key: 'quality_description', setting_value: get('qualityDescription') },
+                { setting_key: 'quality_purity', setting_value: get('qualityPurity') },
+                { setting_key: 'seo_title', setting_value: get('seoTitle') },
+                { setting_key: 'seo_description', setting_value: get('seoDescription') },
+                { setting_key: 'seo_keywords', setting_value: get('seoKeywords') }
+            ];
+            const { error } = await supabaseClient.from('settings').upsert(upserts, { onConflict: 'setting_key' });
+            if (!error) {
+                btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Saved Successfully!';
+                btn.classList.replace('btn-primary', 'btn-success');
+                setTimeout(() => { btn.innerHTML = orig; btn.classList.replace('btn-success', 'btn-primary'); btn.disabled = false; }, 2000);
+            } else {
+                btn.innerHTML = '<i class="fa-solid fa-exclamation-triangle mr-2"></i> Error - Try Again';
+                btn.classList.replace('btn-primary', 'btn-danger');
+                setTimeout(() => { btn.innerHTML = orig; btn.classList.replace('btn-danger', 'btn-primary'); btn.disabled = false; }, 2000);
+            }
+        }
+
+        // =====================================================
+        //  COMMUNICATIONS
+        // =====================================================
+        async function loadCommunications() {
+            const { data: comms } = await supabaseClient.from('communications').select('*').order('date', { ascending: false });
+            const timeline = document.getElementById('communicationTimeline');
+            if (!timeline) return;
+            if (!comms || comms.length === 0) {
+                timeline.innerHTML = '<div class="text-center py-8 text-muted">No communications found</div>';
+            } else {
+                timeline.innerHTML = comms.map(c => `
+                    <div class="communication-entry">
+                        <div class="comm-header">
+                            <div class="comm-customer">${c.customer_name}</div>
+                            <div class="comm-meta">
+                                <span><i class="fa-solid fa-envelope"></i> ${c.type}</span>
+                                <span><i class="fa-solid fa-calendar"></i> ${new Date(c.date).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <div class="comm-content">${c.message}</div>
+                        <div class="comm-footer">
+                            <span class="comm-status status-${c.status}">${c.status.replace('-',' ').toUpperCase()}</span>
+                        </div>
+                    </div>`).join('');
+            }
+        }
+
+        async function addCommunication() {
+            const html = `
+                <div style="position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);" id="commModal">
+                    <div class="glass-panel" style="max-width:480px;width:90%;padding:2rem;border-radius:1.25rem;border:1px solid rgba(11,190,214,0.15);position:relative;">
+                        <button onclick="document.getElementById('commModal').remove()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text-muted);font-size:1.25rem;cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+                        <h3 class="text-white mb-1" style="font-size:1.1rem;">Log Communication</h3>
+                        <p class="text-muted text-sm mb-4">Record a customer interaction.</p>
+                        <div class="mb-3">
+                            <label class="text-muted text-sm mb-1 block">Customer Name</label>
+                            <input id="_commName" type="text" class="glass-input w-full" placeholder="e.g. John Smith">
+                        </div>
+                        <div class="mb-3">
+                            <label class="text-muted text-sm mb-1 block">Type</label>
+                            <select id="_commType" class="glass-input w-full">
+                                <option>email</option><option>whatsapp</option><option>phone</option><option>manual</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="text-muted text-sm mb-1 block">Message / Notes</label>
+                            <textarea id="_commMessage" rows="3" class="glass-input w-full" placeholder="What was discussed?"></textarea>
+                        </div>
+                        <button onclick="submitCommunication()" class="btn btn-primary glow-btn w-full"><i class="fa-solid fa-plus mr-2"></i>Log Communication</button>
+                    </div>
+                </div>`;
+            document.body.insertAdjacentHTML('beforeend', html);
+        }
+
+        async function submitCommunication() {
+            const name = document.getElementById('_commName').value.trim();
+            const type = document.getElementById('_commType').value;
+            const message = document.getElementById('_commMessage').value.trim();
+            if (!name || !message) return alert('Please fill in customer name and message.');
+            const { error } = await supabaseClient.from('communications').insert({ customer_name: name, message, type, status: 'open', date: new Date().toISOString() });
+            if (!error) { document.getElementById('commModal')?.remove(); loadCommunications(); }
+            else alert('Error: ' + error.message);
+        }
+
+        // =====================================================
+        //  CRM
+        // =====================================================
+        async function loadCRM() {
+            const { data: customers } = await supabaseClient.from('customers').select('*').order('created_at', { ascending: false });
+            if (!customers) return;
+            const pipeline = { new: [], qualified: [], quote_sent: [], negotiation: [], won: [] };
+            customers.forEach(c => { if (pipeline[c.stage]) pipeline[c.stage].push(c); });
+            document.getElementById('crmTotalCustomers').textContent = customers.length;
+            document.getElementById('crmActiveDeals').textContent = (pipeline.qualified.length + pipeline.quote_sent.length + pipeline.negotiation.length);
+            document.getElementById('crmOpenConversations').textContent = pipeline.new.length;
+            document.getElementById('stageNew').textContent = pipeline.new.length;
+            document.getElementById('stageQualified').textContent = pipeline.qualified.length;
+            document.getElementById('stageQuote').textContent = pipeline.quote_sent.length;
+            document.getElementById('stageNegotiation').textContent = pipeline.negotiation.length;
+            document.getElementById('stageWon').textContent = pipeline.won.length;
+            displayStageCards('stageNewCards', pipeline.new);
+            displayStageCards('stageQualifiedCards', pipeline.qualified);
+            displayStageCards('stageQuoteCards', pipeline.quote_sent);
+            displayStageCards('stageNegotiationCards', pipeline.negotiation);
+            displayStageCards('stageWonCards', pipeline.won);
+        }
+
+        function displayStageCards(stageId, customers) {
+            const el = document.getElementById(stageId);
+            if (!el) return;
+            el.innerHTML = customers.length === 0 ? '<div class="text-center text-muted">No customers</div>' :
+                customers.map(c => `
+                    <div class="customer-card">
+                        <div class="customer-name">${c.name}</div>
+                        <div class="customer-email">${c.email}</div>
+                        <div class="customer-value">$${c.value || '0'}</div>
+                    </div>`).join('');
+        }
+
+        async function addCustomer() {
+            const html = `
+                <div style="position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);" id="crmAddModal">
+                    <div class="glass-panel" style="max-width:440px;width:90%;padding:2rem;border-radius:1.25rem;border:1px solid rgba(11,190,214,0.15);position:relative;">
+                        <button onclick="document.getElementById('crmAddModal').remove()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text-muted);font-size:1.25rem;cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+                        <h3 class="text-white mb-1" style="font-size:1.1rem;">Add CRM Customer</h3>
+                        <p class="text-muted text-sm mb-4">Add a new lead to the pipeline.</p>
+                        <div class="mb-3">
+                            <label class="text-muted text-sm mb-1 block">Full Name</label>
+                            <input id="_crmName" type="text" class="glass-input w-full" placeholder="e.g. Dr. Jane Smith">
+                        </div>
+                        <div class="mb-3">
+                            <label class="text-muted text-sm mb-1 block">Email</label>
+                            <input id="_crmEmail" type="email" class="glass-input w-full" placeholder="customer@lab.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="text-muted text-sm mb-1 block">Estimated Value ($)</label>
+                            <input id="_crmValue" type="number" class="glass-input w-full" placeholder="e.g. 5000">
+                        </div>
+                        <div class="mb-4">
+                            <label class="text-muted text-sm mb-1 block">Initial Stage</label>
+                            <select id="_crmStage" class="glass-input w-full">
+                                <option value="new">New Lead</option>
+                                <option value="qualified">Qualified</option>
+                                <option value="quote_sent">Quote Sent</option>
+                                <option value="negotiation">Negotiation</option>
+                                <option value="won">Closed Won</option>
+                            </select>
+                        </div>
+                        <button onclick="submitCRMCustomer()" class="btn btn-primary glow-btn w-full"><i class="fa-solid fa-user-plus mr-2"></i>Add to Pipeline</button>
+                    </div>
+                </div>`;
+            document.body.insertAdjacentHTML('beforeend', html);
+        }
+
+        async function submitCRMCustomer() {
+            const name = document.getElementById('_crmName').value.trim();
+            const email = document.getElementById('_crmEmail').value.trim();
+            const value = document.getElementById('_crmValue').value;
+            const stage = document.getElementById('_crmStage').value;
+            if (!name || !email) return alert('Name and email are required.');
+            const { error } = await supabaseClient.from('customers').insert({ name, email, value: value || 0, stage });
+            if (!error) { document.getElementById('crmAddModal')?.remove(); loadCRM(); }
+            else alert('Error: ' + error.message);
+        }
+
+        // =====================================================
+        //  LOGO UPLOAD
+        // =====================================================
+        async function uploadLogo() {
+            const fileInput = document.getElementById('logoUploadInput');
+            if (!fileInput || !fileInput.files[0]) return alert('Please select a file first.');
+            const file = fileInput.files[0];
+            const filePath = `logo/Logo.${file.name.split('.').pop()}`;
+            const { data, error } = await supabaseClient.storage.from('logos').upload(filePath, file, { upsert: true });
+            if (error) { alert('Upload error: ' + error.message); return; }
+            const { data: { publicUrl } } = supabaseClient.storage.from('logos').getPublicUrl(filePath);
+            await supabaseClient.from('settings').upsert({ setting_key: 'logo_url', setting_value: publicUrl }, { onConflict: 'setting_key' });
+            alert('Logo uploaded successfully!');
+        }
+
+        // =====================================================
+        //  INITIALISE ON LOAD
+        // =====================================================
+        window.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            loadProducts();
+            loadQuotes();
+            loadReviews();
+            loadUsers();
+            loadReps();
+            loadSettings();
+        });
+    </script>
+</body>
+</html>

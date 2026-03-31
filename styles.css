@@ -1228,27 +1228,32 @@ img {
     font-weight: 700;
 }
 
-/* Mobile Navigation Redesign */
+/* Mobile nav breakpoints — handled by responsive.css */
 @media (max-width: 1024px) {
-    .nav-container { height: 80px; padding: 0 1rem; }
-    .header-left { flex: 0 0 auto; }
-    .header-center { display: none; }
-    .header-right { flex: 1; display: flex; justify-content: flex-end; }
-    
-    .integrated-search { width: 160px; }
-    .utility-actions { gap: 0.75rem; }
+    .nav-container { height: 75px; padding: 0 1.5rem; }
+    .header-left { flex: 1; min-width: unset; }
+    .header-center { display: none !important; }
+    .header-right { flex: 0 0 auto; min-width: unset; display: flex; justify-content: flex-end; }
+    .integrated-search { display: none !important; }
+    .action-divider { display: none !important; }
+    .auth-action.hide-mobile { display: none !important; }
 }
 
 @media (max-width: 768px) {
-    .integrated-search { display: none; }
-    .logo-text { font-size: 1rem; }
-    .logo-icon-wrapper { width: 40px; height: 40px; }
+    .logo-text { font-size: 0.9rem; }
+    .logo-icon-wrapper { width: 36px; height: 36px; }
+    .user-portal-wrapper { display: flex !important; }
 }
 
 @media (max-width: 480px) {
-    .lang-selector-premium { display: none; }
-    .action-divider { display: none; }
-    .nav-container { padding: 0 0.75rem; }
+    .nav-container { height: 64px; padding: 0 0.75rem; }
+    .logo-icon-wrapper { width: 34px !important; height: 34px !important; min-width: 34px !important; }
+    .logo-text { font-size: 0.8rem !important; }
+    .utility-btn, .mobile-trigger { width: 36px !important; height: 36px !important; font-size: 0.9rem !important; }
+    .lang-current { display: none; }
+    .utility-actions { gap: 0.3rem !important; }
+    .interaction-group { gap: 0.4rem !important; }
+    .cart-count-badge { width: 14px; height: 14px; font-size: 0.6rem; top: -3px; right: -3px; }
 }
 
 .mobile-trigger {
@@ -1305,12 +1310,37 @@ img {
   --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Base Styles */
+/* Universal Box Sizing Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100%;
+  width: 100%;
+  overflow-x: hidden !important;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.global-page-wrapper {
+  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  min-height: 100vh;
+}
+
 body {
   background-color: var(--bg-darker);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+    linear-gradient(rgba(2, 4, 8, 0.85), rgba(2, 4, 8, 0.85)),
+    url('back ground image.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: var(--text-main);
   line-height: 1.6;
 }
@@ -1331,7 +1361,6 @@ body {
   width: 600px;
   height: 600px;
   background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  filter: blur(80px);
   opacity: 0.3;
   pointer-events: none;
   z-index: -1;
@@ -1409,7 +1438,6 @@ body {
     width: 40%;
     height: 60%;
     background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
-    filter: blur(100px);
     pointer-events: none;
 }
 
@@ -1420,7 +1448,6 @@ body {
     width: 40%;
     height: 60%;
     background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
-    filter: blur(100px);
     pointer-events: none;
 }
 
@@ -1579,7 +1606,7 @@ body {
     radial-gradient(2px 2px at 70% 80%, rgba(11, 190, 214, 0.6) 0%, transparent 3px),
     radial-gradient(2px 2px at 25% 85%, rgba(6, 182, 212, 0.5) 0%, transparent 3px);
   background-size: 180px 180px;
-  animation: helixRotation 60s linear infinite;
+  /* Removed helixRotation animation for performance */
 }
 
 @keyframes helixRotation {
@@ -1620,7 +1647,7 @@ body {
     linear-gradient(0deg, transparent 24%, rgba(11, 190, 214, 0.03) 25%, rgba(11, 190, 214, 0.03) 26%, transparent 27%, transparent 74%, rgba(11, 190, 214, 0.03) 75%, rgba(11, 190, 214, 0.03) 76%, transparent 77%, transparent),
     linear-gradient(90deg, transparent 24%, rgba(6, 182, 212, 0.02) 25%, rgba(6, 182, 212, 0.02) 26%, transparent 27%, transparent 74%, rgba(6, 182, 212, 0.02) 75%, rgba(6, 182, 212, 0.02) 76%, transparent 77%, transparent);
   background-size: 80px 80px, 80px 80px;
-  animation: gridPulse 30s ease-in-out infinite;
+  /* static medical grid */
 }
 
 @keyframes gridPulse {
@@ -1642,7 +1669,7 @@ body {
     radial-gradient(2px 2px at 10% 90%, rgba(11, 190, 214, 0.3) 0%, transparent 30%),
     radial-gradient(3px 3px at 90% 50%, rgba(6, 182, 212, 0.4) 0%, transparent 40%);
   background-size: 200px 200px, 180px 180px, 220px 220px, 160px 160px, 240px 240px;
-  animation: cellularDrift 90s linear infinite;
+  /* static cellular particles */
 }
 
 @keyframes cellularDrift {
@@ -1685,7 +1712,7 @@ body {
     radial-gradient(1px 1px at 70% 45%, rgba(6, 182, 212, 0.5) 0%, transparent 2px),
     radial-gradient(1px 1px at 80% 50%, rgba(11, 190, 214, 0.6) 0%, transparent 2px);
   background-size: 100px 100px;
-  animation: dnaRotation 120s linear infinite;
+  /* static dna strand */
 }
 
 @keyframes dnaRotation {
@@ -3826,7 +3853,7 @@ p { margin-bottom: 1rem; }
 /* ==== MARQUEE TICKER ==== */
 /* ==== MARQUEE TICKER ==== */
 .ticker-wrap {
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
   background: linear-gradient(90deg, var(--bg-darker) 80%, var(--accent-cyan) 100%);
   border-bottom: 1px solid var(--border-glass-light);
@@ -4396,9 +4423,9 @@ body { top: 0 !important; } /* Prevents the google top banner from pushing body 
 #goog-gt-tt { display: none !important; } /* Hide tooltip */
 
 /* ==== MODALS & CART SIDEBAR ==== */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity var(--transition-normal); padding: 1rem; }
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity var(--transition-normal); padding: 1rem; overflow-y: auto; }
 .modal-overlay.active { display: flex; opacity: 1; }
-.modal-content { width: 100%; max-width: 450px; padding: 2.5rem; position: relative; transform: translateY(20px); transition: transform var(--transition-normal); max-height: 90vh; overflow-y: auto;}
+.modal-content { width: 100%; max-width: 450px; padding: 2.5rem; position: relative; transform: translateY(20px); transition: transform var(--transition-normal); max-height: 90vh; overflow-y: auto; margin: auto; }
 @media (max-width: 480px) { .modal-content { padding: 1.5rem; } }
 .modal-overlay.active .modal-content { transform: translateY(0); }
 .modal-close { position: absolute; top: 1rem; right: 1.5rem; background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; transition: color var(--transition-fast); z-index: 10; padding: 0.5rem; }
@@ -4444,9 +4471,17 @@ body { top: 0 !important; } /* Prevents the google top banner from pushing body 
 .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--danger-red); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; border: 2px solid var(--bg-darker); }
 
 /* Floating Chat */
-.floating-chat { position: fixed; bottom: 2.5rem; right: 2.5rem; width: 64px; height: 64px; background: linear-gradient(135deg, #128C7E, #25D366); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.25rem; box-shadow: 0 4px 25px rgba(37,211,102,0.4); z-index: 999; border: 2px solid rgba(255,255,255,0.2); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-.floating-chat:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 8px 30px rgba(37,211,102,0.6); }
-.floating-chat-tooltip { position: absolute; right: 85px; padding: 0.75rem 1.25rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity var(--transition-fast); font-size: 0.875rem; font-weight: 600; border: 1px solid var(--border-glass-light); }
+.floating-contact-wrapper { position: fixed; bottom: 2.5rem; right: 2.5rem; display: flex; flex-direction: column; gap: 1rem; align-items: flex-end; z-index: 999; }
+.floating-chat-item { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.25rem; color: white; position: relative; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid rgba(255,255,255,0.2); text-decoration: none; }
+.floating-chat-item:hover { transform: scale(1.1) translateY(-5px); }
+.floating-chat-whatsapp { background: linear-gradient(135deg, #128C7E, #25D366); box-shadow: 0 4px 25px rgba(37,211,102,0.4); }
+.floating-chat-whatsapp:hover { box-shadow: 0 8px 30px rgba(37,211,102,0.6); }
+.floating-chat-telegram { background: linear-gradient(135deg, #0088cc, #00a2ff); box-shadow: 0 4px 25px rgba(0, 136, 204, 0.4); }
+.floating-chat-telegram:hover { box-shadow: 0 8px 30px rgba(0, 136, 204, 0.6); }
+.floating-chat-email { background: linear-gradient(135deg, #0bbed6, #1e3a8a); box-shadow: 0 4px 25px rgba(11, 190, 214, 0.4); }
+.floating-chat-email:hover { box-shadow: 0 8px 30px rgba(11, 190, 214, 0.6); }
+.floating-chat-item .floating-chat-tooltip { position: absolute; right: 85px; padding: 0.75rem 1.25rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity var(--transition-fast); font-size: 0.875rem; font-weight: 600; border: 1px solid var(--border-glass-light); background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-radius: 8px; color: white; }
+.floating-chat-item:hover .floating-chat-tooltip { opacity: 1; }
 
 /* ==== MOBILE REFINEMENTS 100/100 PERFECTION ==== */
 @media (max-width: 1024px) {
@@ -4553,13 +4588,9 @@ body { top: 0 !important; } /* Prevents the google top banner from pushing body 
     
     .stat-badge { width: 56px; height: 56px; font-size: 1rem; }
     
-    .floating-chat { 
-        width: 56px; 
-        height: 56px; 
-        bottom: 1.5rem; 
-        right: 1.5rem; 
-        font-size: 1.75rem; 
-    }
+    .floating-contact-wrapper { bottom: 1rem; right: 1rem; }
+    .floating-chat-item { width: 52px; height: 52px; font-size: 1.75rem; }
+    .floating-chat-item .floating-chat-tooltip { right: 70px; }
 
     .trust-mini-item {
         flex-direction: column;

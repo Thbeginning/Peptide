@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products | Qingli Peptide</title>
-    <meta name="description" content="Browse our complete catalog of research peptides.">
+    <title>Refund & Returns Policy | Qingli Peptide</title>
+    <meta name="description" content="Refund and Returns Policy for Qingli Peptide services.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -178,124 +177,79 @@
             padding: 0.85rem;
             border-radius: 0.75rem;
             font-weight: 700; font-size: 0.9rem;
-            text-decoration: none;
-            transition: all 0.25s;
+            color: #fff; text-decoration: none;
+            transition: all 0.2s; border: 1px solid rgba(255,255,255,0.1);
         }
-        .cat-footer-wa  { background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.25); color: #25d366; }
-        .cat-footer-tg  { background: rgba(0,136,204,0.12);  border: 1px solid rgba(0,136,204,0.25);  color: #0088cc; }
-        .cat-footer-em  { background: rgba(11,190,214,0.12); border: 1px solid rgba(11,190,214,0.25); color: #0bbed6; }
-        .cat-footer-wa:hover { background: rgba(37,211,102,0.25); }
-        .cat-footer-tg:hover { background: rgba(0,136,204,0.25); }
-        .cat-footer-em:hover { background: rgba(11,190,214,0.25); }
+        .cat-footer-wa { background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.3) !important; color: #4ade80 !important; }
+        .cat-footer-tg { background: rgba(59,130,246,0.1); border-color: rgba(59,130,246,0.3) !important; color: #60a5fa !important; }
+        .cat-footer-em { background: rgba(11,190,214,0.1); border-color: rgba(11,190,214,0.3) !important; color: #0bbed6 !important; }
 
-        /* Catalog Hero */
-        .catalog-hero {
-            height: 300px;
-            background: url('COA/peptide%20product%20cover%20.jpeg') center/cover no-repeat;
-            position: relative;
-            display: flex; align-items: center; justify-content: center;
-            color: white;
-            border-bottom: 1px solid var(--border-glass);
+        .cat-footer-wa:hover { background: rgba(34,197,94,0.2); }
+        .cat-footer-tg:hover { background: rgba(59,130,246,0.2); }
+        .cat-footer-em:hover { background: rgba(11,190,214,0.2); }
+        
+        /* Privacy Container */
+        .privacy-content p {
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
         }
-        .catalog-hero::before {
-            content: ''; position: absolute; inset: 0;
-            background: rgba(0,0,0,0.7);
-        }
-        .catalog-hero h1 {
-            position: relative; z-index: 10;
-            font-size: 3.5rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        .privacy-content h2, .privacy-content h3 {
+            color: #fff;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
             font-family: var(--font-primary);
-            color: var(--text-main);
+        }
+        .privacy-content h2 {
+            font-size: 1.5rem;
+            color: #0bbed6;
+        }
+        .privacy-content h3 {
+            font-size: 1.25rem;
+        }
+        .privacy-content ul {
+            list-style-type: disc;
+            margin-left: 2rem;
+            margin-bottom: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+        .privacy-content li {
+            margin-bottom: 0.5rem;
+        }
+        /* ---- RESPONSIVE NAVBAR ---- */
+        @media (max-width: 1024px) {
+            .cat-nav-links  { display: none !important; }
+            .cat-quote-btn  { display: none !important; }
+            .cat-burger     { display: flex !important; }
+        }
+        @media (max-width: 480px) {
+            .cat-nav-container { padding: 0 1rem; height: 64px; }
+            .logo-text { font-size: 0.82rem !important; }
+            .logo-img  { width: 36px !important; height: 36px !important; }
         }
 
-        /* Layout */
-        .catalog-container {
-            max-width: 1400px; margin: 0 auto;
-            padding: 4rem 1.5rem;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 3rem;
-        }
-        @media (max-width: 992px) {
-            .catalog-container { grid-template-columns: 1fr; }
-            .cat-nav-links { display: none !important; }
-            .cat-burger { display: flex !important; }
-        }
-
-        /* Category sidebar */
-        .catalog-sidebar h2 { font-size: 1.5rem; color: var(--text-main); margin-bottom: 1.5rem; font-family: var(--font-primary); }
-        .sidebar-menu { list-style: none; margin-bottom: 2rem; }
-        .sidebar-menu li { margin-bottom: 1rem; }
-        .sidebar-menu a { color: var(--text-muted); font-weight: 500; transition: color 0.15s; display: block; text-decoration: none; }
-        .sidebar-menu a:hover, .sidebar-menu a.active { color: var(--accent-cyan); }
-        .search-box { position: relative; margin-bottom: 2rem; }
-        .search-box input { width: 100%; padding: 1rem 1rem 1rem 3rem; border: 1px solid var(--border-glass-light); border-radius: 0.5rem; background: rgba(0,0,0,0.4); font-family: var(--font-primary); color: var(--text-main); box-sizing: border-box; }
-        .search-box i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-
-        /* Grid */
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
-        .pagination { display: flex; justify-content: flex-end; margin-top: 3rem; gap: 0.5rem; }
-        .page-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass-light); padding: 0.5rem 1rem; color: var(--text-muted); border-radius: 0.25rem; cursor: pointer; }
-        .page-btn.active { background: var(--accent-cyan); color: #000; border-color: var(--accent-cyan); font-weight: 600; }
-
-        /* Sticky contact bar */
-        .sticky-contact-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            display: flex; z-index: 400;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(20px);
-            background: rgba(5,8,16,0.92);
-        }
-        .sticky-contact-bar a {
-            flex: 1;
-            display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-            padding: 1rem 0.5rem;
-            font-weight: 700; font-size: 0.88rem;
-            text-decoration: none;
-            letter-spacing: 0.02em;
-            transition: all 0.25s;
-            border-right: 1px solid rgba(255,255,255,0.06);
-        }
-        .sticky-contact-bar a:last-child { border-right: none; }
-        .sticky-contact-bar a i { font-size: 1.2rem; }
-        .scb-wa  { color: #25d366; }
-        .scb-wa:hover  { background: rgba(37,211,102,0.12); }
-        .scb-em  { color: #0bbed6; }
-        .scb-em:hover  { background: rgba(11,190,214,0.12); }
-        .scb-tg  { color: #0088cc; }
-        .scb-tg:hover  { background: rgba(0,136,204,0.12); }
     </style>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-    <script src="supabase-config.js?v=7.0"></script>
 </head>
 
 <body class="catalog-page">
 
-    <!-- HEADER -->
+    <!-- DESKTOP HEADER -->
     <header class="catalog-header">
         <div class="cat-nav-container">
-
-            <!-- Logo -->
-            <a href="index.html" style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;flex-shrink:0;">
-                <img src="Logo.jpeg" alt="Qingli Peptide Logo" style="width:40px;height:40px;border-radius:8px;border:1px solid rgba(11,190,214,0.3);">
-                <span style="font-size:0.9rem;font-weight:800;font-family:var(--font-primary);letter-spacing:0.08em;color:#fff;">QINGLI <span style="color:#0bbed6;">PEPTIDE</span></span>
+            <a href="index.html" class="logo" style="display:flex;">
+                <img src="Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img">
+                <span class="logo-text text-white">Qingli <span class="text-glow">Peptide</span></span>
             </a>
 
-            <!-- Desktop nav -->
-            <nav>
+            <div style="display: flex; gap: 1.75rem; align-items: center;">
                 <ul class="cat-nav-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html" class="active-link">Products</a></li>
+                    <li><a href="products.html">Products</a></li>
                     <li><a href="index.html#quality">About Us</a></li>
                     <li><a href="index.html#verify">Verify Rep</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
                 </ul>
-            </nav>
-
-            <!-- Right actions -->
-            <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
                 <a href="https://wa.me/85292434470" target="_blank" class="cat-quote-btn">
                     <i class="fa-brands fa-whatsapp" style="margin-right:0.4rem;"></i>Quote Now
                 </a>
@@ -318,7 +272,7 @@
 
         <div class="cat-sidebar-links">
             <a href="index.html"         class="cat-sidebar-link">Home <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;opacity:0.5;"></i></a>
-            <a href="products.html"      class="cat-sidebar-link active-link">Products <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;opacity:0.5;"></i></a>
+            <a href="products.html"      class="cat-sidebar-link">Products <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;opacity:0.5;"></i></a>
             <a href="index.html#quality" class="cat-sidebar-link">About Us <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;opacity:0.5;"></i></a>
             <a href="index.html#verify"  class="cat-sidebar-link">Verify Rep <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;opacity:0.5;"></i></a>
             <a href="index.html#contact" class="cat-sidebar-link">Contact <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;opacity:0.5;"></i></a>
@@ -338,47 +292,49 @@
     </aside>
 
     <!-- HERO -->
-    <section class="catalog-hero">
-        <h1>Products</h1>
+    <section class="catalog-hero" style="min-height: 250px; padding: 4rem 1.5rem; display: flex; align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle at center, rgba(11,190,214,0.1), transparent 70%);">
+        <h1>Refund & <span class="text-glow">Returns</span> Policy</h1>
     </section>
 
-    <!-- MAIN CONTENT -->
-    <div class="catalog-container">
+    <!-- CONTENT -->
+    <div class="container" style="max-width: 900px; margin-top: 2rem; margin-bottom: 4rem;">
+        <div class="glass-panel p-8 privacy-content" style="padding: 3rem;">
+            
+            <p>At Qing Li Peptide, we strive to ensure that every customer is satisfied with their purchase. If you are not fully satisfied with your order, we are here to help.</p>
 
-        <!-- Category sidebar -->
-        <aside class="catalog-sidebar">
-            <div style="position: sticky; top: 100px;">
-                <h2>Product Categories</h2>
-                <ul class="sidebar-menu">
-                    <li><a href="#" class="active" onclick="filterCategory('All')">All Products</a></li>
-                    <li><a href="#" onclick="filterCategory('Peptide')">Peptide</a></li>
-                    <li><a href="#" onclick="filterCategory('Cosmetic')">Cosmetic Peptides</a></li>
-                    <li><a href="#" onclick="filterCategory('Hormone')">Hormones</a></li>
-                    <li><a href="index.html#quality">COA</a></li>
-                </ul>
+            <h2>1. Return Policy</h2>
+            <h3>Eligibility for Return:</h3>
+            <p>We accept returns within 30 days of receiving your order. To be eligible for a return, the product must be in its original, unopened condition and unused.</p>
 
-                <div class="search-box">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="catalogSearch" placeholder="Search..." oninput="filterCatalog(this.value)">
-                </div>
+            <h3>Non-Returnable Items:</h3>
+            <p>Unfortunately, we cannot accept returns on opened products, customized orders, or clearance items. If you have any questions about whether your item is eligible for return, please contact our support team.</p>
 
-                <a href="https://wa.me/85292434470" target="_blank" class="btn btn-yellow w-full">
-                    <i class="fa-solid fa-clipboard-list mr-2"></i> Quote Now
-                </a>
-            </div>
-        </aside>
+            <h2>2. Refund Policy</h2>
+            <h3>Refund Process:</h3>
+            <p>Once we receive your returned item, we will inspect it and notify you of the approval or rejection of your refund. If your return is approved, we will initiate a refund to your original method of payment (PayPal).</p>
 
-        <!-- Product grid -->
-        <main>
-            <div class="catalog-grid" id="fullProductGrid">
-                <!-- JS injects products here -->
-            </div>
-            <div class="pagination" id="catalogPagination">
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">Next <i class="fa-solid fa-chevron-right text-sm ml-1"></i></button>
-            </div>
-        </main>
+            <h3>Processing Time:</h3>
+            <p>Please allow up to 10 business days for the refund to be processed after we have received the returned product.</p>
+
+            <h3>Refund Amount:</h3>
+            <p>Your refund will cover the full purchase price of the product, excluding shipping costs. Return shipping fees will be the responsibility of the customer, unless the return is due to a product defect or error on our part.</p>
+
+            <h2>3. How to Return Your Product</h2>
+            <p>Contact our customer service team at <a href="mailto:quiglipeptide@gmail.com" class="text-accent hover-glow">quiglipeptide@gmail.com</a> to request a return authorization.</p>
+            <p>We will provide you with instructions on how to ship your return item back to us.</p>
+            <p>Make sure to securely package your item and include a copy of your order receipt or invoice in the return package.</p>
+            <p>Once we receive the returned item and inspect its condition, we will issue your refund.</p>
+
+            <h2>4. PayPal Refunds</h2>
+            <p>If you have made your payment via PayPal, the refund will be processed directly to your PayPal account. Please note that PayPal may take a few days to reflect the refund in your account, depending on their processing time.</p>
+
+            <h2>Why Choose Qing Li Peptide?</h2>
+            <ul>
+                <li><strong>Quality Assurance:</strong> All our products are rigorously tested for purity and quality, ensuring that you receive only the best.</li>
+                <li><strong>Excellent Customer Support:</strong> Our team is always ready to assist you with any inquiries or issues.</li>
+                <li><strong>Hassle-Free Returns:</strong> We want to make your shopping experience as smooth as possible, so we offer a simple and easy return process.</li>
+            </ul>
+        </div>
     </div>
 
     <!-- FOOTER -->
@@ -391,7 +347,7 @@
 
             <div class="footer-grid mt-8 pt-4">
                 <div class="footer-brand">
-                    <a href="#" class="logo mb-4" style="display:flex;">
+                    <a href="index.html" class="logo mb-4" style="display:flex;">
                         <img src="Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img">
                         <span class="logo-text text-white">Qingli <span class="text-glow">Peptide</span></span>
                     </a>
@@ -427,28 +383,12 @@
             <div class="footer-bottom mt-8 pt-6 border-top-glass flex-between text-muted text-sm">
                 <p>&copy; 2026 Qingli Peptide. All rights reserved.</p>
                 <div class="flex gap-4">
-                    <a href="#" class="hover-text-white">Terms of Service</a>
                     <a href="privacy-policy.html" class="hover-text-white">Privacy Policy</a>
+                    <a href="refund-policy.html" class="hover-text-white">Refund & Returns</a>
                 </div>
             </div>
         </div>
     </footer>
-
-    <!-- STICKY CONTACT BAR -->
-    <div class="sticky-contact-bar">
-        <a href="https://wa.me/85292434470" target="_blank" class="scb-wa">
-            <i class="fa-brands fa-whatsapp"></i>
-            <span>WhatsApp</span>
-        </a>
-        <a href="mailto:quiglipeptide@gmail.com" class="scb-em">
-            <i class="fa-solid fa-envelope"></i>
-            <span>Email</span>
-        </a>
-        <a href="https://t.me/Qinglishagmoa" target="_blank" class="scb-tg">
-            <i class="fa-brands fa-telegram"></i>
-            <span>Telegram</span>
-        </a>
-    </div>
 
     <!-- Hamburger JS -->
     <script>
@@ -468,10 +408,5 @@
             }
         });
     </script>
-
-    <script>window.isCatalogPage = true;</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase-config.js"></script>
-    <script src="script.js?v=7.3"></script>
 </body>
 </html>

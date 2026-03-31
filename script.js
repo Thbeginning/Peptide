@@ -37,65 +37,44 @@ class ProfessionalMarquee {
     
     async fetchMarqueeData() {
         try {
-            const response = await fetch('api/settings.php?action=fetch', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            });
-            
-            const data = await response.json();
-            
-            if (data.status === 'success' && data.settings) {
-                // Parse messages
-                if (data.settings.contact_marquee) {
-                    this.messages = data.settings.contact_marquee
+            const { data: rows, error } = await supabaseClient
+                .from('settings')
+                .select('setting_key, setting_value');
+
+            if (!error && rows) {
+                const settings = {};
+                rows.forEach(r => settings[r.setting_key] = r.setting_value);
+
+                if (settings.contact_marquee) {
+                    this.messages = settings.contact_marquee
                         .split(/\r?\n/)
                         .map(line => line.trim())
                         .filter(line => line.length > 0);
                 }
-                
-                // Parse settings
-                if (data.settings.marquee_speed) {
-                    this.settings.speed = parseInt(data.settings.marquee_speed) || 30;
-                }
-                
-                if (data.settings.marquee_color) {
-                    this.settings.color = data.settings.marquee_color;
-                    this.settings.theme = this.getColorTheme(data.settings.marquee_color);
-                }
-                
-                if (data.settings.marquee_pause_hover !== undefined) {
-                    this.settings.pauseOnHover = Boolean(data.settings.marquee_pause_hover);
-                }
-                
-                if (data.settings.marquee_auto_refresh !== undefined) {
-                    this.settings.autoRefresh = Boolean(data.settings.marquee_auto_refresh);
+                if (settings.marquee_speed) this.settings.speed = parseInt(settings.marquee_speed) || 30;
+                if (settings.marquee_color) {
+                    this.settings.color = settings.marquee_color;
+                    this.settings.theme = this.getColorTheme(settings.marquee_color);
                 }
             }
-            
-            // Set default messages if none provided
+
             if (this.messages.length === 0) {
                 this.messages = [
                     '• GLOBAL EXPORT QUALITY',
-                    '• GUARANTEED CUSTOMS CLEARANCE', 
+                    '• GUARANTEED CUSTOMS CLEARANCE',
                     '• UNMATCHED PURITY STANDARDS',
                     '• 24/7 TECHNICAL SUPPORT',
                     '• DISCREET WORLDWIDE SHIPPING'
                 ];
             }
-            
+
             this.render();
             this.hideLoading();
-            
         } catch (error) {
             console.error('Failed to fetch marquee data:', error);
-            
-            // Fallback to default messages
             this.messages = [
                 '• GLOBAL EXPORT QUALITY',
-                '• GUARANTEED CUSTOMS CLEARANCE', 
+                '• GUARANTEED CUSTOMS CLEARANCE',
                 '• UNMATCHED PURITY STANDARDS'
             ];
             this.render();
@@ -301,44 +280,31 @@ class ProfessionalMarquee {
             .split('\n')
             .map(line => line.trim())
             .filter(line => line.length > 0);
-        
+
         const speed = parseInt(document.getElementById('adminMarqueeSpeed').value) || 30;
         const color = document.getElementById('adminMarqueeColor').value;
-        
+
         try {
-            const response = await fetch('api/settings.php?action=save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: JSON.stringify({
-                    contact_marquee: messages.join('\n'),
-                    marquee_speed: speed,
-                    marquee_color: color
-                })
-            });
-            
-            const data = await response.json();
-            
-            if (data.status === 'success') {
+            const upserts = [
+                { setting_key: 'contact_marquee', setting_value: messages.join('\n') },
+                { setting_key: 'marquee_speed', setting_value: String(speed) },
+                { setting_key: 'marquee_color', setting_value: color }
+            ];
+            const { error } = await supabaseClient.from('settings').upsert(upserts, { onConflict: 'setting_key' });
+
+            if (!error) {
                 this.messages = messages;
                 this.settings.speed = speed;
                 this.settings.color = color;
                 this.settings.theme = this.getColorTheme(color);
-                
                 this.render();
-                
-                // Close admin panel
                 document.querySelector('.marquee-admin-panel')?.remove();
-                
-                // Show success notification
                 this.showNotification('Marquee settings saved successfully!');
             } else {
-                alert('Error saving settings: ' + (data.message || 'Unknown error'));
+                alert('Error saving settings: ' + error.message);
             }
-        } catch (error) {
-            console.error('Error saving marquee settings:', error);
+        } catch (err) {
+            console.error('Error saving marquee settings:', err);
             alert('Error saving settings. Please try again.');
         }
     }
@@ -453,8 +419,13 @@ particleStyle.textContent = `
 `;
 document.head.appendChild(particleStyle);
 
+// ====== EVENT LISTENERS ======
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded - starting initialization...');
+    
+    // 1. MUST RUN FIRST: Check Age Verification Status
+    checkAgeVerification();
+    
     professionalMarquee = new ProfessionalMarquee();
     
     // Force background immediately
@@ -466,8 +437,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Also force on window resize
     window.addEventListener('resize', forceCinematicBackground);
     
-    // Force on scroll
-    window.addEventListener('scroll', forceCinematicBackground);
+    // Force on scroll with throttling
+    let bgScrollTicking = false;
+    window.addEventListener('scroll', () => {
+        if (!bgScrollTicking) {
+            window.requestAnimationFrame(() => {
+                forceCinematicBackground();
+                bgScrollTicking = false;
+            });
+            bgScrollTicking = true;
+        }
+    }, { passive: true });
     
     // Initialize interactive effects immediately
     initInteractiveEffects();
@@ -493,6 +473,206 @@ let products = [];
 let currentUser = null;
 let cartItems = [];
 
+// ====== Authentication & Client Portal Modal ======
+function openAuthModal(tab = 'login') {
+    const modal = document.getElementById('authModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.getElementById('loginError').style.display = 'none';
+        document.getElementById('regError').style.display = 'none';
+        switchAuthTab(tab);
+    }
+}
+
+function closeAuthModal() {
+    const modal = document.getElementById('authModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+function switchAuthTab(tab) {
+    document.querySelectorAll('.auth-tabs .auth-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'none';
+    
+    if (tab === 'login') {
+        document.querySelector('.auth-tabs .auth-tab:nth-child(1)').classList.add('active');
+        document.getElementById('loginForm').style.display = 'block';
+    } else {
+        document.querySelector('.auth-tabs .auth-tab:nth-child(2)').classList.add('active');
+        document.getElementById('registerForm').style.display = 'block';
+    }
+}
+
+async function handleLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('loginBtn');
+    const btnText = document.getElementById('loginBtnText');
+    const errDiv = document.getElementById('loginError');
+    
+    // Loading state
+    if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; }
+    if (btnText) btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Authenticating...';
+    if (errDiv) errDiv.style.display = 'none';
+
+    try {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+        if (error) {
+            if (errDiv) { errDiv.innerHTML = `<i class="fa-solid fa-circle-exclamation mr-2"></i>${error.message}`; errDiv.style.display = 'block'; }
+        } else {
+            const role = data.user?.user_metadata?.role;
+            if (role === 'admin') {
+                window.location.href = 'admin/index.html';
+            } else {
+                closeAuthModal();
+                checkAuthSession();
+            }
+        }
+    } catch(err) {
+        console.error(err);
+        if (errDiv) { errDiv.innerHTML = '<i class="fa-solid fa-circle-exclamation mr-2"></i>' + (err.message || 'Connection error.'); errDiv.style.display = 'block'; }
+    }
+
+    // Reset button
+    if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+    if (btnText) btnText.innerHTML = 'SIGN IN';
+}
+
+async function handleRegister(e) {
+    e.preventDefault();
+    const btn = document.getElementById('regBtn');
+    const btnText = document.getElementById('regBtnText');
+    const errDiv = document.getElementById('regError');
+    
+    if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; }
+    if (btnText) btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Creating Account...';
+    if (errDiv) errDiv.style.display = 'none';
+
+    try {
+        const name = document.getElementById('regName').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const password = document.getElementById('regPassword').value;
+
+        // Step 1: Sign up the user
+        const { data: signUpData, error: signUpError } = await supabaseClient.auth.signUp({
+            email, password,
+            options: { data: { name } }
+        });
+
+        if (signUpError) {
+            // Handle duplicate email gracefully
+            const msg = signUpError.message.toLowerCase();
+            if (msg.includes('already registered') || msg.includes('user already registered') || msg.includes('already been registered')) {
+                if (errDiv) { errDiv.innerHTML = '<i class="fa-solid fa-circle-exclamation mr-2"></i>This email is already registered. Please log in instead.'; errDiv.style.display = 'block'; }
+            } else {
+                if (errDiv) { errDiv.innerHTML = `<i class="fa-solid fa-circle-exclamation mr-2"></i>${signUpError.message}`; errDiv.style.display = 'block'; }
+            }
+            if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+            if (btnText) btnText.innerHTML = 'CREATE ACCOUNT';
+            return;
+        }
+
+        const userId = signUpData?.user?.id;
+
+        // Step 2: Auto-confirm via Edge Function and insert into CRM arrays
+        if (userId) {
+            // Push to Client Directory
+            try {
+                await supabaseClient.from('users').upsert({ id: userId, name: name, email: email, last_login: new Date().toISOString() });
+            } catch(e) { console.warn('Error syncing to users table:', e); }
+
+            // Push to CRM Pipeline
+            try {
+                // Check if exists first to avoid duplicate CRM entry if user registers again
+                const { data: existingCustomer } = await supabaseClient.from('customers').select('id').eq('email', email).single();
+                if (!existingCustomer) {
+                    await supabaseClient.from('customers').insert({ name: name, email: email, stage: 'new', value: 0 });
+                }
+            } catch(e) { console.warn('Error syncing to CRM:', e); }
+
+            if (btnText) btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Setting up account...';
+            try {
+                await fetch('https://ujwmzcdpilmgaiwrligq.supabase.co/functions/v1/auto-confirm-user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId })
+                });
+                // Give Postgres/Gotrue a moment to reflect the confirmed status
+                await new Promise(r => setTimeout(r, 1500));
+            } catch (fnErr) {
+                console.warn('Auto-confirm function error (non-fatal):', fnErr);
+            }
+        }
+
+        // Step 3: Sign in immediately — no email verification prompt
+        if (btnText) btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Signing you in...';
+        let loginAttempt = await supabaseClient.auth.signInWithPassword({ email, password });
+
+        // Retry once if it fails due to propagation delay
+        if (loginAttempt.error) {
+            await new Promise(r => setTimeout(r, 2000));
+            loginAttempt = await supabaseClient.auth.signInWithPassword({ email, password });
+        }
+
+        const loginError = loginAttempt.error;
+
+        if (loginError) {
+            // If sign-in fails (e.g., confirmation still pending), show success but ask to log in
+            if (errDiv) {
+                errDiv.innerHTML = '<i class="fa-solid fa-circle-check mr-2"></i>Account created! Please log in to continue.';
+                errDiv.style.background = 'rgba(16,185,129,0.1)';
+                errDiv.style.borderColor = 'rgba(16,185,129,0.35)';
+                errDiv.style.color = '#34d399';
+                errDiv.style.display = 'block';
+            }
+            switchAuthTab('login');
+            // pre-fill the login email
+            const loginEmailInput = document.getElementById('loginEmail');
+            if (loginEmailInput) loginEmailInput.value = email;
+        } else {
+            // Success — close modal and update UI
+            closeAuthModal();
+            await checkAuthSession(); // Wait for session to be fully loaded
+        }
+
+    } catch(err) {
+        console.error('Registration Exception:', err);
+        if (errDiv) { errDiv.innerHTML = '<i class="fa-solid fa-circle-exclamation mr-2"></i>' + (err.message || 'Connection error.'); errDiv.style.display = 'block'; }
+    }
+
+    if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+    if (btnText) btnText.innerHTML = 'CREATE ACCOUNT';
+}
+
+
+function togglePasswordVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    const icon = btn.querySelector('i');
+    if (icon) { icon.className = isPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'; }
+}
+
+
+
+async function logoutUser() {
+    try {
+        await supabaseClient.auth.signOut();
+        currentUser = null;
+        cartItems = [];
+        renderCartUI();
+        checkAuthSession();
+    } catch(err) {
+        console.error('Logout error', err);
+    }
+}
+// ===============================================
+
 // Provide products grid
 let showingAllProducts = false;
 let currentCategoryFilter = 'All';
@@ -505,51 +685,58 @@ async function fetchProducts() {
     if (grid) {
         grid.innerHTML = Array(6).fill('<div class="skeleton-card"></div>').join('');
     }
-    
+
+        // Contact info is now hardcoded in HTML. No dynamic overwrite needed.
+        window.globalContactWhatsapp = '85292434470';
+        window.globalSupportEmail = 'quiglipeptide@gmail.com';
+
     try {
-        console.log('Fetching products from: api/products.php?action=fetch_all');
-        const res = await fetch('api/products.php?action=fetch_all');
-        console.log('API response status:', res.status);
-        
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        
-        const data = await res.json();
-        console.log('API response data:', data);
-        
-        if (data.status === 'success') {
-            products = data.products;
-            console.log('Products loaded:', products.length);
-            
-            // Artificial delay for smooth skeleton transition
-            setTimeout(() => {
-                if (document.getElementById('productGrid') || document.getElementById('fullProductGrid')) {
-                    if (window.isCatalogPage) {
-                        renderCatalogGrid();
-                    } else {
-                        renderProducts(6);
-                    }
-                } 
-                
-                if (document.getElementById('dynamicProductGallery')) {
-                    renderProductDetail();
+        const { data, error } = await supabaseClient
+            .from('products')
+            .select('*')
+            .order('name');
+
+        if (error) throw error;
+
+        products = data || [];
+        console.log('Products loaded from Supabase:', products.length);
+
+        setTimeout(() => {
+            if (document.getElementById('productGrid') || document.getElementById('fullProductGrid')) {
+                if (window.isCatalogPage) {
+                    renderCatalogGrid();
+                } else {
+                    renderProducts(6);
                 }
-            }, 500);
-        } else {
-            throw new Error(data.message || 'API returned error status');
-        }
+            }
+            if (document.getElementById('dynamicProductGallery')) {
+                renderProductDetail();
+            }
+        }, 500);
     } catch(e) {
         console.error('Error fetching products:', e);
-        const errorMessage = `
-            <div class="text-center py-20 text-danger">
-                <i class="fa-solid fa-exclamation-triangle fa-2x mb-4"></i>
-                <h4>Failed to load compounds</h4>
-                <p class="text-muted">Error: ${e.message}</p>
-                <small class="text-muted">Check browser console for details</small>
-            </div>
-        `;
-        if (grid) grid.innerHTML = errorMessage;
+        // Fallback to local hardcoded products for local preview before Supabase is configured
+        products = [
+            { id: "aod9604", name: "AOD9604", category: "Peptide", image_path: "COA/peptide product cover .jpeg", description: "Fat loss peptide fragment derived from hGH.", purity: ">99.0%" },
+            { id: "bpc-tb-blend", name: "BPC 157 + TB500", category: "Peptide Blend", image_path: "COA/peptide product cover .jpeg", description: "Synergistic tissue repair and angiogenesis blend.", purity: ">99.0%" },
+            { id: "bpc-157", name: "BPC-157", category: "Peptide", image_path: "COA/peptide product cover .jpeg", description: "Body Protection Compound. Synthetically produced sequence utilized extensively for tissue repair research.", purity: ">99.2%" },
+            { id: "cjc-dac", name: "CJC-1295 DAC", category: "Peptide", image_path: "COA/peptide product cover .jpeg", description: "Long-acting GHRH analog with Drug Affinity Complex.", purity: ">98.8%" },
+            { id: "cjc-nodac", name: "CJC-1295 NO DAC", category: "Peptide", image_path: "COA/peptide product cover .jpeg", description: "Shorter acting GHRH analog (Mod GRF 1-29).", purity: ">99.0%" },
+            { id: "cjc-ipa", name: "CJC1295 NO DAC + IPA", category: "Peptide Blend", image_path: "COA/peptide product cover .jpeg", description: "Standard growth hormone secretagogue blend.", purity: ">99.0%" }
+        ];
+        
+        setTimeout(() => {
+            if (document.getElementById('productGrid') || document.getElementById('fullProductGrid')) {
+                if (window.isCatalogPage) {
+                    renderCatalogGrid();
+                } else {
+                    renderProducts(6);
+                }
+            }
+            if (document.getElementById('dynamicProductGallery')) {
+                renderProductDetail();
+            }
+        }, 500);
     }
 }
 
@@ -587,7 +774,7 @@ function renderProducts(limit = null) {
 
     if (products.length > limit) {
         grid.insertAdjacentHTML('afterend', `
-            <div class="text-center mt-8 hide-when-expanded">
+            <div class="text-center mt-8">
                 <a href="products.html" class="btn btn-outline glow-btn-outline btn-lg glass-panel mt-6" style="padding: 1rem 3rem;">
                     View All Products <i class="fa-solid fa-chevron-right ml-2"></i>
                 </a>
@@ -786,8 +973,8 @@ function renderProductDetail() {
             usersHtml = product.target_users.split('\n').filter(l => l.trim().length > 0).map(l => l.startsWith('✔️') || l.startsWith('✔') ? l : `✔️ ${l}`).join('<br>');
         }
         
-        const contactPhone = typeof globalSettings !== 'undefined' && globalSettings.whatsapp_clean ? globalSettings.whatsapp_clean : '1234567890';
-        const waLink = `https://wa.me/${contactPhone}?text=${encodeURIComponent("I'm interested in pricing for " + product.name)}`;
+        const contactPhone = window.globalContactWhatsapp;
+        const waLink = `https://wa.me/${contactPhone}?text=${encodeURIComponent("Hello QingLi Team, I would like a wholesale quote for " + product.name)}`;
 
         const infoEl = document.getElementById('dynamicProductInfo');
         if (infoEl) {
@@ -899,39 +1086,42 @@ function toggleReadMore() {
 
 async function checkAuthSession() {
     try {
-        console.log('Checking auth session...');
-        const res = await fetch('api/auth.php?action=check');
-        console.log('Auth check response status:', res.status);
-        
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        
-        const data = await res.json();
-        console.log('Auth check data:', data);
-        
-        if (data.logged_in) {
-            currentUser = data.user;
+        const { data: { session } } = await supabaseClient.auth.getSession();
+
+        if (session && session.user) {
+            const user = session.user;
+            currentUser = {
+                id: user.id,
+                name: user.user_metadata?.name || user.email.split('@')[0],
+                email: user.email,
+                role: user.user_metadata?.role || 'customer'
+            };
+
             const authGuest = document.getElementById('authGuest');
             const authLogged = document.getElementById('authLogged');
             if (authGuest) authGuest.style.display = 'none';
             if (authLogged) authLogged.style.display = 'flex';
-            
+
             const navUserName = document.getElementById('navUserName');
             if (navUserName) navUserName.innerText = currentUser.name;
 
             const adminLink = document.getElementById('adminDashboardLink');
-            if (adminLink) {
-                adminLink.style.display = currentUser.role === 'admin' ? 'block' : 'none';
-            }
-            
+            if (adminLink) adminLink.style.display = currentUser.role === 'admin' ? 'block' : 'none';
+
             const mobGuest = document.getElementById('mobileAuthGuest');
             const mobLogged = document.getElementById('mobileAuthLogged');
             const mobUserName = document.getElementById('mobileNavUserName');
-            if(mobGuest) mobGuest.style.display = 'none';
-            if(mobLogged) mobLogged.style.display = 'block';
-            if(mobUserName) mobUserName.innerText = currentUser.name;
-            
+            if (mobGuest) mobGuest.style.display = 'none';
+            if (mobLogged) mobLogged.style.display = 'block';
+            if (mobUserName) mobUserName.innerText = currentUser.name;
+
+            const sbGuest = document.getElementById('cartSidebarGuest');
+            const sbLogged = document.getElementById('cartSidebarLogged');
+            const sbUserName = document.getElementById('cartSidebarUserName');
+            if (sbGuest) sbGuest.style.display = 'none';
+            if (sbLogged) sbLogged.style.display = 'flex';
+            if (sbUserName) sbUserName.innerText = currentUser.name;
+
             fetchCart();
         } else {
             currentUser = null;
@@ -939,159 +1129,100 @@ async function checkAuthSession() {
             const authLogged = document.getElementById('authLogged');
             if (authGuest) authGuest.style.display = 'flex';
             if (authLogged) authLogged.style.display = 'none';
-            
+
             const mobGuest = document.getElementById('mobileAuthGuest');
             const mobLogged = document.getElementById('mobileAuthLogged');
-            if(mobGuest) mobGuest.style.display = 'block';
-            if(mobLogged) mobLogged.style.display = 'none';
+            if (mobGuest) mobGuest.style.display = 'block';
+            if (mobLogged) mobLogged.style.display = 'none';
+
+            const sbGuest = document.getElementById('cartSidebarGuest');
+            const sbLogged = document.getElementById('cartSidebarLogged');
+            if (sbGuest) sbGuest.style.display = 'block';
+            if (sbLogged) sbLogged.style.display = 'none';
         }
-    } catch (e) { 
+    } catch (e) {
         console.error('Error checking auth:', e);
-        // Show guest UI as fallback
         currentUser = null;
-        const authGuest = document.getElementById('authGuest');
-        const authLogged = document.getElementById('authLogged');
-        if (authGuest) authGuest.style.display = 'flex';
-        if (authLogged) authLogged.style.display = 'none';
-        
-        const mobGuest = document.getElementById('mobileAuthGuest');
-        const mobLogged = document.getElementById('mobileAuthLogged');
-        if(mobGuest) mobGuest.style.display = 'block';
-        if(mobLogged) mobLogged.style.display = 'none';
     }
 }
 
-async function handleLogin(e) {
-    e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    const errorDiv = document.getElementById('loginError');
-    
-    try {
-        const res = await fetch('api/auth.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'login', email, password })
-        });
-        const data = await res.json();
-        if (data.status === 'success') {
-            if (data.user && data.user.role === 'admin') {
-                window.location.href = 'admin/index.php';
-            } else {
-                closeAuthModal();
-                checkAuthSession();
-            }
-        } else {
-            errorDiv.style.display = 'block';
-            errorDiv.innerText = data.message;
-        }
-    } catch(e) { console.error(e); }
-}
+// Note: handleLogin is defined above near line 533 and used for both login forms.
+// This duplicate definition is intentionally removed — the active one is above.
 
-async function handleRegister(e) {
-    e.preventDefault();
-    const name = document.getElementById('regName').value;
-    const email = document.getElementById('regEmail').value;
-    const password = document.getElementById('regPassword').value;
-    const errorDiv = document.getElementById('regError');
-    
-    try {
-        const res = await fetch('api/auth.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'register', name, email, password })
-        });
-        const data = await res.json();
-        if (data.status === 'success') {
-            closeAuthModal();
-            checkAuthSession();
-        } else {
-            errorDiv.style.display = 'block';
-            errorDiv.innerText = data.message;
-        }
-    } catch(e) { console.error(e); }
-}
+// Note: handleRegister is defined above near line 566. This duplicate is removed.
 
-async function logoutUser() {
-    await fetch('api/auth.php?action=logout');
-    checkAuthSession();
-    cartItems = [];
-    renderCartUI();
-}
+// logoutUser is defined above near line 600. This duplicate is removed.
 
 // ====== CART LOGIC ======
 async function addToCart(productId, productName) {
-    if (!currentUser) {
-        openAuthModal();
-        return;
-    }
-    
+    if (!currentUser) { openAuthModal(); return; }
+
     try {
-        const res = await fetch('api/cart.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'add', product_id: productId, product_name: productName, quantity: 1 })
-        });
-        const data = await res.json();
-        if (data.status === 'success') {
-            fetchCart(); // refresh the drawer
-            
-            // tiny animation feedback
-            const btn = document.querySelector(`.product-card[data-id="${productId}"] .btn-primary`);
-            if (btn) {
-                const standardText = btn.innerHTML;
-                btn.innerHTML = `<i class="fa-solid fa-check mr-2"></i> Added`;
-                btn.style.background = 'var(--success-green)';
-                setTimeout(() => {
-                    btn.innerHTML = standardText;
-                    btn.style.background = '';
-                }, 1500);
-            }
+        // Check if item already in cart
+        const { data: existing } = await supabaseClient
+            .from('cart_items')
+            .select('id, quantity')
+            .eq('user_id', currentUser.id)
+            .eq('product_id', productId)
+            .single();
+
+        if (existing) {
+            await supabaseClient.from('cart_items').update({ quantity: existing.quantity + 1 }).eq('id', existing.id);
+        } else {
+            await supabaseClient.from('cart_items').insert({
+                user_id: currentUser.id,
+                product_id: productId,
+                product_name: productName,
+                quantity: 1
+            });
         }
+
+        fetchCart();
+
+        // 1. Give visual feedback on the general button if in catalog
+        const btn = document.querySelector(`.product-card[data-id="${productId}"] .btn-primary`);
+        if (btn) {
+            const standardText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-check mr-2"></i> Added`;
+            btn.style.background = 'var(--success-green)';
+            setTimeout(() => { btn.innerHTML = standardText; btn.style.background = ''; }, 1500);
+        }
+
+        // 2. Also automatically open the cart so the user can verify
+        document.getElementById('cartSidebar').classList.add('active');
+        document.getElementById('cartOverlay').classList.add('active');
+        
+        // Ensure body scrolling is disabled when sidebar is open
+        document.body.style.overflow = 'hidden';
+
     } catch (e) { console.error(e); }
 }
 
 async function fetchCart() {
     if (!currentUser) return;
     try {
-        const res = await fetch('api/cart.php?action=fetch');
-        const data = await res.json();
-        if (data.status === 'success') {
-            cartItems = data.cart;
-            renderCartUI();
-        }
+        const { data, error } = await supabaseClient
+            .from('cart_items')
+            .select('*')
+            .eq('user_id', currentUser.id)
+            .order('added_at');
+        if (!error) { cartItems = data || []; renderCartUI(); }
     } catch (e) { console.error(e); }
 }
 
 async function removeFromCart(itemId) {
     try {
-        const res = await fetch('api/cart.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'remove', item_id: itemId })
-        });
-        const data = await res.json();
-        if (data.status === 'success') {
-            fetchCart();
-        }
+        const { error } = await supabaseClient.from('cart_items').delete().eq('id', itemId);
+        if (!error) fetchCart();
     } catch (e) { console.error(e); }
 }
 
 async function updateCartQuantity(itemId, newQty) {
-    if (newQty < 1) return; // Optional: auto remove if < 1, but we prevent it here
+    if (newQty < 1) { await removeFromCart(itemId); return; }
     try {
-        const res = await fetch('api/cart.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'update', item_id: itemId, quantity: newQty })
-        });
-        const data = await res.json();
-        if (data.status === 'success') {
-            fetchCart();
-        }
-    } catch (e) {
-        console.error(e);
-    }
+        const { error } = await supabaseClient.from('cart_items').update({ quantity: newQty }).eq('id', itemId);
+        if (!error) fetchCart();
+    } catch (e) { console.error(e); }
 }
 
 function renderCartUI() {
@@ -1141,41 +1272,71 @@ function closeInquiryModal() {
 
 async function submitInquiry(e) {
     e.preventDefault();
+    if (!currentUser) { openAuthModal(); return; }
+
     const btn = e.target.querySelector('button[type="submit"]');
     const oldText = btn.innerHTML;
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
     btn.disabled = true;
 
-    const data = {
-        action: 'submit_quote',
-        shipping_city: document.getElementById('inqCity').value,
-        shipping_country: document.getElementById('inqCountry').value,
-        contact_method: document.getElementById('inqContactMethod').value,
-        contact_detail: document.getElementById('inqContactDetail').value,
-        message: document.getElementById('inqMessage').value,
-        research_only_confirmed: document.getElementById('inqResearchOnly').checked
-    };
-
     try {
-        const res = await fetch('api/cart.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        const respData = await res.json();
-        
-        if (respData.status === 'success') {
-            document.getElementById('inquiryModal').classList.remove('active');
-            document.getElementById('successMessageText').innerText = respData.message;
-            document.getElementById('successModal').classList.add('active');
-            e.target.reset();
-            fetchCart(); // This will empty the cart UI
-        } else {
-            alert(respData.message || 'An error occurred.');
+        const nameVal = document.getElementById('inqName').value || currentUser.name || "A customer";
+        const cityVal = document.getElementById('inqCity').value;
+        const countryVal = document.getElementById('inqCountry').value;
+
+        // 1. Create the quote request
+        const { data: quote, error: qErr } = await supabaseClient
+            .from('quote_requests')
+            .insert({
+                user_id: currentUser.id,
+                customer_name: nameVal,
+                shipping_city: cityVal,
+                shipping_country: countryVal,
+                contact_method: document.getElementById('inqContactMethod').value,
+                contact_detail: document.getElementById('inqContactDetail').value,
+                message: document.getElementById('quoteMessage').value,
+                research_only_confirmed: document.getElementById('researchDisclaimer').checked,
+                status: 'Pending'
+            })
+            .select()
+            .single();
+
+        if (qErr) throw qErr;
+
+        // 2. Insert quote items
+        if (cartItems.length > 0) {
+            const items = cartItems.map(item => ({
+                quote_id: quote.id,
+                product_id: item.product_id,
+                product_name: item.product_name,
+                quantity: item.quantity
+            }));
+            await supabaseClient.from('quote_request_items').insert(items);
         }
+
+        // 3. Clear the cart
+        await supabaseClient.from('cart_items').delete().eq('user_id', currentUser.id);
+
+        document.getElementById('inquiryModal').classList.remove('active');
+        const successMsg = document.getElementById('successMessageText');
+        if (successMsg) successMsg.innerText = 'Your quote request has been submitted! Redirecting to WhatsApp...';
+        document.getElementById('successModal').classList.add('active');
+        e.target.reset();
+        fetchCart();
+        
+        // 4. Redirect to WhatsApp
+        let waNumber = window.globalContactWhatsapp || '85292434470';
+        waNumber = waNumber.replace(/[^0-9]/g, '');
+        const customMessage = `Hello Qingli Peptide! My name is ${nameVal} from ${cityVal}, ${countryVal}. I have just submitted a quote request on the website. Please check your admin dashboard!`;
+        const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(customMessage)}`;
+        
+        setTimeout(() => {
+            window.location.href = waUrl;
+        }, 1500);
+
     } catch(err) {
         console.error(err);
-        alert('Server connection error.');
+        alert('Error submitting quote: ' + (err.message || 'Unknown error'));
     } finally {
         btn.innerHTML = oldText;
         btn.disabled = false;
@@ -1183,28 +1344,6 @@ async function submitInquiry(e) {
 }
 
 // ====== MODAL UI LOGIC ======
-function openAuthModal(tab = 'login') {
-    document.getElementById('authModal').classList.add('active');
-    document.getElementById('loginError').style.display = 'none';
-    document.getElementById('regError').style.display = 'none';
-    switchAuthTab(tab);
-}
-function closeAuthModal() {
-    document.getElementById('authModal').classList.remove('active');
-}
-function switchAuthTab(tab) {
-    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('registerForm').style.display = 'none';
-    
-    if (tab === 'login') {
-        document.querySelector('.auth-tab:nth-child(1)').classList.add('active');
-        document.getElementById('loginForm').style.display = 'block';
-    } else {
-        document.querySelector('.auth-tab:nth-child(2)').classList.add('active');
-        document.getElementById('registerForm').style.display = 'block';
-    }
-}
 function toggleCart() {
     document.getElementById('cartSidebar').classList.toggle('active');
     document.getElementById('cartOverlay').classList.toggle('active');
@@ -1236,10 +1375,18 @@ function openMyAccount() {
 
 async function fetchUserQuotes() {
     const container = document.getElementById('accountQuotesContainer');
+    if (!currentUser) return;
     try {
-        const res = await fetch('api/user_quotes.php?action=fetch_history');
-        const data = await res.json();
-        
+        const { data: quotes, error } = await supabaseClient
+            .from('quote_requests')
+            .select('*, quote_request_items(*)')
+            .eq('user_id', currentUser.id)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        const data = { status: 'success', quotes: (quotes || []).map(q => ({ ...q, items: q.quote_request_items || [] })) };
+
         if (data.status === 'success') {
             if (data.quotes.length === 0) {
                 container.innerHTML = `<div class="text-center text-muted py-8"><i class="fa-solid fa-folder-open fa-3x mb-4 opacity-50"></i><p>You have no past quote requests.</p></div>`;
@@ -1284,22 +1431,29 @@ async function fetchUserQuotes() {
 
 async function duplicateQuote(quoteId) {
     if (!confirm("Add exactly these items to your active Quote List? It will merge with any existing items you have.")) return;
-    
+    if (!currentUser) return;
+
     try {
-        const res = await fetch('api/user_quotes.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'duplicate', quote_id: quoteId })
-        });
-        const data = await res.json();
-        
-        if (data.status === 'success') {
-            document.getElementById('accountModal').classList.remove('active');
-            fetchCart();
-            setTimeout(() => toggleCart(), 300); // Open drawer after slight delay
-        } else {
-            alert(data.message);
+        const { data: items, error } = await supabaseClient
+            .from('quote_request_items')
+            .select('*')
+            .eq('quote_id', quoteId);
+
+        if (error) throw error;
+
+        if (items && items.length > 0) {
+            const cartInserts = items.map(i => ({
+                user_id: currentUser.id,
+                product_id: i.product_id,
+                product_name: i.product_name,
+                quantity: i.quantity
+            }));
+            await supabaseClient.from('cart_items').insert(cartInserts);
         }
+
+        document.getElementById('accountModal').classList.remove('active');
+        fetchCart();
+        setTimeout(() => toggleCart(), 300);
     } catch(e) { console.error(e); }
 }
 
@@ -1314,40 +1468,67 @@ function calculateDose() {
     const peptideMg = parseFloat(document.getElementById('peptideAmount').value);
     const waterMl = parseFloat(document.getElementById('waterAmount').value);
     const doseAmount = parseFloat(document.getElementById('desiredDose').value);
-    const doseUnit = document.getElementById('doseUnit').value;
-
-    if (!peptideMg || !waterMl || !doseAmount) return alert("Please ensure all inputs have valid numbers.");
-
-    let syringeVolumeMl = syringeSizeType === 50 ? 0.5 : (syringeSizeType === 30 ? 0.3 : 1.0);
-    let doseMg = doseUnit === 'mcg' ? doseAmount / 1000 : doseAmount;
-    const concentrationMgPerMl = peptideMg / waterMl;
-    const volumeToInjectMl = doseMg / concentrationMgPerMl;
-    const unitsToPull = volumeToInjectMl * 100;
-    const maxTicks = syringeSizeType;
+    const doseUnit = document.getElementById('doseUnit')?.value || 'mcg';
 
     const resultDiv = document.getElementById('calcResult');
-    const pullUnitsSpan = document.getElementById('pullUnits');
+    const pullUnitsEl = document.getElementById('pullUnits');
     const visualLiquid = document.getElementById('visualLiquid');
+    const resSyringe = document.getElementById('resSyringe');
+    const resConcentration = document.getElementById('resConcentration');
+    const resVolume = document.getElementById('resVolume');
+    const errBox = document.getElementById('calcError');
+    const errText = document.getElementById('calcErrorText');
 
+    // Always show the result panel
     resultDiv.style.display = 'block';
+    errBox.style.display = 'none';
 
+    // Validation
+    if (!peptideMg || !waterMl || !doseAmount || isNaN(peptideMg) || isNaN(waterMl) || isNaN(doseAmount)) {
+        pullUnitsEl.innerHTML = '<span style="font-size:1.5rem;">⚠</span>';
+        errText.textContent = 'Please fill in all fields with valid numbers.';
+        errBox.style.display = 'block';
+        visualLiquid.style.width = '0%';
+        return;
+    }
+    if (peptideMg <= 0 || waterMl <= 0 || doseAmount <= 0) {
+        errText.textContent = 'All values must be greater than zero.';
+        errBox.style.display = 'block';
+        return;
+    }
+
+    // Calculations
+    const syringeVolumeMl = syringeSizeType === 50 ? 0.5 : (syringeSizeType === 30 ? 0.3 : 1.0);
+    const doseMg = doseUnit === 'mcg' ? doseAmount / 1000 : doseAmount;
+    const concentrationMgPerMl = peptideMg / waterMl;
+    const volumeToInjectMl = doseMg / concentrationMgPerMl;
+    const unitsToPull = volumeToInjectMl * 100; // IU on syringe
+    const maxTicks = syringeSizeType;
+    const percentage = Math.min((unitsToPull / maxTicks) * 100, 100);
+
+    // Populate secondary stats
+    if (resConcentration) resConcentration.textContent = concentrationMgPerMl.toFixed(3);
+    if (resVolume) resVolume.textContent = volumeToInjectMl.toFixed(4);
+    if (resSyringe) resSyringe.textContent = syringeVolumeMl + ' mL syringe';
+
+    // Check if dose exceeds syringe capacity
     if (unitsToPull > maxTicks) {
-        pullUnitsSpan.innerHTML = "TOO HIGH";
-        pullUnitsSpan.style.color = "var(--danger-red)";
-        visualLiquid.style.width = "100%";
-        visualLiquid.style.background = "var(--danger-red)";
-        document.getElementById('resSyringe').parentElement.innerText = `Dose exceeds syringe capacity.`;
+        pullUnitsEl.innerHTML = '<span style="color:#ef4444;font-size:2rem;">TOO HIGH</span>';
+        visualLiquid.style.width = '100%';
+        visualLiquid.style.background = 'linear-gradient(90deg,#dc2626,#ef4444)';
+        errText.textContent = `Dose (${unitsToPull.toFixed(1)} IU) exceeds your syringe capacity (${maxTicks} IU). Use a larger syringe or split the dose.`;
+        errBox.style.display = 'block';
     } else {
-        const roundedTicks = Number(unitsToPull.toFixed(1));
-        pullUnitsSpan.innerText = roundedTicks;
-        pullUnitsSpan.style.color = "inherit";
-        document.getElementById('resSyringe').innerText = syringeVolumeMl + "mL";
-
-        const percentage = (roundedTicks / maxTicks) * 100;
-        visualLiquid.style.width = `${percentage}%`;
-        visualLiquid.style.background = "linear-gradient(90deg, var(--accent-blue), var(--accent-cyan))";
+        const roundedTicks = Math.round(unitsToPull * 10) / 10;
+        pullUnitsEl.textContent = roundedTicks;
+        pullUnitsEl.style.color = '';
+        visualLiquid.style.width = percentage + '%';
+        visualLiquid.style.background = percentage > 80
+            ? 'linear-gradient(90deg,#d97706,#fbbf24)'
+            : 'linear-gradient(90deg,#0284c7,#0bbed6)';
     }
 }
+
 
 // ====== Verification Tool ======
 async function handleVerify(event) {
@@ -1363,8 +1544,12 @@ async function handleVerify(event) {
     resultDiv.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-accent"></i> Checking secure database...';
     
     try {
-        const res = await fetch(`api/verify_rep.php?rep_id=${encodeURIComponent(repId)}`);
-        const data = await res.json();
+        const { data: repRow, error: repErr } = await supabase
+            .from('representatives')
+            .select('*')
+            .eq('rep_id', repId)
+            .single();
+        const data = repErr ? { status: 'error' } : { status: 'success', rep: repRow };
         
         // Brief artificial delay for realistic secure checking feel
         setTimeout(() => {
@@ -1503,36 +1688,56 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedLang = localStorage.getItem('preferredLanguage') || 'en';
     const langCurrent = document.querySelector('.lang-current');
     const langMap = {
-        'en': { code: 'EN' },
-        'es': { code: 'ES' },
-        'fr': { code: 'FR' },
-        'de': { code: 'DE' },
-        'zh-CN': { code: 'ZH' },
-        'ja': { code: 'JA' }
+        'en': { selected: 'EN' },
+        'es': { selected: 'ES' },
+        'fr': { selected: 'FR' },
+        'de': { selected: 'DE' },
+        'zh-CN': { selected: 'ZH' },
+        'ja': { selected: 'JA' }
     };
     
     // Set initial language display
     if (langCurrent && langMap[savedLang]) {
-        langCurrent.innerText = langMap[savedLang].code;
+        langCurrent.innerText = langMap[savedLang].selected;
         
         // Update active state
         document.querySelectorAll('.lang-option').forEach(opt => {
             opt.classList.remove('active');
-            if (opt.getAttribute('onclick').includes(`'${savedLang}'`)) {
+            if (opt.getAttribute('onclick')?.includes(`'${savedLang}'`)) {
                 opt.classList.add('active');
             }
         });
     }
     
     // Wait for Google Translate to load, then apply saved language
-    setTimeout(() => {
-        if (savedLang !== 'en') {
-            changeLanguage(savedLang);
-        }
-    }, 1000);
+    if (savedLang !== 'en') {
+        applyLanguageWhenReady(savedLang);
+    }
 });
 
-// Enhanced changeLanguage function
+// Helper to poll for google translate and apply
+function applyLanguageWhenReady(lang) {
+    const langMap = {
+        'en': 'en', 'es': 'es', 'fr': 'fr', 'de': 'de', 'zh-CN': 'zh-CN', 'ja': 'ja'
+    };
+    const googleCode = langMap[lang] || lang;
+    
+    let attempts = 0;
+    const interval = setInterval(() => {
+        const gtCombo = document.querySelector('.goog-te-combo');
+        if (gtCombo) {
+            clearInterval(interval);
+            if (gtCombo.value !== googleCode) {
+                gtCombo.value = googleCode;
+                gtCombo.dispatchEvent(new Event('change'));
+            }
+        }
+        attempts++;
+        if (attempts > 40) clearInterval(interval); // give up after 20 seconds
+    }, 500);
+}
+
+// Enhanced changeLanguage function triggered by user click
 function changeLanguage(lang) {
     console.log('Changing language to:', lang);
     
@@ -1551,7 +1756,7 @@ function changeLanguage(lang) {
     // Update UI
     document.querySelectorAll('.lang-option').forEach(opt => {
         opt.classList.remove('active');
-        if (opt.getAttribute('onclick').includes(`'${lang}'`)) {
+        if (opt.getAttribute('onclick')?.includes(`'${lang}'`)) {
             opt.classList.add('active');
         }
     });
@@ -1568,18 +1773,14 @@ function changeLanguage(lang) {
     const googleCode = langMap[lang]?.googleCode || lang;
     const domain = window.location.hostname;
     
-    // Set cookies
-    document.cookie = `googtrans=/en/${googleCode}; path=/; domain=${domain}; max-age=31536000`;
+    // Set cookies specifically formatted for Google Translate
     document.cookie = `googtrans=/en/${googleCode}; path=/; max-age=31536000`;
+    if (domain !== 'localhost') {
+        document.cookie = `googtrans=/en/${googleCode}; path=/; domain=${domain}; max-age=31536000`;
+    }
     
-    // Try to trigger Google Translate widget
-    setTimeout(() => {
-        const gtCombo = document.querySelector('.goog-te-combo');
-        if (gtCombo) {
-            gtCombo.value = googleCode;
-            gtCombo.dispatchEvent(new Event('change'));
-        }
-    }, 100);
+    // Trigger Google Translate widget
+    applyLanguageWhenReady(lang);
 }
 
 // Close dropdowns on click outside
@@ -1633,12 +1834,28 @@ function handleAgeRejection() {
 
 // Function to check age verification status
 function checkAgeVerification() {
+    const modal = document.getElementById('ageModal');
+    if (!modal) return;
+    
     if (localStorage.getItem('age_verified') === 'true') {
-        const modal = document.getElementById('ageModal');
-        if (modal) {
-            modal.classList.remove('active');
-            modal.style.display = 'none';
-        }
+        modal.classList.remove('active');
+        modal.style.cssText = 'display: none !important;';
+        document.body.style.overflow = 'auto'; // ensure scrolling is enabled
+    } else {
+        modal.classList.add('active');
+        // Extreme bulletproofing to prevent it from closing like a flash
+        modal.style.cssText = 'display: flex !important; z-index: 999999 !important; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important;';
+        document.body.style.overflow = 'hidden'; // block background scrolling until verified
+    }
+}
+
+function acceptAge() {
+    localStorage.setItem('age_verified', 'true');
+    const modal = document.getElementById('ageModal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.style.cssText = 'display: none !important;';
+        document.body.style.overflow = 'auto'; // re-enable scrolling
     }
 }
 
@@ -1675,30 +1892,63 @@ document.addEventListener('click', (e) => {
 
 // Initialization hook
 document.addEventListener('DOMContentLoaded', () => {
+    checkAgeVerification();
+    const btn21 = document.getElementById('21plus-button');
+    if (btn21) btn21.addEventListener('click', acceptAge);
+    
     fetchProducts();
     checkAuthSession();
     fetchCustomMarqueeMessages();
 
     // Header Scroll Effect - Professional State Management
     const header = document.querySelector('.header');
+    let headerScrollTicking = false;
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 30) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
+        if (!headerScrollTicking) {
+            window.requestAnimationFrame(() => {
+                if (window.scrollY > 30) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                headerScrollTicking = false;
+            });
+            headerScrollTicking = true;
         }
-    });
+    }, { passive: true });
 });
 
 // Setup Mobile Menu Toggle Functionality
 function toggleMobileMenu() {
     const sidebar = document.getElementById('mobileSidebar');
     const overlay = document.getElementById('mobileOverlay');
-    if (sidebar && overlay) {
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
+    const trigger = document.getElementById('mobileTrigger');
+    if (!sidebar || !overlay) return;
+
+    const isOpen = sidebar.classList.contains('active');
+
+    if (isOpen) {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+        if (trigger) trigger.classList.remove('active');
+        document.body.style.overflow = '';
+    } else {
+        sidebar.classList.add('active');
+        overlay.classList.add('active');
+        if (trigger) trigger.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
 }
+
+// Close mobile menu on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const sidebar = document.getElementById('mobileSidebar');
+        if (sidebar && sidebar.classList.contains('active')) {
+            toggleMobileMenu();
+        }
+    }
+});
 
 // ====== Testimonial Slider Logic ======
 let currentTestimonialIndex = 0;
@@ -1706,16 +1956,22 @@ let testimonials = [];
 
 async function loadTestimonials() {
     try {
-        const res = await fetch('api/reviews.php?action=fetch_approved');
-        const data = await res.json();
-        if (data.status === 'success') {
-            testimonials = data.reviews;
-            renderTestimonials();
-            updateDots();
+        const { data, error } = await supabase
+            .from('site_reviews')
+            .select('display_name as name, overall_rating as rating, review_text as comment')
+            .eq('status', 'approved')
+            .order('submitted_at', { ascending: false });
+            
+        if (!error && data && data.length > 0) {
+            testimonials = data;
         }
     } catch (e) {
         console.error('Error loading testimonials', e);
     }
+    
+    // Always call render. If data failed to load, the length is 0 and it falls back to default local reviews.
+    renderTestimonials();
+    updateDots();
 }
 
 function renderTestimonials() {
@@ -1723,14 +1979,33 @@ function renderTestimonials() {
     if (!container) return;
     
     if (testimonials.length === 0) {
-        container.innerHTML = `
-            <div class="testimonial-slide">
-                <div class="testimonial-stars">★★★★★</div>
-                <h4 class="testimonial-title">Professional Quality Standards</h4>
-                <p class="testimonial-quote">"The HPLC results are consistent and the QingLi procurement process is seamless. Discreet, fast shipping and professional-grade support."</p>
-                <div class="testimonial-author">— Dr. A. Sterling, Lead Researcher</div>
-            </div>
-        `;
+        // Fallback to high-quality default reviews if database is empty or fails
+        const defaultTestimonials = [
+            { rating: 5, name: "Dr. A. Sterling, Lead Researcher", comment: "The HPLC results are consistent and the QingLi procurement process is seamless. Discreet, fast shipping and professional-grade support." },
+            { rating: 5, name: "Marcus V., Independent Lab", comment: "Unbeatable purity. I've tested batches from 4 different suppliers this year and QingLi consistently returns >99% on mass spec. Incredible reliability." },
+            { rating: 5, name: "Elena R., Clinical Director", comment: "The wholesale portal is incredibly easy to use. Communication with their active reps (especially over WhatsApp) makes large-scale procurement stress-free." },
+            { rating: 4, name: "Dr. J. Chen, University Research", comment: "Excellent compounds with full COA documentation. Shipping took an extra day on my last order, but the quality of the product makes it completely worth the wait." },
+            { rating: 5, name: "Sarah T., Peptide Specialist", comment: "Their custom synthesis service is top-tier. Highly recommend for any serious lab looking for a long-term, trustworthy supplier." }
+        ];
+        
+        container.innerHTML = defaultTestimonials.map(review => {
+            const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+            let headline = "High-Purity Research Standards";
+            if (review.rating < 5) headline = "Reliable Research Partner";
+            
+            return `
+                <div class="testimonial-slide">
+                    <div class="testimonial-stars" style="color:#facc15; font-size:1.2rem; margin-bottom:1rem;">${stars}</div>
+                    <h4 class="testimonial-title" style="color:var(--text-main); margin-bottom:0.5rem; font-size:1.1rem;">${headline}</h4>
+                    <p class="testimonial-quote" style="color:var(--text-muted); font-style:italic; line-height:1.6; margin-bottom:1.5rem;">"${review.comment}"</p>
+                    <div class="testimonial-author" style="color:var(--accent-cyan); font-weight:600; font-size:0.9rem;">— ${review.name}</div>
+                </div>
+            `;
+        }).join('');
+        
+        // Ensure slider length calculation works for default array
+        testimonials = defaultTestimonials; 
+        updateSliderPosition();
         return;
     }
     
@@ -1764,7 +2039,8 @@ function updateDots() {
     const dotsContainer = document.getElementById('sliderDots');
     if (!dotsContainer) return;
     
-    const totalSlides = testimonials.length || 1;
+    // Fallback to array length or 5 for default fallback
+    const totalSlides = testimonials.length > 0 ? testimonials.length : 5;
     dotsContainer.innerHTML = '';
     
     for (let i = 0; i < totalSlides; i++) {
@@ -1776,14 +2052,14 @@ function updateDots() {
 }
 
 function nextTestimonial() {
-    const totalSlides = testimonials.length || 1;
+    const totalSlides = testimonials.length > 0 ? testimonials.length : 5;
     currentTestimonialIndex = (currentTestimonialIndex + 1) % totalSlides;
     updateSliderPosition();
     updateDots();
 }
 
 function prevTestimonial() {
-    const totalSlides = testimonials.length || 1;
+    const totalSlides = testimonials.length > 0 ? testimonials.length : 5;
     currentTestimonialIndex = (currentTestimonialIndex - 1 + totalSlides) % totalSlides;
     updateSliderPosition();
     updateDots();
@@ -1840,16 +2116,23 @@ function scrollToTop() {
 }
 
 // Show/hide back to top button based on scroll position
+let bttScrollTicking = false;
 window.addEventListener('scroll', () => {
-    const backToTopBtn = document.getElementById('backToTop');
-    if (backToTopBtn) {
-        if (window.pageYOffset > 300) {
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
-        }
+    if (!bttScrollTicking) {
+        window.requestAnimationFrame(() => {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (backToTopBtn) {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            }
+            bttScrollTicking = false;
+        });
+        bttScrollTicking = true;
     }
-});
+}, { passive: true });
 
 // Add slide-in animation for notifications
 const style = document.createElement('style');
@@ -1924,3 +2207,74 @@ window.addEventListener("load", reveal); // Initial check
 document.addEventListener('DOMContentLoaded', () => {
     loadTestimonials();
 });
+
+// ==========================================
+// REP VERIFICATION
+// ==========================================
+window.handleVerify = async function(e) {
+    if (e) e.preventDefault();
+    const repIdEl = document.getElementById('repId');
+    const resultEl = document.getElementById('verifyResult');
+    const button = e.target.querySelector('button[type="submit"]');
+
+    if (!repIdEl || !resultEl) return;
+    
+    const repId = repIdEl.value.trim();
+    if (!repId) return;
+
+    if (button) {
+        button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+        button.disabled = true;
+    }
+
+    try {
+        const { data: reps, error } = await supabaseClient
+            .from('representatives')
+            .select('*')
+            .eq('rep_id', repId)
+            .eq('status', 'Active');
+
+        if (error) {
+            console.error(error);
+            resultEl.innerHTML = `
+                <div class="alert-glass mt-4 text-left p-4" style="border:1px solid rgba(239, 68, 68, 0.3); border-left:4px solid #ef4444; background: rgba(239, 68, 68, 0.05);">
+                    <h4 class="text-danger m-0 mb-2"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Verification Error</h4>
+                    <p class="text-sm m-0 text-muted">A network error occurred. Please try again later.</p>
+                </div>
+            `;
+        } else if (reps && reps.length > 0) {
+            const rep = reps[0];
+            resultEl.innerHTML = `
+                <div class="alert-glass mt-4 text-left p-4" style="border:1px solid rgba(16, 185, 129, 0.3); border-left:4px solid #10b981; background: rgba(16, 185, 129, 0.05); border-radius: 0.5rem;">
+                    <div class="flex-between align-start mb-2">
+                        <h4 class="text-success m-0"><i class="fa-solid fa-shield-check mr-2"></i> Verified Representative</h4>
+                        <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid #10b981;">ACTIVE</span>
+                    </div>
+                    <p class="text-lg text-white font-bold m-0 mt-2 mb-1">${rep.name}</p>
+                    <p class="text-sm text-accent m-0 font-mono mb-3">ID REF: ${rep.rep_id}</p>
+                    ${rep.territory ? `<p class="text-sm m-0 text-muted border-top-glass pt-2"><i class="fa-solid fa-map-location-dot mr-2"></i> Authorized Territory: ${rep.territory}</p>` : ''}
+                </div>
+            `;
+        } else {
+            resultEl.innerHTML = `
+                <div class="alert-glass mt-4 text-left p-4" style="border:1px solid rgba(239, 68, 68, 0.4); border-left:4px solid #ef4444; background: rgba(239, 68, 68, 0.1); border-radius: 0.5rem;">
+                    <h4 class="text-danger m-0 mb-3"><i class="fa-solid fa-circle-xmark mr-2"></i> Security Alert: Invalid ID</h4>
+                    <p class="text-sm text-white mb-3">The ID <strong>${repId}</strong> is not recognized as an active Qingli Peptide representative.</p>
+                    <div class="p-3" style="background: rgba(0,0,0,0.3); border-radius: 4px;">
+                        <p class="text-xs m-0 text-danger" style="line-height: 1.5;">
+                            <i class="fa-solid fa-hand mr-1"></i> Please cease communications immediately and report this contact attempt to <strong>admin@qinglipeptide.com</strong> to prevent fraud.
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+    } catch (err) {
+        console.error('Verify error:', err);
+        resultEl.innerHTML = `<div class="text-danger mt-4">Failed to connect to verification server.</div>`;
+    } finally {
+        if (button) {
+            button.innerHTML = 'Verify Rep';
+            button.disabled = false;
+        }
+    }
+}

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="dark-theme">
 
@@ -17,15 +18,13 @@
 
     <!-- Icons (FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css?v=2.5">
+    <link rel="stylesheet" href="styles.css?v=2.6">
     <link rel="stylesheet" href="product.css?v=2.5">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <link rel="stylesheet" href="responsive.css">
 </head>
-
-<body>
-
-    <!-- Header & Navigation -->
+<body class="product-page">
     <!-- Header & Navigation: Scientific Precision Redesign -->
     <header class="header">
         <div class="container nav-container">
@@ -33,7 +32,7 @@
             <div class="header-left">
                 <a href="index.html" class="logo">
                     <div class="logo-icon-wrapper">
-                        <img src="Peptide image 2.0/Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img" loading="lazy">
+                        <img src="Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img" loading="lazy">
                         <div class="logo-glow"></div>
                     </div>
                     <span class="logo-text">QINGLI <span class="text-glow">PEPTIDE</span></span>
@@ -100,28 +99,28 @@
                                 </div>
                                 <div class="lang-grid">
                                     <button class="lang-option active" onclick="changeLanguage('en')">
-                                        <span class="flag-icon">🇺🇸</span>
+                                        <span class="flag-icon">ðŸ‡ºðŸ‡¸</span>
                                         <span class="lang-name">English</span>
                                     </button>
                                     <button class="lang-option" onclick="changeLanguage('es')">
-                                        <span class="flag-icon">🇪🇸</span>
-                                        <span class="lang-name">Español</span>
+                                        <span class="flag-icon">ðŸ‡ªðŸ‡¸</span>
+                                        <span class="lang-name">EspaÃ±ol</span>
                                     </button>
                                     <button class="lang-option" onclick="changeLanguage('fr')">
-                                        <span class="flag-icon">🇫🇷</span>
-                                        <span class="lang-name">Français</span>
+                                        <span class="flag-icon">ðŸ‡«ðŸ‡·</span>
+                                        <span class="lang-name">FranÃ§ais</span>
                                     </button>
                                     <button class="lang-option" onclick="changeLanguage('de')">
-                                        <span class="flag-icon">🇩🇪</span>
+                                        <span class="flag-icon">ðŸ‡©ðŸ‡ª</span>
                                         <span class="lang-name">Deutsch</span>
                                     </button>
                                     <button class="lang-option" onclick="changeLanguage('zh-CN')">
-                                        <span class="flag-icon">🇨🇳</span>
-                                        <span class="lang-name">中文</span>
+                                        <span class="flag-icon">ðŸ‡¨ðŸ‡³</span>
+                                        <span class="lang-name">ä¸­æ–‡</span>
                                     </button>
                                     <button class="lang-option" onclick="changeLanguage('ja')">
-                                        <span class="flag-icon">🇯🇵</span>
-                                        <span class="lang-name">日本語</span>
+                                        <span class="flag-icon">ðŸ‡¯ðŸ‡µ</span>
+                                        <span class="lang-name">æ—¥æœ¬èªž</span>
                                     </button>
                                 </div>
                             </div>
@@ -135,7 +134,7 @@
                             <div class="user-portal-dropdown glass-panel-darker" id="userDropdown">
                                 <div class="portal-header">
                                     <div class="user-info">
-                                        <span id="navUserName" class="user-name">Research Client</span>
+                                        <span id="navUserName" class="user-name">Account</span>
                                         <span class="user-status">Verified Account</span>
                                     </div>
                                 </div>
@@ -230,7 +229,7 @@
             <div class="footer-grid mt-8 pt-4">
                 <div class="footer-brand">
                     <a href="#" class="logo mb-4" style="display:flex;">
-                        <img src="Peptide image 2.0/Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img">
+                        <img src="Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img">
                         <span class="logo-text text-white">Qingli <span class="text-glow">Peptide</span></span>
                     </a>
                     <p class="text-muted text-sm mt-4">Premium supplier of high-purity peptides and chemical reagents for the global biotechnology sector.</p>
@@ -250,8 +249,8 @@
                     <h4 class="text-white mb-4">Compliance</h4>
                     <ul class="footer-links text-muted text-sm">
                         <li><a href="#" class="hover-text-white">Terms of Service</a></li>
-                        <li><a href="#" class="hover-text-white">Privacy Policy</a></li>
-                        <li><a href="#" class="hover-text-white">Shipping & Customs</a></li>
+                        <li><a href="privacy-policy.html" class="hover-text-white">Privacy Policy</a></li>
+                        <li><a href="refund-policy.html" class="hover-text-white">Refund & Returns</a></li>
                         <li><a href="#" class="hover-text-white text-danger">Research Disclaimer</a></li>
                     </ul>
                 </div>
@@ -259,9 +258,9 @@
                 <div>
                     <h4 class="text-white mb-4">Contact Us</h4>
                     <ul class="footer-links text-muted text-sm">
-                        <li><a href="https://wa.me/1234567890" class="hover-text-white"><i class="fa-brands fa-whatsapp text-accent mr-2"></i> WhatsApp</a></li>
-                        <li><a href="#" class="hover-text-white"><i class="fa-brands fa-telegram text-accent mr-2"></i> Telegram</a></li>
-                        <li><a href="mailto:sales@qinglipeptide.com" class="hover-text-white"><i class="fa-solid fa-envelope text-accent mr-2"></i> Email Sales</a></li>
+                        <li><a href="https://wa.me/85292434470" target="_blank" class="hover-text-white"><i class="fa-brands fa-whatsapp text-accent mr-2"></i> WhatsApp</a></li>
+                        <li><a href="https://t.me/Qinglishagmoa" target="_blank" class="hover-text-white"><i class="fa-brands fa-telegram text-accent mr-2"></i> Telegram</a></li>
+                        <li><a href="mailto:quiglipeptide@gmail.com" class="hover-text-white"><i class="fa-solid fa-envelope text-accent mr-2"></i> Email Sales</a></li>
                     </ul>
                 </div>
 
@@ -269,7 +268,7 @@
                     <h4 class="text-white mb-4">Accepted Payments</h4>
                     <div class="payment-icons text-muted flex gap-4 text-2xl">
                         <i class="fa-brands fa-bitcoin hover-glow" title="Bitcoin"></i>
-                        <span class="hover-glow" style="font-weight: bold; font-family: sans-serif; cursor: help;" title="Tether USDT">₮</span>
+                        <span class="hover-glow" style="font-weight: bold; font-family: sans-serif; cursor: help;" title="Tether USDT">â‚®</span>
                         <i class="fa-solid fa-building-columns hover-glow" title="Bank Wire"></i>
                     </div>
                 </div>
@@ -279,17 +278,27 @@
                 <p>&copy; 2026 Qingli Peptide. All rights reserved.</p>
                 <div class="flex gap-4">
                     <a href="#" class="hover-text-white">Terms of Service</a>
-                    <a href="#" class="hover-text-white">Privacy Policy</a>
+                    <a href="privacy-policy.html" class="hover-text-white">Privacy Policy</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Floating Action Button -->
-    <a href="https://wa.me/237681163230?text=Hello%20CEO%2C%20I%20have%20a%20question%20about%20my%20quote." target="_blank" class="floating-chat glow-btn" style="background: var(--success-green); border-color: var(--success-green); box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);">
-        <i class="fa-brands fa-whatsapp text-white"></i>
-        <span class="floating-chat-tooltip glass-panel">Inquire on WhatsApp</span>
-    </a>
+    <!-- Floating Contact Actions -->
+    <div class="floating-contact-wrapper">
+        <a href="mailto:quiglipeptide@gmail.com" target="_blank" class="floating-chat-item email-card floating-chat-email">
+            <i class="fa-solid fa-envelope text-white"></i>
+            <span class="floating-chat-tooltip glass-panel">Email Support</span>
+        </a>
+        <a href="https://t.me/Qinglishagmoa" target="_blank" class="floating-chat-item floating-chat-telegram">
+            <i class="fa-brands fa-telegram text-white"></i>
+            <span class="floating-chat-tooltip glass-panel">Contact on Telegram</span>
+        </a>
+        <a href="https://wa.me/85292434470" target="_blank" class="floating-chat-item floating-chat-whatsapp">
+            <i class="fa-brands fa-whatsapp text-white"></i>
+            <span class="floating-chat-tooltip glass-panel">Inquire on WhatsApp</span>
+        </a>
+    </div>
 
     <!-- Contact Support Modal -->
     <div id="contactModal" class="modal-overlay">
@@ -303,18 +312,18 @@
             <h3 class="mb-2 text-white">Research Support</h3>
             <p class="text-muted mb-8">Our specialized team is available to assist with technical specifications, custom synthesis, or active quote inquiries.</p>
             <div class="contact-options">
-                <a href="mailto:support@qinglipeptide.com" id="modalEmailLink" class="contact-card email-card">
+                <a href="mailto:quiglipeptide@gmail.com" id="modalEmailLink" class="contact-card email-card">
                     <div class="contact-card-icon"><i class="fa-solid fa-envelope"></i></div>
                     <div class="contact-card-info">
                         <span class="contact-card-label">Email Us</span>
-                        <span class="contact-card-value" id="modalEmailText">support@qinglipeptide.com</span>
+                        <span class="contact-card-value" id="modalEmailText">quiglipeptide@gmail.com</span>
                     </div>
                     <i class="fa-solid fa-chevron-right contact-card-arrow"></i>
                 </a>
-                <a href="https://wa.me/..." id="modalWhatsappLink" target="_blank" class="contact-card whatsapp-card">
+                <a href="https://wa.me/85292434470" id="modalWhatsappLink" target="_blank" class="contact-card whatsapp-card">
                     <div class="contact-card-icon"><i class="fa-brands fa-whatsapp"></i></div>
                     <div class="contact-card-info">
-                        <span class="contact-card-label">WhatsApp Support</span>
+                        <span class="contact-card-label">WhatsApp: +852 9243 4470</span>
                         <span class="contact-card-value">Instant Scientific Inquiry</span>
                     </div>
                     <i class="fa-solid fa-chevron-right contact-card-arrow"></i>
@@ -487,28 +496,38 @@
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 
-    <!-- Google Translate Hidden Widget -->
-    <div id="google_translate_element" style="display:none;"></div>
-
-    <!-- Include Script -->
-    <script src="script.js?v=2.5"></script>
+    <!-- Custom Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="script.js?v=7.2"></script>
     <script>
-        // Tell script.js that we are on the single product page
+        // Track page context for conditional UI
         window.isProductDetailPage = true;
     </script>
+    
+    <!-- Age Verification Safety Redirect -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('age_verified') !== 'true') {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+
+    <!-- Google Translate Hidden Widget -->
+    <div id="google_translate_element"></div>
 
     <!-- Google Translate Script -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
-                includedLanguages: 'en,es,fr,de,zh-CN,ja,ru,pt,ar',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
+                includedLanguages: 'es,fr,de,zh-CN,ja',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
     </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</body>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+</body>
 </html>

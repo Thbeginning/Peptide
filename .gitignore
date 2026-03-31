@@ -1,1 +1,28 @@
-.vercel
+# Dependencies
+node_modules/
+npm-debug.log*
+
+# Environment & secrets
+.env
+.env.local
+*.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build output
+dist/
+build/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor directories
+.vscode/
+.idea/

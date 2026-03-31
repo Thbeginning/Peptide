@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="dark-theme">
 
@@ -82,31 +83,13 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
     </style>
+
+<link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
+<div class="global-page-wrapper">
 
-    <!-- Medical/Peptide Cinematic Background System -->
-    <div class="cinematic-bg">
-        <div class="molecular-helix"></div>
-        <div class="peptide-chains"></div>
-        <div class="medical-grid"></div>
-        <div class="cellular-particles"></div>
-        <div class="laboratory-beams"></div>
-        <div class="dna-strand"></div>
-        <div class="medical-glow"></div>
-        <div class="aurora-effect"></div>
-        <div class="medical-floating-elements">
-            <div class="medical-element peptide-molecule"></div>
-            <div class="medical-element peptide-molecule"></div>
-            <div class="medical-element peptide-molecule"></div>
-            <div class="medical-element peptide-molecule"></div>
-            <div class="medical-element peptide-molecule"></div>
-            <div class="medical-element dna-helix"></div>
-            <div class="medical-element dna-helix"></div>
-            <div class="medical-element dna-helix"></div>
-        </div>
-    </div>
 
     <!-- Header & Navigation: Scientific Precision Redesign -->
     <header class="header">
@@ -115,7 +98,7 @@
             <div class="header-left">
                 <a href="#" class="logo">
                     <div class="logo-icon-wrapper">
-                        <img src="Peptide image 2.0/Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img" loading="lazy">
+                        <img src="Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img" loading="lazy">
                         <div class="logo-glow"></div>
                     </div>
                     <span class="logo-text">QINGLI <span class="text-glow">PEPTIDE</span></span>
@@ -182,28 +165,28 @@
                                 </div>
                                 <div class="lang-grid">
                                     <button class="lang-option active" onclick="changeLanguage('en')">
-                                        <span class="flag-icon">🇺🇸</span>
+                                        <span class="flag-code">US</span>
                                         <span class="lang-name">English</span>
                                     </button>
                                     <button class="lang-option" onclick="changeLanguage('es')">
-                                        <span class="flag-icon">🇪🇸</span>
-                                        <span class="lang-name">Español</span>
+                                        <span class="flag-code">ES</span>
+                                        <span class="lang-name">Espa&#241;ol</span>
                                     </button>
                                     <button class="lang-option" onclick="changeLanguage('fr')">
-                                        <span class="flag-icon">🇫🇷</span>
-                                        <span class="lang-name">Français</span>
+                                        <span class="flag-code">FR</span>
+                                        <span class="lang-name">Fran&#231;ais</span>
                                     </button>
                                     <button class="lang-option" onclick="changeLanguage('de')">
-                                        <span class="flag-icon">🇩🇪</span>
+                                        <span class="flag-code">DE</span>
                                         <span class="lang-name">Deutsch</span>
                                     </button>
                                     <button class="lang-option" onclick="changeLanguage('zh-CN')">
-                                        <span class="flag-icon">🇨🇳</span>
-                                        <span class="lang-name">中文</span>
+                                        <span class="flag-code">CN</span>
+                                        <span class="lang-name">&#20013;&#25991;</span>
                                     </button>
                                     <button class="lang-option" onclick="changeLanguage('ja')">
-                                        <span class="flag-icon">🇯🇵</span>
-                                        <span class="lang-name">日本語</span>
+                                        <span class="flag-code">JP</span>
+                                        <span class="lang-name">&#26085;&#26412;&#35486;</span>
                                     </button>
                                 </div>
                             </div>
@@ -217,7 +200,7 @@
                             <div class="user-portal-dropdown glass-panel-darker" id="userDropdown">
                                 <div class="portal-header">
                                     <div class="user-info">
-                                        <span id="navUserName" class="user-name">Research Client</span>
+                                        <span id="navUserName" class="user-name">Account</span>
                                         <span class="user-status">Verified Account</span>
                                     </div>
                                 </div>
@@ -273,19 +256,64 @@
         </div>
         <div class="mobile-sidebar-content">
             <nav class="mobile-nav-links">
-                <a href="#" class="mobile-link" onclick="toggleMobileMenu()">Home <i class="fa-solid fa-chevron-right"></i></a>
-                <a href="#products" class="mobile-link" onclick="toggleMobileMenu()">Shop Compounds <i class="fa-solid fa-chevron-right"></i></a>
-                <a href="#about" class="mobile-link" onclick="toggleMobileMenu()">About Us <i class="fa-solid fa-chevron-right"></i></a>
-                <a href="#quality" class="mobile-link" onclick="toggleMobileMenu()">Lab Results <i class="fa-solid fa-chevron-right"></i></a>
-                <a href="#" class="mobile-link" onclick="toggleMobileMenu(); openContactModal(event)">Contact Support <i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#" class="mobile-link" onclick="toggleMobileMenu()">
+                    <span><i class="fa-solid fa-house" style="margin-right:0.6rem;color:#0bbed6;"></i>Home</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="products.html" class="mobile-link" onclick="toggleMobileMenu()">
+                    <span><i class="fa-solid fa-vial-circle-check" style="margin-right:0.6rem;color:#0bbed6;"></i>Product Catalog</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#products" class="mobile-link" onclick="toggleMobileMenu()">
+                    <span><i class="fa-solid fa-flask" style="margin-right:0.6rem;color:#0bbed6;"></i>Shop Compounds</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#about" class="mobile-link" onclick="toggleMobileMenu()">
+                    <span><i class="fa-solid fa-circle-info" style="margin-right:0.6rem;color:#0bbed6;"></i>About Us</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#quality" class="mobile-link" onclick="toggleMobileMenu()">
+                    <span><i class="fa-solid fa-microscope" style="margin-right:0.6rem;color:#0bbed6;"></i>Lab Results</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#verify" class="mobile-link" onclick="toggleMobileMenu()">
+                    <span><i class="fa-solid fa-shield-halved" style="margin-right:0.6rem;color:#0bbed6;"></i>Verify Rep</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#" class="mobile-link" onclick="toggleMobileMenu(); openContactModal(event)">
+                    <span><i class="fa-solid fa-headset" style="margin-right:0.6rem;color:#0bbed6;"></i>Contact Support</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
             </nav>
+
+            <!-- Contact quick-links in sidebar -->
+            <div style="margin: 1.25rem 1.5rem 0; display:flex; flex-direction:column; gap:0.6rem;">
+                <a href="https://wa.me/85292434470" target="_blank" style="display:flex;align-items:center;gap:0.7rem;padding:0.75rem 1rem;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:0.75rem;color:#4ade80;font-weight:600;font-size:0.9rem;text-decoration:none;">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+                </a>
+                <a href="https://t.me/Qinglishagmoa" target="_blank" style="display:flex;align-items:center;gap:0.7rem;padding:0.75rem 1rem;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:0.75rem;color:#60a5fa;font-weight:600;font-size:0.9rem;text-decoration:none;">
+                    <i class="fa-brands fa-telegram"></i> Telegram
+                </a>
+                <a href="mailto:quiglipeptide@gmail.com" style="display:flex;align-items:center;gap:0.7rem;padding:0.75rem 1rem;background:rgba(11,190,214,0.08);border:1px solid rgba(11,190,214,0.2);border-radius:0.75rem;color:#0bbed6;font-weight:600;font-size:0.9rem;text-decoration:none;">
+                    <i class="fa-solid fa-envelope"></i> Email Sales
+                </a>
+            </div>
         </div>
+
+        <!-- Footer: Client Portal (guest) -->
         <div class="mobile-sidebar-footer" id="mobileAuthGuest">
-             <button onclick="toggleMobileMenu(); openAuthModal('login')" class="btn btn-primary btn-cta-premium w-full py-4">Sign In to Portal</button>
+            <button onclick="toggleMobileMenu(); openAuthModal('login')" class="btn btn-primary btn-cta-premium w-full py-4">
+                <i class="fa-solid fa-arrow-right-to-bracket" style="margin-right:0.5rem;"></i>Client Portal — Sign In
+            </button>
         </div>
+        <!-- Footer: My Account (logged in) -->
         <div class="mobile-sidebar-footer" id="mobileAuthLogged" style="display: none;">
-             <button onclick="toggleMobileMenu(); openMyAccount()" class="btn btn-primary w-full py-4 mb-3"><i class="fa-solid fa-user mr-2"></i> My Account</button>
-             <button onclick="toggleMobileMenu(); logoutUser()" class="btn btn-outline text-danger w-full py-4"><i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Sign Out</button>
+            <button onclick="toggleMobileMenu(); openMyAccount()" class="btn btn-primary w-full py-4 mb-3">
+                <i class="fa-solid fa-user mr-2"></i> My Account
+            </button>
+            <button onclick="toggleMobileMenu(); logoutUser()" class="btn btn-outline text-danger w-full py-4">
+                <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Sign Out
+            </button>
         </div>
     </aside>
 
@@ -296,7 +324,6 @@
             <div class="reveal">
                 <div class="luxury-rating-badge mb-8" onclick="scrollToReviews()">
                     <div class="rating-stars-luxury">
-                        <div class="star-luxury filled"></div>
                         <div class="star-luxury filled"></div>
                         <div class="star-luxury filled"></div>
                         <div class="star-luxury filled"></div>
@@ -344,8 +371,8 @@
                     </div>
                     
                     <div class="narrative-body">
-                        <p class="narrative-text mb-10">
-                            With over <span class="text-accent font-bold">7 years of excellence</span> in peptide production, <strong>Qingli Peptide</strong> specializes in high-purity research, beauty, and fitness compounds. Our mission is to bridge the gap between complex molecular science and global research availability.
+                        <p class="narrative-text text-white mb-10">
+                            <strong>QingLi Peptide</strong> stands at the forefront of biochemical innovation with over <span class="text-accent font-bold">8+ years of excellence</span> in peptide production. We specialize in the synthesis of high-purity compounds tailored for research, beauty, and fitness. Our mission is to bridge the gap between complex molecular science and global research availability, ensuring precision and quality in every vial.
                         </p>
                         
                         <div class="narrative-pillars">
@@ -586,20 +613,58 @@
                                 </button>
                             </div>
                         </div>
-                        
-                        <!-- Result Display -->
-                        <div class="calc-result-enhanced">
-                            <div class="result-header">
-                                <i class="fa-solid fa-check-circle"></i>
-                                Calculation Result
+
+                        <!-- Dose Unit Toggle -->
+                        <div class="input-field" style="margin-top:1rem;">
+                            <label class="input-label-enhanced">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                                Dose Unit
+                                <span class="input-hint">Select your measurement unit</span>
+                            </label>
+                            <div class="glass-select-wrapper">
+                                <select id="doseUnit" class="glass-input-premium">
+                                    <option value="mcg">mcg (micrograms) — most common</option>
+                                    <option value="mg">mg (milligrams)</option>
+                                </select>
                             </div>
-                            <div class="result-content">
-                                <div class="result-item">
-                                    <div class="result-label">Units to Draw</div>
-                                    <div class="result-value" id="unitsToDraw">--</div>
-                                    <div class="result-description">Mark this on your syringe</div>
+                        </div>
+
+                        <!-- Result Display -->
+                        <div id="calcResult" style="display:none;margin-top:1.5rem;background:rgba(11,190,214,0.06);border:1px solid rgba(11,190,214,0.2);border-radius:1.25rem;padding:1.75rem;">
+                            <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1.25rem;color:var(--accent-cyan);font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;">
+                                <i class="fa-solid fa-circle-check"></i> Calculation Result
+                            </div>
+                            <div style="text-align:center;margin-bottom:1.25rem;">
+                                <div style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.25rem;">Units to Draw</div>
+                                <div id="pullUnits" style="font-size:3rem;font-weight:800;background:linear-gradient(135deg,#0bbed6,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">--</div>
+                                <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.25rem;">IU on your syringe</div>
+                            </div>
+                            <div style="margin-bottom:1.25rem;">
+                                <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-bottom:0.4rem;">
+                                    <span>0</span><span id="resSyringe">-- mL syringe</span>
+                                </div>
+                                <div style="height:14px;background:rgba(255,255,255,0.06);border-radius:50px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+                                    <div id="visualLiquid" style="height:100%;width:0%;background:linear-gradient(90deg,#0284c7,#0bbed6);border-radius:50px;transition:width 0.8s ease;"></div>
                                 </div>
                             </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+                                <div style="background:rgba(255,255,255,0.04);border-radius:0.75rem;padding:0.875rem;text-align:center;border:1px solid rgba(255,255,255,0.06);">
+                                    <div style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Concentration</div>
+                                    <div id="resConcentration" style="font-size:1.1rem;font-weight:700;color:var(--text-main);">--</div>
+                                    <div style="font-size:0.65rem;color:var(--text-muted);">mg / mL</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,0.04);border-radius:0.75rem;padding:0.875rem;text-align:center;border:1px solid rgba(255,255,255,0.06);">
+                                    <div style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;">Volume to Inject</div>
+                                    <div id="resVolume" style="font-size:1.1rem;font-weight:700;color:var(--text-main);">--</div>
+                                    <div style="font-size:0.65rem;color:var(--text-muted);">mL</div>
+                                </div>
+                            </div>
+                            <div id="calcError" style="display:none;margin-top:1rem;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:0.75rem;padding:0.875rem;font-size:0.85rem;color:#fca5a5;text-align:center;">
+                                <i class="fa-solid fa-circle-exclamation" style="margin-right:0.4rem;"></i><span id="calcErrorText"></span>
+                            </div>
+                            <p style="margin-top:1.25rem;font-size:0.72rem;color:var(--text-muted);text-align:center;line-height:1.6;">
+                                <i class="fa-solid fa-shield-halved" style="margin-right:0.3rem;"></i>For laboratory research use only.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -693,24 +758,175 @@
             </div>
 
             <!-- Testimonial Slider -->
-            <div class="testimonial-slider" style="max-width: 1000px; margin: 3rem auto 0;">
-                <div class="testimonial-container" id="testimonialContainer" style="display: flex; overflow: hidden; position: relative;">
+            <div class="testimonial-slider" style="max-width: 1000px; margin: 3rem auto 0; position: relative; padding: 0 20px;">
+                <div class="testimonial-track" id="testimonialContainer">
                     <!-- Testimonials will be loaded here via JS -->
                 </div>
                 
-                <!-- Slider Controls -->
-                <div class="slider-controls" style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
-                    <button class="slider-btn" id="prevBtn" onclick="prevTestimonial()" style="background: rgba(0, 20, 40, 0.8); border: 1px solid var(--border-glass); border-radius: 50%; width: 40px; height: 40px; color: var(--text-main); cursor: pointer; transition: all 0.3s ease;">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <div class="slider-dots" id="sliderDots" style="display: flex; gap: 0.5rem;"></div>
-                    <button class="slider-btn" id="nextBtn" onclick="nextTestimonial()" style="background: rgba(0, 20, 40, 0.8); border: 1px solid var(--border-glass); border-radius: 50%; width: 40px; height: 40px; color: var(--text-main); cursor: pointer; transition: all 0.3s ease;">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
+                <!-- Slider Dots -->
+                <div style="display: flex; justify-content: center; margin-top: 2rem;">
+                    <div class="slider-dots" id="sliderDots" style="display: flex; gap: 0.5rem; align-items: center;"></div>
                 </div>
+
+                <!-- Slider Arrows -->
+                <button class="slider-btn absolute-arrow" id="prevBtn" onclick="prevTestimonial()" style="position: absolute; left: 0; top: calc(50% - 2rem); transform: translateY(-50%); background: #011123; border: 1px solid rgba(6,182,212,0.3); border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; color: var(--accent-cyan); cursor: pointer; transition: all 0.3s ease; z-index: 10; padding: 0;">
+                    <i class="fa-solid fa-chevron-left" style="font-size: 1.1rem; margin-right: 2px;"></i>
+                </button>
+                <button class="slider-btn absolute-arrow" id="nextBtn" onclick="nextTestimonial()" style="position: absolute; right: 0; top: calc(50% - 2rem); transform: translateY(-50%); background: #011123; border: 1px solid rgba(6,182,212,0.3); border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; color: var(--accent-cyan); cursor: pointer; transition: all 0.3s ease; z-index: 10; padding: 0;">
+                    <i class="fa-solid fa-chevron-right" style="font-size: 1.1rem; margin-left: 2px;"></i>
+                </button>
             </div>
         </div>
     </section>
+
+    <!-- Rating Statistics Section -->
+    <section id="rating-stats" class="section section-dark relative" style="padding: 4rem 0;">
+        <div class="container relative z-10">
+
+            <!-- Section Header -->
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <span class="badge" style="margin-bottom:1rem;">Research Verified</span>
+                <h2 class="text-gradient" style="font-size:2.2rem;margin-bottom:0.5rem;">Trusted Worldwide</h2>
+                <p class="text-muted" style="max-width:500px;margin:0 auto;">Our track record of excellence, backed by verified researcher reviews and independent lab testing.</p>
+            </div>
+
+            <!-- Stat Cards Grid -->
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto 3rem;">
+
+                <!-- Average Rating -->
+                <div class="glass-panel" style="padding:2rem 1.5rem;text-align:center;border-radius:1.25rem;border:1px solid rgba(6,182,212,0.15);position:relative;overflow:hidden;">
+                    <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#0284c7,#0bbed6);"></div>
+                    <div style="width:52px;height:52px;background:rgba(11,190,214,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;border:1px solid rgba(11,190,214,0.25);">
+                        <i class="fa-solid fa-star" style="color:#0bbed6;font-size:1.25rem;"></i>
+                    </div>
+                    <div style="font-size:2.75rem;font-weight:800;background:linear-gradient(135deg,#0bbed6,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">4.9</div>
+                    <div style="margin:0.5rem 0;color:#facc15;font-size:1rem;letter-spacing:3px;">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <div style="color:var(--text-muted);font-size:0.78rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">Average Rating</div>
+                    <div style="color:var(--text-muted);font-size:0.72rem;margin-top:0.2rem;opacity:0.7;">out of 5.0</div>
+                </div>
+
+                <!-- Happy Customers -->
+                <div class="glass-panel" style="padding:2rem 1.5rem;text-align:center;border-radius:1.25rem;border:1px solid rgba(16,185,129,0.15);position:relative;overflow:hidden;">
+                    <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#059669,#10b981);"></div>
+                    <div style="width:52px;height:52px;background:rgba(16,185,129,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;border:1px solid rgba(16,185,129,0.25);">
+                        <i class="fa-solid fa-users" style="color:#10b981;font-size:1.25rem;"></i>
+                    </div>
+                    <div class="counter-value" data-target="2847" style="font-size:2.75rem;font-weight:800;color:#10b981;line-height:1;">2,847+</div>
+                    <div style="color:var(--text-muted);font-size:0.78rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-top:0.75rem;">Happy Customers</div>
+                    <div style="color:var(--text-muted);font-size:0.72rem;margin-top:0.2rem;opacity:0.7;">Worldwide researchers</div>
+                </div>
+
+                <!-- Orders Fulfilled -->
+                <div class="glass-panel" style="padding:2rem 1.5rem;text-align:center;border-radius:1.25rem;border:1px solid rgba(139,92,246,0.15);position:relative;overflow:hidden;">
+                    <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#7c3aed,#a78bfa);"></div>
+                    <div style="width:52px;height:52px;background:rgba(139,92,246,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;border:1px solid rgba(139,92,246,0.25);">
+                        <i class="fa-solid fa-box-open" style="color:#a78bfa;font-size:1.25rem;"></i>
+                    </div>
+                    <div style="font-size:2.75rem;font-weight:800;color:#a78bfa;line-height:1;">12,500+</div>
+                    <div style="color:var(--text-muted);font-size:0.78rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-top:0.75rem;">Orders Fulfilled</div>
+                    <div style="color:var(--text-muted);font-size:0.72rem;margin-top:0.2rem;opacity:0.7;">Shipped discreetly &amp; fast</div>
+                </div>
+
+                <!-- Satisfaction Rate -->
+                <div class="glass-panel" style="padding:2rem 1.5rem;text-align:center;border-radius:1.25rem;border:1px solid rgba(245,158,11,0.15);position:relative;overflow:hidden;">
+                    <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#d97706,#fbbf24);"></div>
+                    <div style="width:52px;height:52px;background:rgba(245,158,11,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;border:1px solid rgba(245,158,11,0.25);">
+                        <i class="fa-solid fa-trophy" style="color:#fbbf24;font-size:1.25rem;"></i>
+                    </div>
+                    <div style="font-size:2.75rem;font-weight:800;color:#fbbf24;line-height:1;">98.7%</div>
+                    <div style="color:var(--text-muted);font-size:0.78rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-top:0.75rem;">Satisfaction Rate</div>
+                    <div style="color:var(--text-muted);font-size:0.72rem;margin-top:0.2rem;opacity:0.7;">Based on verified reviews</div>
+                </div>
+
+            </div>
+
+            <!-- Rating Breakdown -->
+            <div class="glass-panel" style="max-width:680px;margin:0 auto;padding:2.5rem;border:1px solid rgba(6,182,212,0.1);border-radius:1.5rem;">
+                <h4 style="text-align:center;margin-bottom:2rem;color:var(--text-main);font-size:1.1rem;font-weight:700;">
+                    <i class="fa-solid fa-chart-simple" style="color:var(--accent-cyan);margin-right:0.6rem;"></i>Rating Breakdown
+                </h4>
+                <!-- 5 Stars -->
+                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.9rem;">
+                    <span style="color:#facc15;font-size:0.78rem;font-weight:600;min-width:60px;display:flex;gap:2px;">
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                    </span>
+                    <div style="flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:50px;overflow:hidden;">
+                        <div style="width:82%;height:100%;background:linear-gradient(90deg,#facc15,#fde68a);border-radius:50px;"></div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:0.8rem;min-width:38px;text-align:right;font-weight:600;">82%</span>
+                </div>
+                <!-- 4 Stars -->
+                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.9rem;">
+                    <span style="color:#facc15;font-size:0.78rem;font-weight:600;min-width:60px;display:flex;gap:2px;">
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-regular fa-star" style="font-size:0.7rem;opacity:0.4;"></i>
+                    </span>
+                    <div style="flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:50px;overflow:hidden;">
+                        <div style="width:12%;height:100%;background:linear-gradient(90deg,#10b981,#34d399);border-radius:50px;"></div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:0.8rem;min-width:38px;text-align:right;font-weight:600;">12%</span>
+                </div>
+                <!-- 3 Stars -->
+                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.9rem;">
+                    <span style="color:#facc15;font-size:0.78rem;font-weight:600;min-width:60px;display:flex;gap:2px;">
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-regular fa-star" style="font-size:0.7rem;opacity:0.4;"></i>
+                        <i class="fa-regular fa-star" style="font-size:0.7rem;opacity:0.4;"></i>
+                    </span>
+                    <div style="flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:50px;overflow:hidden;">
+                        <div style="width:4%;height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:50px;"></div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:0.8rem;min-width:38px;text-align:right;font-weight:600;">4%</span>
+                </div>
+                <!-- 2 Stars -->
+                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.9rem;">
+                    <span style="color:#facc15;font-size:0.78rem;font-weight:600;min-width:60px;display:flex;gap:2px;">
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-regular fa-star" style="font-size:0.7rem;opacity:0.4;"></i>
+                        <i class="fa-regular fa-star" style="font-size:0.7rem;opacity:0.4;"></i>
+                        <i class="fa-regular fa-star" style="font-size:0.7rem;opacity:0.4;"></i>
+                    </span>
+                    <div style="flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:50px;overflow:hidden;">
+                        <div style="width:1.5%;height:100%;background:linear-gradient(90deg,#ef4444,#f87171);border-radius:50px;"></div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:0.8rem;min-width:38px;text-align:right;font-weight:600;">1.5%</span>
+                </div>
+                <!-- 1 Star -->
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                    <span style="color:#facc15;font-size:0.78rem;font-weight:600;min-width:60px;display:flex;gap:2px;">
+                        <i class="fa-solid fa-star" style="font-size:0.7rem;"></i>
+                        <i class="fa-regular fa-star" style="font-size:0.7rem;opacity:0.4;"></i>
+                        <i class="fa-regular fa-star" style="font-size:0.7rem;opacity:0.4;"></i>
+                        <i class="fa-regular fa-star" style="font-size:0.7rem;opacity:0.4;"></i>
+                        <i class="fa-regular fa-star" style="font-size:0.7rem;opacity:0.4;"></i>
+                    </span>
+                    <div style="flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:50px;overflow:hidden;">
+                        <div style="width:0.5%;height:100%;background:linear-gradient(90deg,#dc2626,#ef4444);border-radius:50px;"></div>
+                    </div>
+                    <span style="color:var(--text-muted);font-size:0.8rem;min-width:38px;text-align:right;font-weight:600;">0.5%</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    
 
     <!-- Verification Tool -->
     <section id="verify" class="section section-darker verify-section border-top-glass">
@@ -747,25 +963,12 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="#" class="logo">
-                        <img src="Peptide image 2.0/Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img">
+                        <img src="Logo.jpeg" alt="Qingli Peptide Logo" class="logo-img">
                         <span class="logo-text">Qingli <span class="text-glow">Peptide</span></span>
                     </a>
                     <p class="footer-description">
                         Premium supplier of high-purity peptides and chemical reagents for the global biotechnology sector. Empowering research excellence since 2019.
                     </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link" title="Facebook">
-                            <i class="fa-brands fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link" title="Twitter">
-                            <i class="fa-brands fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link" title="LinkedIn">
-                            <i class="fa-brands fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="social-link" title="Instagram">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
                     </div>
                 </div>
 
@@ -784,8 +987,8 @@
                     <h4>Compliance</h4>
                     <ul class="footer-links">
                         <li><a href="#" class="hover-glow">Terms of Service</a></li>
-                        <li><a href="#" class="hover-glow">Privacy Policy</a></li>
-                        <li><a href="#" class="hover-glow">Shipping & Customs</a></li>
+                        <li><a href="privacy-policy.html" class="hover-glow">Privacy Policy</a></li>
+                        <li><a href="refund-policy.html" class="hover-glow">Refund & Returns</a></li>
                         <li><a href="#" class="hover-glow text-danger">Research Disclaimer</a></li>
                     </ul>
                 </div>
@@ -793,18 +996,18 @@
                 <div class="footer-section">
                     <h4>Contact & Support</h4>
                     <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fa-brands fa-whatsapp"></i>
-                            <span>WhatsApp Support</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fa-solid fa-envelope"></i>
-                            <span>sales@qinglipeptide.com</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fa-solid fa-globe"></i>
-                            <span>Global Shipping</span>
-                        </div>
+                        <a href="https://wa.me/85292434470" target="_blank" class="contact-item" style="text-decoration:none; color:inherit;">
+                            <i class="fa-brands fa-whatsapp" style="color:#25d366;"></i>
+                            <span>+852 9243 4470</span>
+                        </a>
+                        <a href="mailto:quiglipeptide@gmail.com" class="contact-item" style="text-decoration:none; color:inherit;">
+                            <i class="fa-solid fa-envelope" style="color:#06b6d4;"></i>
+                            <span>quiglipeptide@gmail.com</span>
+                        </a>
+                        <a href="https://t.me/Qinglishagmoa" target="_blank" class="contact-item" style="text-decoration:none; color:inherit;">
+                            <i class="fa-brands fa-telegram" style="color:#2aabee;"></i>
+                            <span>Telegram Channel</span>
+                        </a>
                     </div>
                     
                     <div class="newsletter-section">
@@ -820,7 +1023,7 @@
             <div class="footer-bottom">
                 <div class="footer-bottom-links">
                     <a href="#" class="hover-glow">Terms of Service</a>
-                    <a href="#" class="hover-glow">Privacy Policy</a>
+                    <a href="privacy-policy.html" class="hover-glow">Privacy Policy</a>
                     <a href="#" class="hover-glow">Cookie Policy</a>
                 </div>
                 
@@ -830,7 +1033,7 @@
                         <i class="fa-brands fa-bitcoin"></i>
                     </div>
                     <div class="payment-icon" title="Tether">
-                        <span>₮</span>
+                        <span>â‚®</span>
                     </div>
                     <div class="payment-icon" title="Bank Wire">
                         <i class="fa-solid fa-building-columns"></i>
@@ -847,12 +1050,21 @@
         <i class="fa-solid fa-arrow-up"></i>
     </div>
 
-    <!-- Floating Action Button -->
-    <a href="https://wa.me/237681163230?text=Hello%20CEO%2C%20I%20have%20a%20question%20about%20my%20quote." target="_blank" class="floating-chat glow-btn" style="background: var(--success-green); border-color: var(--success-green); box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);">
-        <i class="fa-brands fa-whatsapp text-white"></i>
-        <span class="floating-chat-tooltip glass-panel">Inquire on WhatsApp</span>
-    </a>
-
+    <!-- Floating Contact Actions -->
+    <div class="floating-contact-wrapper">
+        <a href="mailto:quiglipeptide@gmail.com" id="floatingEmailBtn" target="_blank" class="floating-chat-item email-card floating-chat-email">
+            <i class="fa-solid fa-envelope text-white"></i>
+            <span class="floating-chat-tooltip glass-panel">Email Support</span>
+        </a>
+        <a href="https://t.me/Qinglishagmoa" id="floatingTelegramBtn" target="_blank" class="floating-chat-item floating-chat-telegram">
+            <i class="fa-brands fa-telegram text-white"></i>
+            <span class="floating-chat-tooltip glass-panel">Contact on Telegram</span>
+        </a>
+        <a href="https://wa.me/85292434470" id="floatingWhatsappBtn" target="_blank" class="floating-chat-item floating-chat-whatsapp">
+            <i class="fa-brands fa-whatsapp text-white"></i>
+            <span class="floating-chat-tooltip glass-panel">Inquire on WhatsApp</span>
+        </a>
+    </div>
     
     <!-- Contact Support Modal -->
     <div id="contactModal" class="modal-overlay">
@@ -869,19 +1081,19 @@
             <p class="text-muted mb-8">Our specialized team is available to assist with technical specifications, custom synthesis, or active quote inquiries.</p>
             
             <div class="contact-options">
-                <a href="mailto:support@qinglipeptide.com" id="modalEmailLink" class="contact-card email-card">
+                <a href="mailto:quiglipeptide@gmail.com" id="modalEmailLink" class="contact-card email-card">
                     <div class="contact-card-icon"><i class="fa-solid fa-envelope"></i></div>
                     <div class="contact-card-info">
                         <span class="contact-card-label">Email Us</span>
-                        <span class="contact-card-value" id="modalEmailText">support@qinglipeptide.com</span>
+                        <span class="contact-card-value" id="modalEmailText">quiglipeptide@gmail.com</span>
                     </div>
                     <i class="fa-solid fa-chevron-right contact-card-arrow"></i>
                 </a>
                 
-                <a href="https://wa.me/..." id="modalWhatsappLink" target="_blank" class="contact-card whatsapp-card">
+                <a href="https://wa.me/85292434470" id="modalWhatsappLink" target="_blank" class="contact-card whatsapp-card">
                     <div class="contact-card-icon"><i class="fa-brands fa-whatsapp"></i></div>
                     <div class="contact-card-info">
-                        <span class="contact-card-label">WhatsApp Support</span>
+                        <span class="contact-card-label">WhatsApp: +852 9243 4470</span>
                         <span class="contact-card-value">Instant Scientific Inquiry</span>
                     </div>
                     <i class="fa-solid fa-chevron-right contact-card-arrow"></i>
@@ -900,10 +1112,14 @@
     </button>
 
     <!-- Google Translate Hidden Widget -->
-    <div id="google_translate_element" style="display:none;"></div>
+    <div id="google_translate_element"></div>
+
+    <!-- Supabase Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="supabase-config.js?v=7.0"></script>
 
     <!-- Custom Script -->
-    <script src="script.js?v=2.5"></script>
+    <script src="script.js?v=7.1"></script>
     
     <!-- Google Translate Script -->
     <script type="text/javascript">
@@ -917,30 +1133,7 @@
     </script>
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <!-- Force Cinematic Background Visibility -->
-    <script>
-        // Force background visibility immediately on page load
-        (function() {
-            function forceBackground() {
-                const bg = document.querySelector('.cinematic-bg');
-                if (bg) {
-                    bg.style.cssText = 'position:fixed!important;top:0!important;left:0!important;width:100%!important;height:100%!important;z-index:-1!important;display:block!important;visibility:visible!important;opacity:1!important';
-                    const children = bg.children;
-                    for(let i=0;i<children.length;i++) {
-                        children[i].style.display='block';
-                        children[i].style.visibility='visible';
-                        children[i].style.opacity='1';
-                    }
-                }
-            }
-            // Try immediately
-            forceBackground();
-            // Try again after DOM loads
-            document.addEventListener('DOMContentLoaded', forceBackground);
-            // Keep trying
-            setInterval(forceBackground, 300);
-        })();
-    </script>
+
 
     <!-- Inline Particle Burst Function -->
     <script>
@@ -965,37 +1158,17 @@
         }
     </script>
 
-    <!-- Medical/Peptide Cinematic Background System -->
-    <div class="cinematic-bg">
-        <div class="molecular-helix"></div>
-        <div class="peptide-chains"></div>
-        <div class="medical-grid"></div>
-        <div class="cellular-particles"></div>
-        <div class="laboratory-beams"></div>
-        <div class="dna-strand"></div>
-        <div class="medical-glow"></div>
-        <div class="aurora-effect"></div>
-        <div class="medical-floating-elements">
-            <div class="medical-element peptide-molecule"></div>
-            <div class="medical-element peptide-molecule"></div>
-            <div class="medical-element peptide-molecule"></div>
-            <div class="medical-element peptide-molecule"></div>
-            <div class="medical-element peptide-molecule"></div>
-            <div class="medical-element dna-helix"></div>
-            <div class="medical-element dna-helix"></div>
-            <div class="medical-element dna-helix"></div>
-        </div>
-    </div>
+
 
     <!-- 21+ Age Verification Modal -->
-    <div id="ageModal" class="modal-overlay active" style="z-index: 9999;">
+    <div id="ageModal" class="modal-overlay" style="z-index: 9999; display: none;">
         <div class="modal-content glass-panel-darker text-center">
             <i class="fa-solid fa-triangle-exclamation text-danger mb-4" style="font-size: 3rem;"></i>
             <h2 class="text-white mb-2">Age Verification Required</h2>
             <p id="ageModalText" class="text-muted mb-6">Are you 21 years of age or older? This site contains products intended for laboratory research use only.</p>
             <div id="ageModalButtons" class="flex gap-4" style="justify-content: center;">
                 <button class="btn btn-outline text-danger" onclick="handleAgeRejection()" style="flex:1;">No, I am under 21</button>
-                <button class="btn btn-primary glow-btn" onclick="const p = this.parentElement.parentElement.parentElement; p.classList.remove('active'); p.style.display='none'; localStorage.setItem('age_verified', 'true');" style="flex:1;">Yes, I am 21+</button>
+                <button id="21plus-button" class="btn btn-primary glow-btn" onclick="acceptAge()" style="flex:1;">Yes, I am 21+</button>
             </div>
         </div>
     </div>
@@ -1094,9 +1267,21 @@
     <!-- Cart / Quote List Sidebar -->
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
     <div class="cart-sidebar glass-panel-darker border-left-glass" id="cartSidebar">
-        <div class="border-bottom-glass p-4 flex-between">
+        <div class="border-bottom-glass p-4" style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
             <span class="logo-text text-white" style="font-size: 1.25rem;"><i class="fa-solid fa-list-check mr-2"></i> Your Quote List</span>
-            <button class="modal-close" style="position: static;" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div id="cartSidebarGuest">
+                    <button onclick="toggleCart(); openAuthModal('register')" style="background: rgba(11, 190, 214, 0.1); border: 1px solid var(--accent-cyan); color: var(--accent-cyan); font-size: 0.75rem; padding: 0.35rem 0.75rem; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Connect Profile
+                    </button>
+                </div>
+                <div id="cartSidebarLogged" style="display: none; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.25rem 0.75rem; border-radius: 50px;">
+                    <i class="fa-solid fa-user-check" style="color: #10b981; font-size: 0.75rem;"></i>
+                    <span id="cartSidebarUserName" style="color: white; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;"></span>
+                </div>
+                <button class="modal-close" style="position: static;" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
         </div>
         <div class="cart-items p-4" id="cartItemsContainer">
             <!-- Items injected via JS -->
@@ -1118,51 +1303,74 @@
         </div>
     </div>
 
-    <!-- Auth Modal -->
+    <!-- Auth Modal: Premium Design -->
     <div id="authModal" class="modal-overlay">
-        <div class="modal-content glass-panel-darker">
+        <div class="modal-content glass-panel-darker" style="max-width:460px;border-radius:1.5rem;padding:2.5rem;">
             <button class="modal-close" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
-            <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
-                <button class="auth-tab" onclick="switchAuthTab('register')">Sign Up</button>
-            </div>
-            
-            <div id="loginForm" class="auth-form-container">
-                <h3 class="text-center mb-4">Welcome Back</h3>
-                <div id="loginError" class="alert alert-glass mb-4" style="display: none; padding: 1rem; border-radius: 0.5rem;"></div>
-                <form onsubmit="handleLogin(event)">
-                    <div class="input-group" style="margin-bottom: 1rem;">
-                        <label for="loginEmail">Email Address</label>
-                        <input type="email" id="loginEmail" class="glass-input" required>
-                    </div>
-                    <div class="input-group" style="margin-bottom: 1rem;">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" class="glass-input" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary glow-btn w-full mt-4">Login</button>
-                </form>
+
+            <!-- Brand Header -->
+            <div class="text-center" style="margin-bottom:1.5rem;">
+                <div style="width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 0.75rem;box-shadow:0 0 30px rgba(11,190,214,0.4); border:2px solid var(--accent-cyan); overflow:hidden;">
+                    <img src="Logo.jpeg" alt="Qingli Peptide" style="width:100%;height:100%;object-fit:cover;">
+                </div>
+                <p style="font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent-cyan);font-weight:700;margin:0;">Qingli Peptide Â· Client Portal</p>
             </div>
 
-            <div id="registerForm" class="auth-form-container" style="display: none;">
-                <h3 class="text-center mb-4">Create Account</h3>
-                <div id="regError" class="alert alert-glass mb-4" style="display: none; padding: 1rem; border-radius: 0.5rem;"></div>
-                <form onsubmit="handleRegister(event)">
-                    <div class="input-group" style="margin-bottom: 1rem;">
-                        <label for="regName">Full Name</label>
-                        <input type="text" id="regName" class="glass-input" required>
+            <!-- Tabs -->
+            <div class="auth-tabs" style="margin-bottom:2rem;">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Create Account</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form-container">
+                <div id="loginError" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.35);border-radius:0.75rem;padding:0.875rem 1rem;margin-bottom:1.25rem;font-size:0.875rem;color:#fca5a5;"></div>
+                <form onsubmit="handleLogin(event)" autocomplete="on">
+                    <div style="margin-bottom:1rem;">
+                        <label style="display:block;font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.5rem;letter-spacing:0.5px;"><i class="fa-solid fa-envelope mr-2" style="color:var(--accent-cyan);"></i>EMAIL ADDRESS</label>
+                        <input type="email" id="loginEmail" class="glass-input" placeholder="admin@qinglipeptide.com" required autocomplete="email" style="width:100%;box-sizing:border-box;">
                     </div>
-                    <div class="input-group" style="margin-bottom: 1rem;">
-                        <label for="regEmail">Email Address</label>
-                        <input type="email" id="regEmail" class="glass-input" required>
+                    <div style="margin-bottom:1.5rem;position:relative;">
+                        <label style="display:block;font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.5rem;letter-spacing:0.5px;"><i class="fa-solid fa-lock mr-2" style="color:var(--accent-cyan);"></i>PASSWORD</label>
+                        <input type="password" id="loginPassword" class="glass-input" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required autocomplete="current-password" style="width:100%;box-sizing:border-box;padding-right:3.5rem;">
+                        <button type="button" onclick="togglePasswordVisibility('loginPassword',this)" title="Show/hide password" style="position:absolute;right:1rem;bottom:0.85rem;background:none;border:none;color:var(--text-muted);cursor:pointer;padding:0;font-size:0.95rem;" tabindex="-1"><i class="fa-solid fa-eye"></i></button>
                     </div>
-                    <div class="input-group" style="margin-bottom: 1rem;">
-                        <label for="regPassword">Password</label>
-                        <input type="password" id="regPassword" class="glass-input" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary glow-btn w-full mt-4">Sign Up</button>
+                    <button type="submit" id="loginBtn" style="width:100%;padding:1rem;border:none;border-radius:0.875rem;background:linear-gradient(135deg,#0284c7,#0bbed6);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:0.5px;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(11,190,214,0.35);display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        <span id="loginBtnText">SIGN IN</span>
+                    </button>
                 </form>
+                <p style="text-align:center;margin-top:1.25rem;font-size:0.82rem;color:var(--text-muted);">No account? <button onclick="switchAuthTab('register')" style="background:none;border:none;color:var(--accent-cyan);cursor:pointer;font-weight:700;font-size:0.82rem;padding:0;">Create one â†’</button></p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="auth-form-container" style="display:none;">
+                <div id="regError" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.35);border-radius:0.75rem;padding:0.875rem 1rem;margin-bottom:1.25rem;font-size:0.875rem;color:#fca5a5;"></div>
+                <form onsubmit="handleRegister(event)" autocomplete="on">
+                    <div style="margin-bottom:1rem;">
+                        <label style="display:block;font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.5rem;letter-spacing:0.5px;"><i class="fa-solid fa-user mr-2" style="color:var(--accent-cyan);"></i>FULL NAME</label>
+                        <input type="text" id="regName" class="glass-input" placeholder="Dr. Jane Smith" required autocomplete="name" style="width:100%;box-sizing:border-box;">
+                    </div>
+                    <div style="margin-bottom:1rem;">
+                        <label style="display:block;font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.5rem;letter-spacing:0.5px;"><i class="fa-solid fa-envelope mr-2" style="color:var(--accent-cyan);"></i>EMAIL ADDRESS</label>
+                        <input type="email" id="regEmail" class="glass-input" placeholder="you@lab.com" required autocomplete="email" style="width:100%;box-sizing:border-box;">
+                    </div>
+                    <div style="margin-bottom:1.5rem;position:relative;">
+                        <label style="display:block;font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.5rem;letter-spacing:0.5px;"><i class="fa-solid fa-lock mr-2" style="color:var(--accent-cyan);"></i>PASSWORD</label>
+                        <input type="password" id="regPassword" class="glass-input" placeholder="Min. 8 characters" required autocomplete="new-password" style="width:100%;box-sizing:border-box;padding-right:3.5rem;">
+                        <button type="button" onclick="togglePasswordVisibility('regPassword',this)" title="Show/hide password" style="position:absolute;right:1rem;bottom:0.85rem;background:none;border:none;color:var(--text-muted);cursor:pointer;padding:0;font-size:0.95rem;" tabindex="-1"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                    <button type="submit" id="regBtn" style="width:100%;padding:1rem;border:none;border-radius:0.875rem;background:linear-gradient(135deg,#059669,#10b981);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:0.5px;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(16,185,129,0.35);display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <span id="regBtnText">CREATE ACCOUNT</span>
+                    </button>
+                </form>
+                <p style="text-align:center;margin-top:1.25rem;font-size:0.82rem;color:var(--text-muted);">Have an account? <button onclick="switchAuthTab('login')" style="background:none;border:none;color:var(--accent-cyan);cursor:pointer;font-weight:700;font-size:0.82rem;padding:0;">Sign in â†’</button></p>
             </div>
         </div>
-    </div>
+    <script>
+        // WhatsApp and email links are set dynamically in script.js via window.globalContactWhatsapp / window.globalSupportEmail
+    </script>
+</div>
 </body>
 </html>
