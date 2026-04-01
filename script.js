@@ -1,4 +1,4 @@
-// ==== PROFESSIONAL MARQUEE SYSTEM ====
+﻿// ==== PROFESSIONAL MARQUEE SYSTEM ====
 class ProfessionalMarquee {
     constructor() {
         this.marquee = document.getElementById('customMarquee');
@@ -687,7 +687,7 @@ async function fetchProducts() {
     }
 
         // Contact info is now hardcoded in HTML. No dynamic overwrite needed.
-        window.globalContactWhatsapp = '85292434470';
+        window.globalContactWhatsapp = '14239122216';
         window.globalSupportEmail = 'quiglipeptide@gmail.com';
 
     try {
@@ -1325,7 +1325,7 @@ async function submitInquiry(e) {
         fetchCart();
         
         // 4. Redirect to WhatsApp
-        let waNumber = window.globalContactWhatsapp || '85292434470';
+        let waNumber = window.globalContactWhatsapp || '14239122216';
         waNumber = waNumber.replace(/[^0-9]/g, '');
         const customMessage = `Hello Qingli Peptide! My name is ${nameVal} from ${cityVal}, ${countryVal}. I have just submitted a quote request on the website. Please check your admin dashboard!`;
         const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(customMessage)}`;
