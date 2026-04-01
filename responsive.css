@@ -399,3 +399,17 @@
     .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* =============================================
+   MOBILE SIDEBAR BUTTON TEXT FIT
+   Ensure "Client Portal — Sign In" never clips
+   ============================================= */
+.mobile-sidebar-footer .btn {
+    white-space: normal;
+    word-break: break-word;
+    letter-spacing: 0.03em;
+    font-size: 0.85rem;
+    padding: 0.9rem 1rem;
+    text-align: center;
+    line-height: 1.3;
+}
