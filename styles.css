@@ -4471,7 +4471,7 @@ body { top: 0 !important; } /* Prevents the google top banner from pushing body 
 .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--danger-red); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; border: 2px solid var(--bg-darker); }
 
 /* Floating Chat */
-.floating-contact-wrapper { position: fixed; bottom: 2.5rem; right: 2.5rem; display: flex; flex-direction: column; gap: 1rem; align-items: flex-end; z-index: 999; }
+.floating-contact-wrapper { position: fixed; bottom: 2.5rem; left: 2.5rem; display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; z-index: 999; }
 .floating-chat-item { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.25rem; color: white; position: relative; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid rgba(255,255,255,0.2); text-decoration: none; }
 .floating-chat-item:hover { transform: scale(1.1) translateY(-5px); }
 .floating-chat-whatsapp { background: linear-gradient(135deg, #128C7E, #25D366); box-shadow: 0 4px 25px rgba(37,211,102,0.4); }
@@ -4480,7 +4480,7 @@ body { top: 0 !important; } /* Prevents the google top banner from pushing body 
 .floating-chat-telegram:hover { box-shadow: 0 8px 30px rgba(0, 136, 204, 0.6); }
 .floating-chat-email { background: linear-gradient(135deg, #0bbed6, #1e3a8a); box-shadow: 0 4px 25px rgba(11, 190, 214, 0.4); }
 .floating-chat-email:hover { box-shadow: 0 8px 30px rgba(11, 190, 214, 0.6); }
-.floating-chat-item .floating-chat-tooltip { position: absolute; right: 85px; padding: 0.75rem 1.25rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity var(--transition-fast); font-size: 0.875rem; font-weight: 600; border: 1px solid var(--border-glass-light); background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-radius: 8px; color: white; }
+.floating-chat-item .floating-chat-tooltip { position: absolute; left: 85px; right: auto; padding: 0.75rem 1.25rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity var(--transition-fast); font-size: 0.875rem; font-weight: 600; border: 1px solid var(--border-glass-light); background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-radius: 8px; color: white; }
 .floating-chat-item:hover .floating-chat-tooltip { opacity: 1; }
 
 /* ==== MOBILE REFINEMENTS 100/100 PERFECTION ==== */
