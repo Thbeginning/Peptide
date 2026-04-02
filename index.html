@@ -1154,14 +1154,14 @@
 
 
     <!-- 21+ Age Verification Modal -->
-    <div id="ageModal" class="modal-overlay" style="z-index: 9999; display: none;">
-        <div class="modal-content glass-panel-darker text-center">
+    <div id="ageModal" class="modal-overlay" style="z-index: 9999; display: none; align-items: center !important; justify-content: center !important;">
+        <div class="modal-content glass-panel-darker text-center" style="position:relative; bottom:auto; left:auto; margin:auto; max-width:400px; width:calc(100% - 2rem); box-sizing:border-box; border-radius:1.5rem; padding:2.5rem 1.75rem;">
             <i class="fa-solid fa-triangle-exclamation text-danger mb-4" style="font-size: 3rem;"></i>
             <h2 class="text-white mb-2">Age Verification Required</h2>
             <p id="ageModalText" class="text-muted mb-6">Are you 21 years of age or older? This site contains products intended for laboratory research use only.</p>
-            <div id="ageModalButtons" class="flex gap-4" style="justify-content: center;">
-                <button class="btn btn-outline text-danger" onclick="handleAgeRejection()" style="flex:1;">No, I am under 21</button>
-                <button id="21plus-button" class="btn btn-primary glow-btn" onclick="acceptAge()" style="flex:1;">Yes, I am 21+</button>
+            <div id="ageModalButtons" style="display:flex; flex-direction:column; gap:0.875rem; width:100%; margin-top:0.5rem;">
+                <button id="21plus-button" class="btn btn-primary glow-btn" onclick="acceptAge()" style="width:100%; padding:1rem 0.75rem; font-size:1rem; font-weight:700; white-space:normal; line-height:1.3; letter-spacing:0.02em;">Yes, I am 21+</button>
+                <button class="btn btn-outline text-danger" onclick="handleAgeRejection()" style="width:100%; padding:0.9rem 0.75rem; font-size:0.9rem; font-weight:600; white-space:normal; line-height:1.4; letter-spacing:0;">No, I am under 21</button>
             </div>
         </div>
     </div>

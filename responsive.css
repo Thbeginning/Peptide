@@ -270,18 +270,36 @@
         transform: none !important;
     }
 
-    /* Age Verification Modal */
+    /* Age Verification Modal — always dead-center */
     #ageModal.modal-overlay {
         align-items: center !important;
+        justify-content: center !important;
         padding: 1rem !important;
     }
     #ageModal .modal-content {
         position: relative !important;
         bottom: auto !important;
         left: auto !important;
-        border-radius: 1.25rem !important;
+        border-radius: 1.5rem !important;
         margin: auto !important;
-        max-width: 92% !important;
+        max-width: 400px !important;
+        width: calc(100% - 2rem) !important;
+        padding: 2rem 1.5rem !important;
+    }
+    /* Age modal buttons — always stacked & full text visible */
+    #ageModalButtons {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.875rem !important;
+        width: 100% !important;
+    }
+    #ageModalButtons button {
+        width: 100% !important;
+        white-space: normal !important;
+        line-height: 1.4 !important;
+        letter-spacing: 0 !important;
+        padding: 0.875rem 1rem !important;
+        min-height: auto !important;
     }
 
     /* Cart Sidebar */
