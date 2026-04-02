@@ -5549,3 +5549,28 @@ select.unit-toggle {
     max-width: none !important;
     border: none !important;
 }
+
+/* ============================================
+   SMARTSUPP — HARD LOCK POSITION & SIZE
+   Prevents ANY page CSS from making it fullscreen
+   ============================================ */
+div[id^="smartsupp"],
+div[id^="chat-widget"],
+div[class*="smartsupp"],
+div[class*="chat-widget"] {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 400px !important;
+    max-height: 700px !important;
+    z-index: 2147483647 !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: none !important;
+}
