@@ -1054,10 +1054,10 @@
 
     <!-- Floating Contact Actions -->
     <div class="floating-contact-wrapper">
-        <a href="mailto:quiglipeptide@gmail.com" id="floatingEmailBtn" target="_blank" class="floating-chat-item email-card floating-chat-email">
-            <i class="fa-solid fa-envelope text-white"></i>
-            <span class="floating-chat-tooltip glass-panel">Email Support</span>
-        </a>
+        <button onclick="smartsupp('chat:open')" id="floatingLiveChatBtn" class="floating-chat-item floating-chat-email" style="border:none;cursor:pointer;" title="Live Chat">
+            <i class="fa-solid fa-comment-dots text-white"></i>
+            <span class="floating-chat-tooltip glass-panel">Live Chat Support</span>
+        </button>
         <a href="https://t.me/Qinglishagmoa" id="floatingTelegramBtn" target="_blank" class="floating-chat-item floating-chat-telegram">
             <i class="fa-brands fa-telegram text-white"></i>
             <span class="floating-chat-tooltip glass-panel">Contact on Telegram</span>
@@ -1083,11 +1083,11 @@
             <p class="text-muted mb-8">Our specialized team is available to assist with technical specifications, custom synthesis, or active quote inquiries.</p>
             
             <div class="contact-options">
-                <a href="mailto:quiglipeptide@gmail.com" id="modalEmailLink" class="contact-card email-card">
-                    <div class="contact-card-icon"><i class="fa-solid fa-envelope"></i></div>
+                <a onclick="smartsupp('chat:open'); document.getElementById('contactModal').classList.remove('active')" id="modalLiveChatLink" class="contact-card email-card" style="cursor:pointer;" href="#">
+                    <div class="contact-card-icon"><i class="fa-solid fa-comment-dots"></i></div>
                     <div class="contact-card-info">
-                        <span class="contact-card-label">Email Us</span>
-                        <span class="contact-card-value" id="modalEmailText">quiglipeptide@gmail.com</span>
+                        <span class="contact-card-label">Live Chat</span>
+                        <span class="contact-card-value">Chat with us instantly</span>
                     </div>
                     <i class="fa-solid fa-chevron-right contact-card-arrow"></i>
                 </a>
@@ -1379,7 +1379,6 @@
     <script type="text/javascript">
     var _smartsupp = _smartsupp || {};
     _smartsupp.key = '132cc1b3e5e9ccf2e543bc80ff228a2f2288e394';
-    _smartsupp.position = 'bl';
     window.smartsupp||(function(d) {
       var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
       s=d.getElementsByTagName('script')[0];c=d.createElement('script');
